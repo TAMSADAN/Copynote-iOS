@@ -1,10 +1,3 @@
-//
-//  Project.swift
-//  ProjectDescriptionHelpers
-//
-//  Created by 송영모 on 2022/12/29.
-//
-
 import ProjectDescription
 
 protocol ProjectFactory {
@@ -16,7 +9,6 @@ protocol ProjectFactory {
 }
 
 // MARK: - Base Project Factory
-
 class BaseProjectFactory: ProjectFactory {
     let projectName: String = "Copynote"
 
@@ -93,7 +85,6 @@ class BaseProjectFactory: ProjectFactory {
 }
 
 // MARK: - Project
-
 let factory = BaseProjectFactory()
 
 let project: Project = .init(
