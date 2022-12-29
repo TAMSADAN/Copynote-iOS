@@ -1,0 +1,1119 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02B7443FC7EAF11EA2FC0329 /* CopynoteUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF59E749B1D725F3C278B6E2 /* CopynoteUI.framework */; };
+		081D913E44CE55A43BE251B5 /* CopynoteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70FE991652DAF06FCE84B2E0 /* CopynoteKit.framework */; };
+		1BA33ADECB2F75F916551BA1 /* CopynoteUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA70933FA41626E8F3492E00 /* CopynoteUITests.swift */; };
+		6579CAB553C12963739AE4AF /* TuistBundle+Copynote.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD31F7AD4B8E2A23FF8E91EA /* TuistBundle+Copynote.swift */; };
+		8C2950A843BE6A3EE8EFD83D /* CopynoteKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70FE991652DAF06FCE84B2E0 /* CopynoteKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8C2C33D36CE2D97726009D32 /* CopynoteKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B89435F2F5DA0C21CDF2C8 /* CopynoteKit.swift */; };
+		A8F8FD6F2E7BED80F3E2C883 /* CopynoteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70FE991652DAF06FCE84B2E0 /* CopynoteKit.framework */; };
+		A93B21302BA089F24EA68ECB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E3143A16B28074054FA0B40 /* LaunchScreen.storyboard */; };
+		BD6F19CFB1BB8D20A7739FA0 /* CopynoteKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2987E5523334733BE974A49F /* CopynoteKitTests.swift */; };
+		D111DCBAFBA98440F5221EC6 /* CopynoteUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AF59E749B1D725F3C278B6E2 /* CopynoteUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D4681B7E12DB9F477FE9E300 /* CopynoteUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF59E749B1D725F3C278B6E2 /* CopynoteUI.framework */; };
+		DACF101E6C2EC6FDB33D8C2A /* AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B918D5CAF1D58F794EC13BE7 /* AppTests.swift */; };
+		DC7D6049723DBAEC3F0CD20C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EDFD8F429BA38CE0BEB470 /* AppDelegate.swift */; };
+		FB9D9D1970D13C4472B1DF24 /* CopynoteUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FED1EE9DC8BFC5897C5666 /* CopynoteUI.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		00F52FE4A32D360ABD588880 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5B78C0012D55F449746409CE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FB897C67C99C5D7C6120E315;
+			remoteInfo = CopynoteKit;
+		};
+		2FF9B6F2F9FFD682428AD13B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5B78C0012D55F449746409CE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B102FE88148B42F913495BEC;
+			remoteInfo = CopynoteUI;
+		};
+		4604D993361B6A071798912C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5B78C0012D55F449746409CE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FB897C67C99C5D7C6120E315;
+			remoteInfo = CopynoteKit;
+		};
+		4A345409F173E11EE2483ABF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5B78C0012D55F449746409CE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1C6AB4D78F63AD9277B9A999;
+			remoteInfo = Copynote;
+		};
+		C6C872C0F2350AB208899421 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5B78C0012D55F449746409CE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B102FE88148B42F913495BEC;
+			remoteInfo = CopynoteUI;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		329E63B421EDCDBAA31B0394 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80D59E45615B015D5DD745F7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8C2950A843BE6A3EE8EFD83D /* CopynoteKit.framework in Embed Frameworks */,
+				D111DCBAFBA98440F5221EC6 /* CopynoteUI.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9A81F41E04227F8CBA26552 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0D4CC59ADBE98491C616A56 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4C07020D3550797CCDC69D7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F05345AFBAAD789D2FCE896A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0086FF1939048BBF492C9399 /* Copynote-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Copynote-Info.plist"; sourceTree = "<group>"; };
+		0D037A4E6D2C919CE2C5F8D2 /* CopynoteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CopynoteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D67359C69F5734E6AA18B0C /* CopynoteKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CopynoteKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2987E5523334733BE974A49F /* CopynoteKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopynoteKitTests.swift; sourceTree = "<group>"; };
+		46FED1EE9DC8BFC5897C5666 /* CopynoteUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopynoteUI.swift; sourceTree = "<group>"; };
+		4FE711088F890472CB02BD0A /* CopynoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CopynoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		63B89435F2F5DA0C21CDF2C8 /* CopynoteKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopynoteKit.swift; sourceTree = "<group>"; };
+		6693BAEBC7E24315E2C08E43 /* CopynoteUITests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "CopynoteUITests-Info.plist"; sourceTree = "<group>"; };
+		70FE991652DAF06FCE84B2E0 /* CopynoteKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CopynoteKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DB70CADE8173D1014B4920A /* Copynote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Copynote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E3143A16B28074054FA0B40 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AF59E749B1D725F3C278B6E2 /* CopynoteUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CopynoteUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B918D5CAF1D58F794EC13BE7 /* AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTests.swift; sourceTree = "<group>"; };
+		DD31F7AD4B8E2A23FF8E91EA /* TuistBundle+Copynote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistBundle+Copynote.swift"; sourceTree = "<group>"; };
+		E6EDFD8F429BA38CE0BEB470 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EAB1DFB80C863069FAD809E2 /* CopynoteKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "CopynoteKit-Info.plist"; sourceTree = "<group>"; };
+		EE47F65048EFA44682D51DDE /* CopynoteTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "CopynoteTests-Info.plist"; sourceTree = "<group>"; };
+		F51575B56A3080CE79A9E840 /* CopynoteKitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "CopynoteKitTests-Info.plist"; sourceTree = "<group>"; };
+		F934377AEDD4EFF954C7C29A /* CopynoteUI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "CopynoteUI-Info.plist"; sourceTree = "<group>"; };
+		FA70933FA41626E8F3492E00 /* CopynoteUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopynoteUITests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0F38E9F99817B391F2BDD836 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				081D913E44CE55A43BE251B5 /* CopynoteKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3EB54A9782980B70D74AAC54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02B7443FC7EAF11EA2FC0329 /* CopynoteUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6E2F90A81AAF58302F95700A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E49640154FC2705859D5057 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E284E351C5C07A3F1521599D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E889C4C35D29116AA830B7C6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8F8FD6F2E7BED80F3E2C883 /* CopynoteKit.framework in Frameworks */,
+				D4681B7E12DB9F477FE9E300 /* CopynoteUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		172778ECA7FBB0093836C191 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				E6EDFD8F429BA38CE0BEB470 /* AppDelegate.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		3D0F7ED3ADF522E9D1A89120 /* Copynote */ = {
+			isa = PBXGroup;
+			children = (
+				4DFEBAC989A059369FE9A5D3 /* Resources */,
+				172778ECA7FBB0093836C191 /* Sources */,
+				B20A151E377694EADF3858CB /* Tests */,
+			);
+			path = Copynote;
+			sourceTree = "<group>";
+		};
+		4026A125EE5D53730EF33563 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				46FED1EE9DC8BFC5897C5666 /* CopynoteUI.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		49C1E22CA192E936570FE1B2 /* Targets */ = {
+			isa = PBXGroup;
+			children = (
+				3D0F7ED3ADF522E9D1A89120 /* Copynote */,
+				79A485F3051C340A888C8AE7 /* CopynoteKit */,
+				A2BA86ECC4D7A98BC4072DF3 /* CopynoteUI */,
+			);
+			path = Targets;
+			sourceTree = "<group>";
+		};
+		4DFEBAC989A059369FE9A5D3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9E3143A16B28074054FA0B40 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		755FCA54F05EBA013B35EB8E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7DB70CADE8173D1014B4920A /* Copynote.app */,
+				70FE991652DAF06FCE84B2E0 /* CopynoteKit.framework */,
+				1D67359C69F5734E6AA18B0C /* CopynoteKitTests.xctest */,
+				4FE711088F890472CB02BD0A /* CopynoteTests.xctest */,
+				AF59E749B1D725F3C278B6E2 /* CopynoteUI.framework */,
+				0D037A4E6D2C919CE2C5F8D2 /* CopynoteUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		79A485F3051C340A888C8AE7 /* CopynoteKit */ = {
+			isa = PBXGroup;
+			children = (
+				A74FEE7B7C69259F9A4A8523 /* Sources */,
+				E8FC8846251583CCA59D3111 /* Tests */,
+			);
+			path = CopynoteKit;
+			sourceTree = "<group>";
+		};
+		7EE036FC15974F65CEC1CE30 /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				C309CDF4DB069ECD88FE49D1 /* Derived */,
+				49C1E22CA192E936570FE1B2 /* Targets */,
+			);
+			name = Project;
+			sourceTree = "<group>";
+		};
+		94E163CDE2E34407FCB09682 = {
+			isa = PBXGroup;
+			children = (
+				7EE036FC15974F65CEC1CE30 /* Project */,
+				F41B80DBBD0872CBBD2EA51C /* Frameworks */,
+				755FCA54F05EBA013B35EB8E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		98F14B9047D6ED52FCA0975C /* InfoPlists */ = {
+			isa = PBXGroup;
+			children = (
+				0086FF1939048BBF492C9399 /* Copynote-Info.plist */,
+				EAB1DFB80C863069FAD809E2 /* CopynoteKit-Info.plist */,
+				F51575B56A3080CE79A9E840 /* CopynoteKitTests-Info.plist */,
+				EE47F65048EFA44682D51DDE /* CopynoteTests-Info.plist */,
+				F934377AEDD4EFF954C7C29A /* CopynoteUI-Info.plist */,
+				6693BAEBC7E24315E2C08E43 /* CopynoteUITests-Info.plist */,
+			);
+			path = InfoPlists;
+			sourceTree = "<group>";
+		};
+		998F006EF581C2D197F16423 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				DD31F7AD4B8E2A23FF8E91EA /* TuistBundle+Copynote.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		A2BA86ECC4D7A98BC4072DF3 /* CopynoteUI */ = {
+			isa = PBXGroup;
+			children = (
+				4026A125EE5D53730EF33563 /* Sources */,
+				E0618118C1DA62D11A5AAA8D /* Tests */,
+			);
+			path = CopynoteUI;
+			sourceTree = "<group>";
+		};
+		A74FEE7B7C69259F9A4A8523 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				63B89435F2F5DA0C21CDF2C8 /* CopynoteKit.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		B20A151E377694EADF3858CB /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				B918D5CAF1D58F794EC13BE7 /* AppTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		C309CDF4DB069ECD88FE49D1 /* Derived */ = {
+			isa = PBXGroup;
+			children = (
+				98F14B9047D6ED52FCA0975C /* InfoPlists */,
+				998F006EF581C2D197F16423 /* Sources */,
+			);
+			path = Derived;
+			sourceTree = "<group>";
+		};
+		E0618118C1DA62D11A5AAA8D /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				FA70933FA41626E8F3492E00 /* CopynoteUITests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		E8FC8846251583CCA59D3111 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				2987E5523334733BE974A49F /* CopynoteKitTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		F41B80DBBD0872CBBD2EA51C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1C6AB4D78F63AD9277B9A999 /* Copynote */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B3CF1DB6C9C4E7EF1DD23E1D /* Build configuration list for PBXNativeTarget "Copynote" */;
+			buildPhases = (
+				7D34261431455DD692D4EBEA /* Sources */,
+				0B118BC7236FEE841B450A84 /* Resources */,
+				80D59E45615B015D5DD745F7 /* Embed Frameworks */,
+				E889C4C35D29116AA830B7C6 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				24E197F942B43ED66130FBFA /* PBXTargetDependency */,
+				C7ECE9DA7B24377647AEBC3D /* PBXTargetDependency */,
+			);
+			name = Copynote;
+			productName = Copynote;
+			productReference = 7DB70CADE8173D1014B4920A /* Copynote.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2B621BE58ED10936DA6EF841 /* CopynoteUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5FB79951654AA4D5F48E6A50 /* Build configuration list for PBXNativeTarget "CopynoteUITests" */;
+			buildPhases = (
+				76E03207D3C21E422170DE2D /* Sources */,
+				27CC03B4B4D0C027B70269A7 /* Resources */,
+				F05345AFBAAD789D2FCE896A /* Embed Frameworks */,
+				3EB54A9782980B70D74AAC54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				04A82BE7900D025E813F820F /* PBXTargetDependency */,
+			);
+			name = CopynoteUITests;
+			productName = CopynoteUITests;
+			productReference = 0D037A4E6D2C919CE2C5F8D2 /* CopynoteUITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		3334893C59369662E978242D /* CopynoteTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D2EFC9CD16F453C94648A47 /* Build configuration list for PBXNativeTarget "CopynoteTests" */;
+			buildPhases = (
+				0E4AB5DA2BFAC8502A421776 /* Sources */,
+				0DCEDFE7A04E1D010984BF8A /* Resources */,
+				B9A81F41E04227F8CBA26552 /* Embed Frameworks */,
+				E284E351C5C07A3F1521599D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2BC98F3BE6A0DF916A43B7EC /* PBXTargetDependency */,
+			);
+			name = CopynoteTests;
+			productName = CopynoteTests;
+			productReference = 4FE711088F890472CB02BD0A /* CopynoteTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B102FE88148B42F913495BEC /* CopynoteUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0AB9DB0838F5A710C057B841 /* Build configuration list for PBXNativeTarget "CopynoteUI" */;
+			buildPhases = (
+				2521E64A061DCDC4A5B38E7A /* Sources */,
+				52AA60C3D62ACECB0D7BFB30 /* Resources */,
+				E0D4CC59ADBE98491C616A56 /* Embed Frameworks */,
+				7E49640154FC2705859D5057 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CopynoteUI;
+			productName = CopynoteUI;
+			productReference = AF59E749B1D725F3C278B6E2 /* CopynoteUI.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		CAB10A089A110B04B4746D0B /* CopynoteKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0FC56A3D81ACD8E521F10C24 /* Build configuration list for PBXNativeTarget "CopynoteKitTests" */;
+			buildPhases = (
+				37D0D3E7F2D78F0D09E2E1CF /* Sources */,
+				F315EC7DEE453FBB29820819 /* Resources */,
+				329E63B421EDCDBAA31B0394 /* Embed Frameworks */,
+				0F38E9F99817B391F2BDD836 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F20EE48FCC6746C0EEF4BA78 /* PBXTargetDependency */,
+			);
+			name = CopynoteKitTests;
+			productName = CopynoteKitTests;
+			productReference = 1D67359C69F5734E6AA18B0C /* CopynoteKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FB897C67C99C5D7C6120E315 /* CopynoteKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E5A23E832C91C5300D4BE84 /* Build configuration list for PBXNativeTarget "CopynoteKit" */;
+			buildPhases = (
+				8C46DA733EF33B5514D2F4F5 /* Sources */,
+				0BD4DB844A9A48AB1C333BCE /* Resources */,
+				E4C07020D3550797CCDC69D7 /* Embed Frameworks */,
+				6E2F90A81AAF58302F95700A /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CopynoteKit;
+			productName = CopynoteKit;
+			productReference = 70FE991652DAF06FCE84B2E0 /* CopynoteKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5B78C0012D55F449746409CE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = tuist.io;
+				TargetAttributes = {
+					3334893C59369662E978242D = {
+						TestTargetID = 1C6AB4D78F63AD9277B9A999;
+					};
+				};
+			};
+			buildConfigurationList = 4D1CDBF1B4D778CF539D0FA6 /* Build configuration list for PBXProject "Copynote" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 94E163CDE2E34407FCB09682;
+			productRefGroup = 755FCA54F05EBA013B35EB8E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1C6AB4D78F63AD9277B9A999 /* Copynote */,
+				3334893C59369662E978242D /* CopynoteTests */,
+				FB897C67C99C5D7C6120E315 /* CopynoteKit */,
+				CAB10A089A110B04B4746D0B /* CopynoteKitTests */,
+				B102FE88148B42F913495BEC /* CopynoteUI */,
+				2B621BE58ED10936DA6EF841 /* CopynoteUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0B118BC7236FEE841B450A84 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A93B21302BA089F24EA68ECB /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0BD4DB844A9A48AB1C333BCE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DCEDFE7A04E1D010984BF8A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		27CC03B4B4D0C027B70269A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52AA60C3D62ACECB0D7BFB30 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F315EC7DEE453FBB29820819 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0E4AB5DA2BFAC8502A421776 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DACF101E6C2EC6FDB33D8C2A /* AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2521E64A061DCDC4A5B38E7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB9D9D1970D13C4472B1DF24 /* CopynoteUI.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		37D0D3E7F2D78F0D09E2E1CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD6F19CFB1BB8D20A7739FA0 /* CopynoteKitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		76E03207D3C21E422170DE2D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1BA33ADECB2F75F916551BA1 /* CopynoteUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7D34261431455DD692D4EBEA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6579CAB553C12963739AE4AF /* TuistBundle+Copynote.swift in Sources */,
+				DC7D6049723DBAEC3F0CD20C /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8C46DA733EF33B5514D2F4F5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8C2C33D36CE2D97726009D32 /* CopynoteKit.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		04A82BE7900D025E813F820F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CopynoteUI;
+			target = B102FE88148B42F913495BEC /* CopynoteUI */;
+			targetProxy = C6C872C0F2350AB208899421 /* PBXContainerItemProxy */;
+		};
+		24E197F942B43ED66130FBFA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CopynoteKit;
+			target = FB897C67C99C5D7C6120E315 /* CopynoteKit */;
+			targetProxy = 00F52FE4A32D360ABD588880 /* PBXContainerItemProxy */;
+		};
+		2BC98F3BE6A0DF916A43B7EC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Copynote;
+			target = 1C6AB4D78F63AD9277B9A999 /* Copynote */;
+			targetProxy = 4A345409F173E11EE2483ABF /* PBXContainerItemProxy */;
+		};
+		C7ECE9DA7B24377647AEBC3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CopynoteUI;
+			target = B102FE88148B42F913495BEC /* CopynoteUI */;
+			targetProxy = 2FF9B6F2F9FFD682428AD13B /* PBXContainerItemProxy */;
+		};
+		F20EE48FCC6746C0EEF4BA78 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CopynoteKit;
+			target = FB897C67C99C5D7C6120E315 /* CopynoteKit */;
+			targetProxy = 4604D993361B6A071798912C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0D8A182903CCB87AB3EE5DDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		63B186E1A516B87441F2485C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Derived/InfoPlists/CopynoteUI-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.tuist.CopynoteUI;
+				PRODUCT_NAME = CopynoteUI;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		6E3CA4E79676D8E5DE2C2A4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		85AAE85851A9878ED8B139EC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Derived/InfoPlists/Copynote-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.tuist.Copynote;
+				PRODUCT_NAME = Copynote;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		8CC17E42AB66841EA9675CD3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Derived/InfoPlists/CopynoteKit-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.tuist.CopynoteKit;
+				PRODUCT_NAME = CopynoteKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		B262785309391D349C83E50E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "Derived/InfoPlists/CopynoteTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.tuist.CopynoteTests;
+				PRODUCT_NAME = CopynoteTests;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Copynote.app/Copynote";
+				TEST_TARGET_NAME = Copynote;
+			};
+			name = Release;
+		};
+		B519566993AC5F3085F54110 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "Derived/InfoPlists/CopynoteKitTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.tuist.CopynoteKitTests;
+				PRODUCT_NAME = CopynoteKitTests;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B61BF01DA671AEEFB953E01D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Derived/InfoPlists/CopynoteUI-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.tuist.CopynoteUI;
+				PRODUCT_NAME = CopynoteUI;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		BB1BD4EE64BE204E2BF5C031 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "Derived/InfoPlists/CopynoteUITests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.tuist.CopynoteUITests;
+				PRODUCT_NAME = CopynoteUITests;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D5C5006633FACCFA48906F72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "Derived/InfoPlists/CopynoteTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.tuist.CopynoteTests;
+				PRODUCT_NAME = CopynoteTests;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Copynote.app/Copynote";
+				TEST_TARGET_NAME = Copynote;
+			};
+			name = Debug;
+		};
+		D6A85E755DE406C770F09729 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Derived/InfoPlists/Copynote-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.tuist.Copynote;
+				PRODUCT_NAME = Copynote;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DAA8D1A1FDE1F64E67E3B4F4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "Derived/InfoPlists/CopynoteKitTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.tuist.CopynoteKitTests;
+				PRODUCT_NAME = CopynoteKitTests;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E4C1F249745648DE04A6186F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "Derived/InfoPlists/CopynoteUITests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.tuist.CopynoteUITests;
+				PRODUCT_NAME = CopynoteUITests;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F0D5A55AF7961B819B77F2DD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Derived/InfoPlists/CopynoteKit-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.tuist.CopynoteKit;
+				PRODUCT_NAME = CopynoteKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0AB9DB0838F5A710C057B841 /* Build configuration list for PBXNativeTarget "CopynoteUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B61BF01DA671AEEFB953E01D /* Debug */,
+				63B186E1A516B87441F2485C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0FC56A3D81ACD8E521F10C24 /* Build configuration list for PBXNativeTarget "CopynoteKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B519566993AC5F3085F54110 /* Debug */,
+				DAA8D1A1FDE1F64E67E3B4F4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4D1CDBF1B4D778CF539D0FA6 /* Build configuration list for PBXProject "Copynote" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6E3CA4E79676D8E5DE2C2A4E /* Debug */,
+				0D8A182903CCB87AB3EE5DDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4E5A23E832C91C5300D4BE84 /* Build configuration list for PBXNativeTarget "CopynoteKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F0D5A55AF7961B819B77F2DD /* Debug */,
+				8CC17E42AB66841EA9675CD3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D2EFC9CD16F453C94648A47 /* Build configuration list for PBXNativeTarget "CopynoteTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5C5006633FACCFA48906F72 /* Debug */,
+				B262785309391D349C83E50E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5FB79951654AA4D5F48E6A50 /* Build configuration list for PBXNativeTarget "CopynoteUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4C1F249745648DE04A6186F /* Debug */,
+				BB1BD4EE64BE204E2BF5C031 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B3CF1DB6C9C4E7EF1DD23E1D /* Build configuration list for PBXNativeTarget "Copynote" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D6A85E755DE406C770F09729 /* Debug */,
+				85AAE85851A9878ED8B139EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5B78C0012D55F449746409CE /* Project object */;
+}
