@@ -23,7 +23,7 @@ class BaseProjectFactory: ProjectFactory {
                     [
                         "UISceneConfigurationName": "Default Configuration",
                         "UISceneDelegateClassName": "$(PRODUCT_MODULE_NAME).SceneDelegate"
-                    ],
+                    ]
                 ]
             ]
         ],
@@ -34,7 +34,7 @@ class BaseProjectFactory: ProjectFactory {
             "Item 3": "Pretendard-Bold.otf",
             "Item 4": "Happiness-Sans-Regular.otf",
             "Item 5": "Happiness-Sans-SemiBold.otf",
-            "Item 6": "Happiness-Sans-Bold.otf",
+            "Item 6": "Happiness-Sans-Bold.otf"
         ]
     ]
 
@@ -54,7 +54,7 @@ class BaseProjectFactory: ProjectFactory {
     func generateConfigurations() -> Settings {
         Settings.settings(configurations: [
             .debug(name: "Debug", xcconfig: .relativeToCurrentFile("Sources/Config/Debug.xcconfig")),
-            .release(name: "Release", xcconfig: .relativeToCurrentFile("Sources/Config/Release.xcconfig")),
+            .release(name: "Release", xcconfig: .relativeToCurrentFile("Sources/Config/Release.xcconfig"))
         ])
     }
 

@@ -44,7 +44,7 @@ extension UIView {
         layer.shouldRasterize = true
         layer.rasterizationScale = UIScreen.main.scale
     }
-    
+
     /// Border 적용 함수
     /// - Parameters:
     ///   - color: UIColor 색상

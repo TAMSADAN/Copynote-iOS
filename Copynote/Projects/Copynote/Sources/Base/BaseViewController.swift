@@ -16,27 +16,27 @@ protocol BaseViewControllerProtocol: AnyObject {
     func setupDelegate()
     func setupHierarchy()
     func setupLayout()
+    func setupBind()
 }
 
 class BaseViewController: UIViewController, BaseViewControllerProtocol {
     var disposeBag = DisposeBag()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.backgroundColor = .white
-        
+
         setupProperty()
         setupDelegate()
         setupHierarchy()
         setupLayout()
+        setupBind()
     }
 
     func setupProperty() { }
-    
     func setupDelegate() { }
-    
     func setupHierarchy() { }
-    
     func setupLayout() { }
+    func setupBind() {}
 }

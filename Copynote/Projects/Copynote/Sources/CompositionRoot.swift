@@ -19,7 +19,7 @@ class CompositionRoot {
         let window = UIWindow(windowScene: windowScene)
         window.backgroundColor = .white
         window.makeKeyAndVisible()
-        window.rootViewController = UIViewController()
+        window.rootViewController = NoteViewController()
         return AppDependency(window: window,
                              configureSDKs: self.configureSDKs,
                              configureAppearance: self.configureAppearance)

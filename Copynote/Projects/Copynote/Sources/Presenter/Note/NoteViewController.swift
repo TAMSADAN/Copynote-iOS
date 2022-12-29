@@ -8,4 +8,10 @@
 
 import Foundation
 
-class 
+class NoteViewController: LogoViewController {
+    let categoryCardStackView: CategoryCardStackView = .init()
+
+    override func setupProperty() {
+        super.setupProperty()
+    }
+}

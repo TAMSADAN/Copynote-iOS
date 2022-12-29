@@ -19,7 +19,7 @@ extension UIColor {
             alpha: CGFloat(alpha)
         )
     }
-    
+
     // MARK: 메인 테마 색 또는 자주 쓰는 색을 정의
     // ex. label.textColor = .mainOrange
     class var tmpColor: UIColor { UIColor(hex: 0x292C3F) }
