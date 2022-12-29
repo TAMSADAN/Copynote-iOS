@@ -31,7 +31,10 @@ class BaseProjectFactory: ProjectFactory {
             "Item 0": "Pretendard-Medium.otf",
             "Item 1": "Pretendard-Regular.otf",
             "Item 2": "Pretendard-SemiBold.otf",
-            "Item 3": "Pretendard-Bold.otf"
+            "Item 3": "Pretendard-Bold.otf",
+            "Item 4": "Happiness-Sans-Regular.otf",
+            "Item 5": "Happiness-Sans-SemiBold.otf",
+            "Item 6": "Happiness-Sans-Bold.otf",
         ]
     ]
 

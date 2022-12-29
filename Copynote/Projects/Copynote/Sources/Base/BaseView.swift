@@ -10,23 +10,10 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-/*
-    BaseViewController
-    - setupProperty()
-        - 프로퍼티 관련 - label.font, ...
-    - setupHierarchy()
-        - 계층 관련 - addSubView, ...
-    - setupLayout()
-        - 레이아웃 관련 - view.snp.makeConstraints, ...
-    - setupBind()
-        - 바인딩 관련 - button.rx.tap.bind, ...
-*/
-
 protocol BaseViewProtocol {
     func setupProperty()
     func setupHierarchy()
     func setupLayout()
-    func setupBind()
 }
 
 class BaseView: UIView, BaseViewProtocol {
@@ -42,7 +29,6 @@ class BaseView: UIView, BaseViewProtocol {
         setupProperty()
         setupHierarchy()
         setupLayout()
-        setupBind()
     }
     
     func setupProperty() { }
@@ -50,6 +36,4 @@ class BaseView: UIView, BaseViewProtocol {
     func setupHierarchy() { }
     
     func setupLayout() { }
-    
-    func setupBind() { }
 }

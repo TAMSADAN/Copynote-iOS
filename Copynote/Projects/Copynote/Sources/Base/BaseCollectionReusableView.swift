@@ -22,7 +22,6 @@ class BaseCollectionReusableView: UICollectionReusableView, BaseViewProtocol {
         setupProperty()
         setupHierarchy()
         setupLayout()
-        setupBind()
     }
     
     override func prepareForReuse() {
@@ -36,6 +35,4 @@ class BaseCollectionReusableView: UICollectionReusableView, BaseViewProtocol {
     func setupHierarchy() { }
     
     func setupLayout() { }
-    
-    func setupBind() { }
 }

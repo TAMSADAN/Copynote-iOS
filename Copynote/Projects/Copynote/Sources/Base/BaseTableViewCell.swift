@@ -9,7 +9,6 @@
 import UIKit
 import RxSwift
 import SnapKit
-import Then
 
 class BaseTableViewCell: UITableViewCell, BaseViewProtocol {
     var disposeBag = DisposeBag()
@@ -23,7 +22,6 @@ class BaseTableViewCell: UITableViewCell, BaseViewProtocol {
         setupProperty()
         setupHierarchy()
         setupLayout()
-        setupBind()
     }
     
     override func prepareForReuse() {
@@ -37,6 +35,4 @@ class BaseTableViewCell: UITableViewCell, BaseViewProtocol {
     func setupHierarchy() { }
     
     func setupLayout() { }
-    
-    func setupBind() { }
 }

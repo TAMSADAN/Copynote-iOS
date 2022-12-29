@@ -41,7 +41,7 @@ class NavigationBarViewController: BaseViewController, BaseNavigationBarViewCont
     
     // MARK: - Properties
     
-    private let titleFont = JYPIOSFontFamily.Pretendard.medium.font(size: 16)
+    private let titleFont = CopynoteFontFamily.Pretendard.medium.font(size: 16)
     private let titleTextColor = JYPIOSAsset.textB75.color
     private let subTitleFont = JYPIOSFontFamily.Pretendard.regular.font(size: 18)
     private let subTitleTextColor = JYPIOSAsset.tagGrey200.color
