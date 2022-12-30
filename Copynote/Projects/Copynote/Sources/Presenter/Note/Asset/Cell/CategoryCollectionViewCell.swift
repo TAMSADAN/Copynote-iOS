@@ -21,7 +21,7 @@ class CategoryCollectionViewCell: BaseCollectionViewCell, View {
     override func setupProperty() {
         super.setupProperty()
         
-        titleLabel.font = CopynoteFontFamily.HappinessSansPrint.regular.font(size: 18)
+        titleLabel.font = CopynoteFontFamily.HappinessSansPrint.regular.font(size: 17)
     }
     
     override func setupHierarchy() {

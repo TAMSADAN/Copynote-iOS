@@ -49,7 +49,8 @@ class NoteViewController: LogoViewController, View {
 
 
     // MARK: - UI Components
-
+    
+    let plusButton: UIButton = .init(type: .system)
     let categoryCollectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     let noteCollectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
@@ -77,18 +78,29 @@ class NoteViewController: LogoViewController, View {
 
     override func setupProperty() {
         super.setupProperty()
-
+        
+        plusButton.setTitle("+", for: .normal)
+        plusButton.setTitle("-", for: .highlighted)
+        plusButton.setTitleColor(.black, for: .normal)
+        plusButton.titleLabel?.font = CopynoteFontFamily.HappinessSansPrint.title.font(size: 30)
     }
 
     override func setupHierarchy() {
         super.setupHierarchy()
 
         contentView.addSubviews([categoryCollectionView, noteCollectionView])
+        
+        logoView.addSubviews([plusButton])
     }
 
     override func setupLayout() {
         super.setupLayout()
-
+        
+        plusButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(20)
+        }
+        
         categoryCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(20)
