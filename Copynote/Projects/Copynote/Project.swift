@@ -23,7 +23,7 @@ class BaseProjectFactory: ProjectFactory {
                     [
                         "UISceneConfigurationName": "Default Configuration",
                         "UISceneDelegateClassName": "$(PRODUCT_MODULE_NAME).SceneDelegate"
-                    ],
+                    ]
                 ]
             ]
         ],
@@ -31,7 +31,10 @@ class BaseProjectFactory: ProjectFactory {
             "Item 0": "Pretendard-Medium.otf",
             "Item 1": "Pretendard-Regular.otf",
             "Item 2": "Pretendard-SemiBold.otf",
-            "Item 3": "Pretendard-Bold.otf"
+            "Item 3": "Pretendard-Bold.otf",
+            "Item 4": "Happiness-Sans-Regular.otf",
+            "Item 5": "Happiness-Sans-SemiBold.otf",
+            "Item 6": "Happiness-Sans-Bold.otf"
         ]
     ]
 
@@ -51,7 +54,7 @@ class BaseProjectFactory: ProjectFactory {
     func generateConfigurations() -> Settings {
         Settings.settings(configurations: [
             .debug(name: "Debug", xcconfig: .relativeToCurrentFile("Sources/Config/Debug.xcconfig")),
-            .release(name: "Release", xcconfig: .relativeToCurrentFile("Sources/Config/Release.xcconfig")),
+            .release(name: "Release", xcconfig: .relativeToCurrentFile("Sources/Config/Release.xcconfig"))
         ])
     }
 
@@ -67,7 +70,7 @@ class BaseProjectFactory: ProjectFactory {
                 sources: ["Sources/**"],
                 resources: "Resources/**",
                 entitlements: "\(projectName).entitlements",
-                scripts: [.pre(path: "Scripts/SwiftLintRunScript.sh", arguments: [], name: "SwiftLint")],
+//                scripts: [.pre(path: "Scripts/SwiftLintRunScript.sh", arguments: [], name: "SwiftLint")],
                 dependencies: dependencies
             ),
 
