@@ -9,12 +9,14 @@
 import Foundation
 
 protocol ProviderType: AnyObject {
-    var enviroment: EnvironmentProviderType { get }
+    var enviroment: EnvironmentType { get }
+    var screen: ScreenType { get }
 }
 
 class Provider: ProviderType {
     static let shared: ProviderType = Provider()
 
-    lazy var enviroment: EnvironmentProviderType = EnvironmentProvider(provider: self)
+    lazy var enviroment: EnvironmentType = Environment(provider: self)
+    lazy var screen: ScreenType = Screen(provider: self)
     private init() {}
 }

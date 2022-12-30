@@ -70,7 +70,7 @@ class BaseProjectFactory: ProjectFactory {
                 sources: ["Sources/**"],
                 resources: "Resources/**",
                 entitlements: "\(projectName).entitlements",
-                scripts: [.pre(path: "Scripts/SwiftLintRunScript.sh", arguments: [], name: "SwiftLint")],
+//                scripts: [.pre(path: "Scripts/SwiftLintRunScript.sh", arguments: [], name: "SwiftLint")],
                 dependencies: dependencies
             ),
 

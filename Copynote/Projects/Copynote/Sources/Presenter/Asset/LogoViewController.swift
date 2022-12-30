@@ -13,6 +13,7 @@ class LogoViewController: BaseViewController {
 
     let logoView: UIView = .init()
     let logoLabel: UILabel = .init()
+    let logoDivider: UIView = .init()
     let contentView: UIView = .init()
 
     override func setupProperty() {
@@ -20,13 +21,15 @@ class LogoViewController: BaseViewController {
 
         logoLabel.font = CopynoteFontFamily.HappinessSansPrint.regular.font(size: 20)
         logoLabel.text = "copy note ."
+
+        logoDivider.backgroundColor = .black
     }
 
     override func setupHierarchy() {
         super.setupHierarchy()
 
         view.addSubviews([logoView, contentView])
-        logoView.addSubviews([logoLabel])
+        logoView.addSubviews([logoLabel, logoDivider])
     }
 
     override func setupLayout() {
@@ -35,12 +38,18 @@ class LogoViewController: BaseViewController {
         logoView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(50)
+            $0.height.equalTo(60)
         }
 
         logoLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
+        }
+
+        logoDivider.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview()
+            $0.height.equalTo(1)
         }
 
         contentView.snp.makeConstraints {

@@ -17,9 +17,18 @@ class CategoryCardStackView: UIStackView {
         }
     }
 
-    func setupProperty() {
-        self.subviews.forEach({ $0.removeFromSuperview() })
+    func update(categories: [Category]) {
+        self.categories = categories
+    }
 
+    func setupProperty() {
+        subviews.forEach({ $0.removeFromSuperview() })
+
+        for category in categories {
+            let categoryCardView: CategoryCardView = .init(category: category)
+
+            addArrangedSubview(categoryCardView)
+        }
     }
 }
 

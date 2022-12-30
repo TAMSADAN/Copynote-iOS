@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol EnvironmentProviderType: AnyObject {
+protocol EnvironmentType: AnyObject {
     var version: String { get }
 }
 
-class EnvironmentProvider: BaseProvider, EnvironmentProviderType {
+class Environment: BaseProvider, EnvironmentType {
     var version: String {
         CopynoteResources.bundle.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
     }
