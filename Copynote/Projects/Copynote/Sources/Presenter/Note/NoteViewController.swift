@@ -10,12 +10,14 @@ import UIKit
 import ReactorKit
 import RxDataSources
 
-class NoteViewController: LogoViewController, View {
+class NoteViewController: NavigationViewController, View {
     // MARK: - Properties
 
     typealias Reactor = NoteReactor
     typealias CategoryDataSource = RxCollectionViewSectionedReloadDataSource<CategorySectionModel>
     typealias NoteDataSource = RxCollectionViewSectionedReloadDataSource<NoteSectionModel>
+    
+    let pushCreateNoteScreen: (_ mode: PresentMode) -> CreateNoteViewController
 
     private lazy var categoryDataSource = CategoryDataSource { _, collectionView, indexPath, item -> UICollectionViewCell in
         switch item {
@@ -47,16 +49,20 @@ class NoteViewController: LogoViewController, View {
         }
     }
 
-
     // MARK: - UI Components
     
+    let logoView: UIView = .init()
+    let logoLabel: UILabel = .init()
+    let logoDivider: UIView = .init()
     let plusButton: UIButton = .init(type: .system)
     let categoryCollectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     let noteCollectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     // MARK: - Initializer
     
-    init(reactor: Reactor) {
+    init(reactor: Reactor,
+         pushCreateNoteScreen: @escaping (_ mode: PresentMode) -> CreateNoteViewController) {
+        self.pushCreateNoteScreen = pushCreateNoteScreen
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -67,6 +73,12 @@ class NoteViewController: LogoViewController, View {
     }
 
     // MARK: - Setup Methods
+    
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        
+        showNavigtaionBar(isHidden: true)
+    }
     
     override func setupDelegate() {
         super.setupDelegate()
@@ -79,6 +91,11 @@ class NoteViewController: LogoViewController, View {
     override func setupProperty() {
         super.setupProperty()
         
+        logoLabel.font = CopynoteFontFamily.HappinessSansPrint.regular.font(size: 20)
+        logoLabel.text = "copy note ."
+
+        logoDivider.backgroundColor = .black
+        
         plusButton.setTitle("+", for: .normal)
         plusButton.setTitle("-", for: .highlighted)
         plusButton.setTitleColor(.black, for: .normal)
@@ -88,13 +105,30 @@ class NoteViewController: LogoViewController, View {
     override func setupHierarchy() {
         super.setupHierarchy()
 
-        contentView.addSubviews([categoryCollectionView, noteCollectionView])
+        contentView.addSubviews([logoView, categoryCollectionView, noteCollectionView])
         
-        logoView.addSubviews([plusButton])
+        logoView.addSubviews([logoLabel, logoDivider, plusButton])
     }
 
     override func setupLayout() {
         super.setupLayout()
+        
+        logoView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(60)
+        }
+
+        logoLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(20)
+            $0.centerY.equalToSuperview()
+        }
+
+        logoDivider.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview()
+            $0.height.equalTo(1)
+        }
         
         plusButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
@@ -102,7 +136,7 @@ class NoteViewController: LogoViewController, View {
         }
         
         categoryCollectionView.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalTo(logoView.snp.bottom)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(50)
         }
@@ -118,6 +152,12 @@ class NoteViewController: LogoViewController, View {
         rx.viewWillAppear
             .map { _ in .refresh }
             .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        plusButton.rx.tap
+            .bind { [weak self] in
+                self?.goToCreateNoteViewController(mode: .navigate)
+            }
             .disposed(by: disposeBag)
 
         reactor.state
@@ -137,6 +177,14 @@ class NoteViewController: LogoViewController, View {
                 this.noteCollectionView.collectionViewLayout = this.makeCompositionLayout(from: sections)
             }
             .disposed(by: disposeBag)
+    }
+}
+
+extension NoteViewController {
+    func goToCreateNoteViewController(mode: PresentMode) {
+        let viewController = pushCreateNoteScreen(mode)
+        
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 

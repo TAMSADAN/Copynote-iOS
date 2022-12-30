@@ -19,7 +19,7 @@ class CompositionRoot {
         let window = UIWindow(windowScene: windowScene)
         window.backgroundColor = .white
         window.makeKeyAndVisible()
-        window.rootViewController = makeNoteScreen()
+        window.rootViewController = UINavigationController(rootViewController: makeNoteScreen())
         return AppDependency(window: window,
                              configureSDKs: self.configureSDKs,
                              configureAppearance: self.configureAppearance)
@@ -32,8 +32,16 @@ class CompositionRoot {
 
 extension CompositionRoot {
     static func makeNoteScreen() -> NoteViewController {
+        let pushCreateNoteScreen: (_ mode: PresentMode) -> CreateNoteViewController = { mode in
+            let reactor = CreateNoteReactor()
+            let viewController = CreateNoteViewController(mode: mode,
+                                                          reactor: .init())
+            return viewController
+        }
+        
         let reactor = NoteReactor()
-        let viewController = NoteViewController(reactor: reactor)
+        let viewController = NoteViewController(reactor: reactor,
+                                                pushCreateNoteScreen: pushCreateNoteScreen)
         
         return viewController
     }
