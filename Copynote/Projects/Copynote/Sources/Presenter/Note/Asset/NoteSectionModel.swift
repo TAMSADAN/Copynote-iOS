@@ -11,12 +11,10 @@ import RxDataSources
 typealias NoteSectionModel = SectionModel<NoteSection, NoteItem>
 
 enum NoteSection {
-    case kind([NoteItem])
     case post([NoteItem])
 }
 
 enum NoteItem {
-    case kind(KindCollectionViewCellReactor)
     case post(PostCollectionViewCellReactor)
 }
 
@@ -25,9 +23,6 @@ extension NoteSection: SectionModelType {
     
     var items: [Item] {
         switch self {
-        case let .kind(items):
-            return items
-            
         case let .post(items):
             return items
         }
@@ -35,9 +30,6 @@ extension NoteSection: SectionModelType {
     
     init(original: NoteSection, items: [NoteItem]) {
         switch original {
-        case let .kind(items):
-            self = .kind(items)
-            
         case let .post(items):
             self = .post(items)
         }

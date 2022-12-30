@@ -34,7 +34,10 @@ extension NoteReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .refresh:
-            return .just(.setCategorySections(makeSections()))
+            return .concat([
+                .just(.setCategorySections(makeSections())),
+                .just(.setNoteSections(makeSections()))
+            ])
         }
     }
 
@@ -60,12 +63,9 @@ extension NoteReactor {
     }
     
     private func makeSections() -> [NoteSectionModel] {
-        let kindItems: [NoteItem] = [.kind(.init(kind: .init(title: "전체"))), .kind(.init(kind: .init(title: "메모"))), .kind(.init(kind: .init(title: "URL")))]
-        let kindSection: NoteSectionModel = .init(model: .kind(kindItems), items: kindItems)
+        let items: [NoteItem] = [.post(.init()), .post(.init()), .post(.init())]
+        let section: NoteSectionModel = .init(model: .post(items), items: items)
         
-        let postItems: [NoteItem] = [.post(.init()), .post(.init()), .post(.init())]
-        let postSection: NoteSectionModel = .init(model: .post(postItems), items: postItems)
-        
-        return [kindSection, postSection]
+        return [section]
     }
 }

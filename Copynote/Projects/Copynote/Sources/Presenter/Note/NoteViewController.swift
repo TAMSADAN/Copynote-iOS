@@ -29,19 +29,24 @@ class NoteViewController: LogoViewController, View {
     
     private lazy var noteDataSource = NoteDataSource { _, collectionView, indexPath, item -> UICollectionViewCell in
         switch item {
-        case let .kind(reactor):
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: KindCollectionViewCell.self), for: indexPath) as? KindCollectionViewCell else { return .init() }
-            
-            cell.reactor = reactor
-            return cell
-            
         case let .post(reactor):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PostCollectionViewCell.self), for: indexPath) as? PostCollectionViewCell else { return .init() }
             
             cell.reactor = reactor
             return cell
         }
+    } configureSupplementaryView: { [weak self] dataSource, collectionView, _, indexPath -> UICollectionReusableView in
+        guard let reactor = self?.reactor else { return .init() }
+        switch dataSource[indexPath.section].model {
+        case let .post(items):
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: PostCollectionViewHeader.self), for: indexPath) as? PostCollectionViewHeader else { return .init() }
+
+            header.reactor = .init()
+            
+            return header
+        }
     }
+
 
     // MARK: - UI Components
 
@@ -66,8 +71,8 @@ class NoteViewController: LogoViewController, View {
         super.setupDelegate()
         
         categoryCollectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: CategoryCollectionViewCell.self))
-        noteCollectionView.register(KindCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: KindCollectionViewCell.self))
         noteCollectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: PostCollectionViewCell.self))
+        noteCollectionView.register(PostCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: PostCollectionViewHeader.self))
     }
 
     override func setupProperty() {
@@ -112,5 +117,42 @@ class NoteViewController: LogoViewController, View {
             .map(\.noteSections)
             .bind(to: noteCollectionView.rx.items(dataSource: noteDataSource))
             .disposed(by: disposeBag)
+        
+        reactor.state
+            .map(\.noteSections)
+            .withUnretained(self)
+            .bind { this, sections in
+                this.noteCollectionView.collectionViewLayout = this.makeCompositionLayout(from: sections)
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
+extension NoteViewController {
+    func makeCompositionLayout(from sections: [NoteSectionModel]) -> UICollectionViewCompositionalLayout {
+        let layout: UICollectionViewCompositionalLayout = .init { [weak self] index,_ in
+            switch sections[index].model {                
+            case let .post(items):
+                return self?.makePostLayoutSection(from: items)
+            }
+        }
+        return layout
+    }
+    
+    func makePostLayoutSection(from items: [NoteItem]) -> NSCollectionLayoutSection {
+        let layoutItems: [NSCollectionLayoutItem] = items.map { item in
+            let layoutItem: NSCollectionLayoutItem = .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(104)))
+            layoutItem.contentInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
+            return layoutItem
+        }
+        let layoutGroup: NSCollectionLayoutGroup = .vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)), subitems: layoutItems)
+        layoutGroup.interItemSpacing = .fixed(12)
+        
+        let layoutSection: NSCollectionLayoutSection = .init(group: layoutGroup)
+        let header: NSCollectionLayoutBoundarySupplementaryItem = .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(50)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        header.pinToVisibleBounds = true
+        layoutSection.boundarySupplementaryItems = [header]
+        layoutSection.contentInsets = .init(top: 10, leading: 0, bottom: 0, trailing: 0)
+        return layoutSection
     }
 }
