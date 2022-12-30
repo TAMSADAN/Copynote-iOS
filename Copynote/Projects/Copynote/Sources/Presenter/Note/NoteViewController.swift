@@ -14,15 +14,15 @@ class NoteViewController: NavigationViewController, View {
     // MARK: - Properties
 
     typealias Reactor = NoteReactor
-    typealias CategoryDataSource = RxCollectionViewSectionedReloadDataSource<CategorySectionModel>
+    typealias LocationDataSource = RxCollectionViewSectionedReloadDataSource<LocationSectionModel>
     typealias NoteDataSource = RxCollectionViewSectionedReloadDataSource<NoteSectionModel>
     
     let pushCreateNoteScreen: (_ mode: PresentMode) -> CreateNoteViewController
 
-    private lazy var categoryDataSource = CategoryDataSource { _, collectionView, indexPath, item -> UICollectionViewCell in
+    private lazy var locationDataSource = LocationDataSource { _, collectionView, indexPath, item -> UICollectionViewCell in
         switch item {
-        case let .category(reactor):
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CategoryCollectionViewCell.self), for: indexPath) as? CategoryCollectionViewCell else { return .init() }
+        case let .location(reactor):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: LocationCollectionViewCell.self), for: indexPath) as? LocationCollectionViewCell else { return .init() }
 
             cell.reactor = reactor
             return cell
@@ -55,7 +55,7 @@ class NoteViewController: NavigationViewController, View {
     let logoLabel: UILabel = .init()
     let logoDivider: UIView = .init()
     let plusButton: UIButton = .init(type: .system)
-    let categoryCollectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    let locationCollectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     let noteCollectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     // MARK: - Initializer
@@ -83,7 +83,7 @@ class NoteViewController: NavigationViewController, View {
     override func setupDelegate() {
         super.setupDelegate()
         
-        categoryCollectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: CategoryCollectionViewCell.self))
+        locationCollectionView.register(LocationCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: LocationCollectionViewCell.self))
         noteCollectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: PostCollectionViewCell.self))
         noteCollectionView.register(PostCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: PostCollectionViewHeader.self))
     }
@@ -105,7 +105,7 @@ class NoteViewController: NavigationViewController, View {
     override func setupHierarchy() {
         super.setupHierarchy()
 
-        contentView.addSubviews([logoView, categoryCollectionView, noteCollectionView])
+        contentView.addSubviews([logoView, locationCollectionView, noteCollectionView])
         
         logoView.addSubviews([logoLabel, logoDivider, plusButton])
     }
@@ -135,14 +135,14 @@ class NoteViewController: NavigationViewController, View {
             $0.trailing.equalToSuperview().inset(20)
         }
         
-        categoryCollectionView.snp.makeConstraints {
+        locationCollectionView.snp.makeConstraints {
             $0.top.equalTo(logoView.snp.bottom)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(50)
         }
         
         noteCollectionView.snp.makeConstraints {
-            $0.top.equalTo(categoryCollectionView.snp.bottom)
+            $0.top.equalTo(locationCollectionView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
@@ -162,7 +162,7 @@ class NoteViewController: NavigationViewController, View {
 
         reactor.state
             .map(\.categorySections)
-            .bind(to: categoryCollectionView.rx.items(dataSource: categoryDataSource))
+            .bind(to: locationCollectionView.rx.items(dataSource: locationDataSource))
             .disposed(by: disposeBag)
         
         reactor.state

@@ -9,10 +9,10 @@
 import UIKit
 import ReactorKit
 
-class CategoryCollectionViewCell: BaseCollectionViewCell, View {
+class LocationCollectionViewCell: BaseCollectionViewCell, View {
     // MARK: - Properties
 
-    typealias Reactor = CategoryCollectionViewCellReactor
+    typealias Reactor = LocationCollectionViewCellReactor
 
     // MARK: - UI Components
 
@@ -39,6 +39,6 @@ class CategoryCollectionViewCell: BaseCollectionViewCell, View {
     }
     
     func bind(reactor: Reactor) {
-        titleLabel.text = reactor.initialState.category.title
+        titleLabel.text = reactor.initialState.location.name
     }
 }

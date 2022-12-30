@@ -21,6 +21,7 @@ class CreateNoteViewController: NavigationViewController, View {
     let kindButton: UIButton = .init(type: .system)
     let categoryButton: UIButton = .init(type: .system)
     let divider: UIView = .init()
+    var createNoteView: UIView = CreateMemoNoteView()
     let titleTextField: UITextField = .init()
     let contentTextView: UITextView = .init()
     
@@ -44,28 +45,23 @@ class CreateNoteViewController: NavigationViewController, View {
     override func setupProperty() {
         super.setupProperty()
         
-        kindButton.setTitle("태그: Memo", for: .normal)
+        kindButton.setTitle("분류: Memo", for: .normal)
         kindButton.setTitleColor(.black, for: .normal)
         kindButton.tintColor = .black
         kindButton.titleLabel?.font = CopynoteFontFamily.HappinessSansPrint.regular.font(size: 16)
         
-        categoryButton.setTitle("카테고리: 테스트", for: .normal)
+        categoryButton.setTitle("위치: 테스트", for: .normal)
         categoryButton.setTitleColor(.black, for: .normal)
         categoryButton.tintColor = .black
         categoryButton.titleLabel?.font = CopynoteFontFamily.HappinessSansPrint.regular.font(size: 16)
         
         divider.backgroundColor = .black
-        
-        titleTextField.placeholder = "제목을 입력하세요."
-        titleTextField.font = CopynoteFontFamily.HappinessSansPrint.title.font(size: 30)
-        
-        contentTextView.font = CopynoteFontFamily.HappinessSansPrint.regular.font(size: 17)
     }
     
     override func setupHierarchy() {
         super.setupHierarchy()
         
-        contentView.addSubviews([kindButton, categoryButton, divider, titleTextField, contentTextView])
+        contentView.addSubviews([kindButton, categoryButton, divider, titleTextField, contentTextView, createNoteView])
     }
     
     override func setupLayout() {
@@ -87,13 +83,8 @@ class CreateNoteViewController: NavigationViewController, View {
             $0.height.equalTo(1)
         }
         
-        titleTextField.snp.makeConstraints {
+        createNoteView.snp.makeConstraints {
             $0.top.equalTo(divider.snp.bottom).offset(15)
-            $0.leading.trailing.equalToSuperview().inset(20)
-        }
-        
-        contentTextView.snp.makeConstraints {
-            $0.top.equalTo(titleTextField.snp.bottom)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.bottom.equalToSuperview()
         }

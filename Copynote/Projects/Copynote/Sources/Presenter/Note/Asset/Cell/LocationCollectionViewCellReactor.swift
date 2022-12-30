@@ -8,19 +8,19 @@
 
 import ReactorKit
 
-class CategoryCollectionViewCellReactor: Reactor {
+class LocationCollectionViewCellReactor: Reactor {
     enum Action {}
     
     enum Mutation {}
     
     struct State {
-        let category: Category
+        let location: Location
     }
     
     var initialState: State
 
-    init(category: Category) {
-        self.initialState = .init(category: category)
+    init(location: Location) {
+        self.initialState = .init(location: location)
     }
 }
 

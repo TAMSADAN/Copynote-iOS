@@ -14,12 +14,12 @@ class NoteReactor: Reactor {
     }
 
     enum Mutation {
-        case setCategorySections([CategorySectionModel])
+        case setCategorySections([LocationSectionModel])
         case setNoteSections([NoteSectionModel])
     }
 
     struct State {
-        var categorySections: [CategorySectionModel] = []
+        var categorySections: [LocationSectionModel] = []
         var noteSections: [NoteSectionModel] = []
     }
 
@@ -55,9 +55,9 @@ extension NoteReactor {
         return newState
     }
     
-    private func makeSections() -> [CategorySectionModel] {
-        let items: [CategoryItem] = [.category(.init(category: .init(title: "전체"))), .category(.init(category: .init(title: "테스트")))]
-        let section: CategorySectionModel = .init(model: .category(items), items: items)
+    private func makeSections() -> [LocationSectionModel] {
+        let items: [LocationItem] = [.location(.init(location: .init(id: "1", name: "전체"))), .location(.init(location: .init(id: "2", name: "우리집")))]
+        let section: LocationSectionModel = .init(model: .location(items), items: items)
 
         return [section]
     }
