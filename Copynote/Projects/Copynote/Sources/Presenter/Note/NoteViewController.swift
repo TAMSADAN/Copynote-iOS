@@ -156,7 +156,7 @@ class NoteViewController: NavigationViewController, View {
         
         plusButton.rx.tap
             .bind { [weak self] in
-                self?.goToCreateNoteViewController(mode: .navigate, info: .init(id: <#T##String#>, kind: .memo, location: <#T##Location#>, title: ""))
+                self?.goToCreateNoteViewController(mode: .navigate, info: .init(id: "", kind: .memo, location: "", title: ""))
             }
             .disposed(by: disposeBag)
 

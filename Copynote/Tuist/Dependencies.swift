@@ -18,7 +18,7 @@ let spm = SwiftPackageManagerDependencies([
 ])
 
 let crt = CarthageDependencies([
-    .github(path: "realm/realm-swift", requirement: .exact("10.33.0"))
+    .github(path: "realm/realm-swift", requirement: .exact("10.31.0"))
 ])
 
 let dependencies = Dependencies(

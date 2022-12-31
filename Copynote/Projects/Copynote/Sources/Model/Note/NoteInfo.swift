@@ -16,18 +16,17 @@ struct NoteInfo {
     var title: String
 }
 
-//class NoteInfoRealm: Object {
-//    @Persisted var id: String
-//    @Persisted var kind: Kind
-//    @Persisted var location: String
-//    @Persisted var title: String
-//    
-//    convenience init(kind: Kind, location: String, title: String) {
-//        self.init()
-//        
-//        self.id = id
-//        self.kind = kind
-//        self.location = location
-//        self.title = title
-//    }
-//}
+class NoteInfoRealm: Object {
+    @Persisted(primaryKey: true) var id: String
+    @Persisted var kind: Kind
+    @Persisted var location: String
+    @Persisted var title: String
+    
+    convenience init(kind: Kind, location: String, title: String) {
+        self.init()
+        
+        self.kind = kind
+        self.location = location
+        self.title = title
+    }
+}

@@ -21,7 +21,7 @@ class NoteReactor: Reactor {
     struct State {
         var categorySections: [LocationSectionModel] = []
         var noteSections: [NoteSectionModel] = []
-        var loaction: Location?
+        var loaction: String?
     }
 
     var initialState: State
@@ -57,7 +57,7 @@ extension NoteReactor {
     }
     
     private func makeSections() -> [LocationSectionModel] {
-        let items: [LocationItem] = [.location(.init(location: .init(id: "1", name: "전체"))), .location(.init(location: .init(id: "2", name: "우리집")))]
+        let items: [LocationItem] = [.location(.init(location: "전체")), .location(.init(location: "소진"))]
         let section: LocationSectionModel = .init(model: .location(items), items: items)
 
         return [section]

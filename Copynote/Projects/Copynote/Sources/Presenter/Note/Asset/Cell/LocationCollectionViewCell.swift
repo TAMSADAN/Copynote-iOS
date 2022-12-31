@@ -39,6 +39,6 @@ class LocationCollectionViewCell: BaseCollectionViewCell, View {
     }
     
     func bind(reactor: Reactor) {
-        titleLabel.text = reactor.initialState.location.name
+        titleLabel.text = reactor.initialState.location
     }
 }

@@ -14,12 +14,12 @@ class LocationCollectionViewCellReactor: Reactor {
     enum Mutation {}
     
     struct State {
-        let location: Location
+        let location: String
     }
     
     var initialState: State
 
-    init(location: Location) {
+    init(location: String) {
         self.initialState = .init(location: location)
     }
 }

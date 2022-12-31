@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-enum Kind: Int, Codable, CaseIterable {
+enum Kind: Int, Codable, CaseIterable, PersistableEnum {
     case memo = 0
     case url = 1
     

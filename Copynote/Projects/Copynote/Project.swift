@@ -49,6 +49,8 @@ class BaseProjectFactory: ProjectFactory {
         .external(name: "RxDataSources"),
         .external(name: "ReactorKit"),
         .external(name: "KeychainAccess"),
+        .external(name: "RealmSwift"),
+        .external(name: "Realm"),
     ]
 
     func generateConfigurations() -> Settings {

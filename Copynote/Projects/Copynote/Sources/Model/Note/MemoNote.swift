@@ -14,16 +14,15 @@ struct MemoNote {
     let content: String
 }
 
-//class MemoNoteRealm: Object {
-////    @Persisted(primaryKey: true) var id: String
-//    @Persisted var info: NoteInfoRealm
-//    @Persisted var content: String
-//    
-//    convenience init(info: NoteInfoRealm, content: String) {
-//        self.init()
-//        
-////        self.id = id
-//        self.info = info
-//        self.content = content
-//    }
-//}
+class MemoNoteRealm: Object {
+    @Persisted(primaryKey: true) var id: String
+    @Persisted var info: NoteInfoRealm
+    @Persisted var content: String
+    
+    convenience init(info: NoteInfoRealm, content: String) {
+        self.init()
+        
+        self.info = info
+        self.content = content
+    }
+}
