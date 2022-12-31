@@ -10,9 +10,9 @@ import Foundation
 
 struct NoteInfo {
     let id: String
-    let kind: Kind
-    let location: Location
-    let title: String
+    var kind: Kind
+    var location: Location
+    var title: String
 }
 
 enum Kind: Int {
