@@ -7,9 +7,36 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct UrlNote {
+    var id: String
     let info: NoteInfo
     let url: String
-    let content: String
+    
+    func toRealm() -> UrlNoteRealm {
+        return .init(id: id, info: info.toRealm(), url: url)
+    }
+    
+    func toNote() -> Note {
+        return .init(info: info, content: url)
+    }
+}
+
+class UrlNoteRealm: Object {
+    @Persisted(primaryKey: true) var id: String
+    @Persisted var info: NoteInfoRealm
+    @Persisted var url: String
+    
+    convenience init(id: String, info: NoteInfoRealm, url: String) {
+        self.init()
+        
+        self.id = id
+        self.info = info
+        self.url = url
+    }
+    
+    func toDomain() -> UrlNote {
+        return .init(id: id, info: info.toDomain(), url: url)
+    }
 }

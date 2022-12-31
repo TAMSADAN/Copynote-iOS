@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol ScreenType: AnyObject {
+protocol ScreenProviderType: AnyObject {
     var width: CGFloat { get }
     var height: CGFloat { get }
 }
 
-class Screen: BaseProvider, ScreenType {
+class ScreenProvider: BaseProvider, ScreenProviderType {
     var width: CGFloat {
         return UIScreen.main.bounds.width
     }

@@ -7,16 +7,20 @@
 //
 
 import Foundation
+import RealmSwift
 
 protocol ProviderType: AnyObject {
-    var enviroment: EnvironmentType { get }
-    var screen: ScreenType { get }
+    var enviroment: EnvironmentProviderType { get }
+    var screen: ScreenProviderType { get }
+    var realm: Realm { get }
 }
 
 class Provider: ProviderType {
     static let shared: ProviderType = Provider()
 
-    lazy var enviroment: EnvironmentType = Environment(provider: self)
-    lazy var screen: ScreenType = Screen(provider: self)
+    lazy var enviroment: EnvironmentProviderType = EnvironmentProvider(provider: self)
+    lazy var screen: ScreenProviderType = ScreenProvider(provider: self)
+    lazy var realm: Realm = try! Realm()
+    
     private init() {}
 }
