@@ -17,7 +17,7 @@ class NoteViewController: NavigationViewController, View {
     typealias LocationDataSource = RxCollectionViewSectionedReloadDataSource<LocationSectionModel>
     typealias NoteDataSource = RxCollectionViewSectionedReloadDataSource<NoteSectionModel>
     
-    let pushCreateNoteScreen: (_ mode: PresentMode) -> CreateNoteViewController
+    let pushCreateNoteScreen: (_ mode: PresentMode, _ info: NoteInfo) -> CreateNoteViewController
 
     private lazy var locationDataSource = LocationDataSource { _, collectionView, indexPath, item -> UICollectionViewCell in
         switch item {
@@ -61,7 +61,7 @@ class NoteViewController: NavigationViewController, View {
     // MARK: - Initializer
     
     init(reactor: Reactor,
-         pushCreateNoteScreen: @escaping (_ mode: PresentMode) -> CreateNoteViewController) {
+         pushCreateNoteScreen: @escaping (_ mode: PresentMode, _ info: NoteInfo) -> CreateNoteViewController) {
         self.pushCreateNoteScreen = pushCreateNoteScreen
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
@@ -156,7 +156,7 @@ class NoteViewController: NavigationViewController, View {
         
         plusButton.rx.tap
             .bind { [weak self] in
-                self?.goToCreateNoteViewController(mode: .navigate)
+                self?.goToCreateNoteViewController(mode: .navigate, info: .init(id: <#T##String#>, kind: .memo, location: <#T##Location#>, title: ""))
             }
             .disposed(by: disposeBag)
 
@@ -181,8 +181,8 @@ class NoteViewController: NavigationViewController, View {
 }
 
 extension NoteViewController {
-    func goToCreateNoteViewController(mode: PresentMode) {
-        let viewController = pushCreateNoteScreen(mode)
+    func goToCreateNoteViewController(mode: PresentMode, info: NoteInfo) {
+        let viewController = pushCreateNoteScreen(mode, info)
         
         navigationController?.pushViewController(viewController, animated: true)
     }

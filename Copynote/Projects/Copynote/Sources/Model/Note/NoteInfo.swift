@@ -7,30 +7,27 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct NoteInfo {
-    let id: String
+    var id: String
     var kind: Kind
-    var location: Location
+    var location: String
     var title: String
 }
 
-enum Kind: Int {
-    case memo
-    case url
-    
-    var title: String {
-        switch self {
-        case .memo:
-            return "Memo"
-            
-        case .url:
-            return "Url"
-        }
-    }
-}
-
-struct Location {
-    let id: String
-    let name: String
-}
+//class NoteInfoRealm: Object {
+//    @Persisted var id: String
+//    @Persisted var kind: Kind
+//    @Persisted var location: String
+//    @Persisted var title: String
+//    
+//    convenience init(kind: Kind, location: String, title: String) {
+//        self.init()
+//        
+//        self.id = id
+//        self.kind = kind
+//        self.location = location
+//        self.title = title
+//    }
+//}

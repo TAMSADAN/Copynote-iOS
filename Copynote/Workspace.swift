@@ -10,3 +10,4 @@ import ProjectDescription
 let appName = "Copynote"
 
 let workspace = Workspace(name: appName, projects: ["Projects/*"])
+

@@ -21,6 +21,7 @@ class NoteReactor: Reactor {
     struct State {
         var categorySections: [LocationSectionModel] = []
         var noteSections: [NoteSectionModel] = []
+        var loaction: Location?
     }
 
     var initialState: State

@@ -7,3 +7,19 @@
 //
 
 import Foundation
+import RealmSwift
+
+enum Kind: Int, Codable, CaseIterable {
+    case memo = 0
+    case url = 1
+    
+    var title: String {
+        switch self {
+        case .memo:
+            return "Memo"
+            
+        case .url:
+            return "Url"
+        }
+    }
+}
