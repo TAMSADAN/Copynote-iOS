@@ -55,6 +55,7 @@ class NoteViewController: NavigationViewController, View {
     let logoLabel: UILabel = .init()
     let logoDivider: UIView = .init()
     let plusButton: UIButton = .init(type: .system)
+    let settingButton: UIButton = .init(type: .system)
     let locationCollectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     let noteCollectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
@@ -96,10 +97,15 @@ class NoteViewController: NavigationViewController, View {
 
         logoDivider.backgroundColor = .black
         
-        plusButton.setTitle("+", for: .normal)
-        plusButton.setTitle("-", for: .highlighted)
+//        plusButton.setTitle("+", for: .normal)
+//        plusButton.setTitle("-", for: .highlighted)
+        plusButton.setImage(UIImage(systemName: "plus"), for: .normal)
+        plusButton.tintColor = .black
         plusButton.setTitleColor(.black, for: .normal)
         plusButton.titleLabel?.font = CopynoteFontFamily.HappinessSansPrint.title.font(size: 30)
+        
+        settingButton.setImage(UIImage(systemName: "gearshape"), for: .normal)
+        settingButton.tintColor = .black
     }
 
     override func setupHierarchy() {
@@ -107,7 +113,7 @@ class NoteViewController: NavigationViewController, View {
 
         contentView.addSubviews([logoView, locationCollectionView, noteCollectionView])
         
-        logoView.addSubviews([logoLabel, logoDivider, plusButton])
+        logoView.addSubviews([logoLabel, logoDivider, plusButton, settingButton])
     }
 
     override func setupLayout() {
@@ -132,7 +138,16 @@ class NoteViewController: NavigationViewController, View {
         
         plusButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalTo(settingButton.snp.leading).offset(-10)
+            $0.width.equalTo(20)
+            $0.height.equalTo(20)
+        }
+        
+        settingButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(15)
+            $0.width.equalTo(20)
+            $0.height.equalTo(20)
         }
         
         locationCollectionView.snp.makeConstraints {
