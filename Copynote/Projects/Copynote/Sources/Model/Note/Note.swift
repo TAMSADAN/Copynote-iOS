@@ -9,6 +9,6 @@
 import Foundation
 
 struct Note {
-    let info: NoteInfo
+    let info: NoteInfo?
     let content: String
 }

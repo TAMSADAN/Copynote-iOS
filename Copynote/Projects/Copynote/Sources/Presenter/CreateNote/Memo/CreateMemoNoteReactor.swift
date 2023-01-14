@@ -22,8 +22,10 @@ class CreateMemoNoteReactor: Reactor {
     }
     
     var initialState: State
+    var memoNoteService: MemoNoteServiceType
     
-    init(info: NoteInfo) {
+    init(info: NoteInfo, memoNoteService: MemoNoteServiceType) {
+        self.memoNoteService = memoNoteService
         self.initialState = .init(info: info)
     }
 }

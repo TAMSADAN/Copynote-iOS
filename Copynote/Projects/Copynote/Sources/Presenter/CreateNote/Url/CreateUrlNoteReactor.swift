@@ -9,8 +9,12 @@
 import ReactorKit
 
 class CreateUrlNoteReactor: Reactor {
-    enum Action {}
+    enum Action {
+        case tapDoneButton
+    }
+    
     enum Mutation {}
+    
     struct State {
         var info: NoteInfo
     }

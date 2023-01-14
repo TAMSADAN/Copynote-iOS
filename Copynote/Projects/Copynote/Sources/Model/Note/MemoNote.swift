@@ -11,11 +11,11 @@ import RealmSwift
 
 struct MemoNote {
     var id: String
-    let info: NoteInfo
+    let info: NoteInfo?
     let content: String
     
     func toRealm() -> MemoNoteRealm {
-        return MemoNoteRealm(id: id, info: info.toRealm(), content: content)
+        return MemoNoteRealm(id: id, info: info?.toRealm(), content: content)
     }
     
     func toNote() -> Note {
@@ -25,10 +25,10 @@ struct MemoNote {
 
 class MemoNoteRealm: Object {
     @Persisted(primaryKey: true) var id: String
-    @Persisted var info: NoteInfoRealm
+    @Persisted var info: NoteInfoRealm?
     @Persisted var content: String
     
-    convenience init(id: String, info: NoteInfoRealm, content: String) {
+    convenience init(id: String, info: NoteInfoRealm?, content: String) {
         self.init()
         
         self.id = id
@@ -37,6 +37,6 @@ class MemoNoteRealm: Object {
     }
     
     func toDomain() -> MemoNote {
-        return .init(id: id, info: info.toDomain(), content: content)
+        return .init(id: id, info: info?.toDomain(), content: content)
     }
 }
