@@ -18,12 +18,12 @@ class CreateMemoNoteReactor: Reactor {
     }
     
     struct State {
-        
+        var info: NoteInfo
     }
     
     var initialState: State
     
-    init() {
-        self.initialState = .init()
+    init(info: NoteInfo) {
+        self.initialState = .init(info: info)
     }
 }

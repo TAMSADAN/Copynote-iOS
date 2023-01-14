@@ -35,11 +35,13 @@ extension CompositionRoot {
         let pushCreateNoteScreen: (_ info: NoteInfo) -> CreateNoteViewController = { info in
             let reactor = CreateNoteReactor(info: info)
             let presentCreateMemoNoteView: (_ info: NoteInfo) -> CreateMemoNoteView = { info in
-                let view = CreateMemoNoteView()
+                let reactor = CreateMemoNoteReactor(info: info)
+                let view = CreateMemoNoteView(reactor: reactor)
                 return view
             }
             let presentCreateUrlNoteView: (_ info: NoteInfo) -> CreateUrlNoteView = { info in
-                let view = CreateUrlNoteView()
+                let reactor = CreateUrlNoteReactor(info: info)
+                let view = CreateUrlNoteView(reactor: reactor)
                 return view
             }
             let viewController = CreateNoteViewController(reactor: reactor,

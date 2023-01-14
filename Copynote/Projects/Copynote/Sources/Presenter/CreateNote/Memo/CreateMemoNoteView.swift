@@ -21,6 +21,20 @@ class CreateMemoNoteView: BaseView, View {
     let accessoryView: UIView = .init(frame: CGRect(x: 0.0, y: 0.0, width: Provider.shared.screen.width, height: 50))
     let doneButton: UIButton = .init(type: .system)
     
+    // MARK: - Initializer
+    
+    init(reactor: Reactor) {
+        super.init(frame: .zero)
+        self.reactor = reactor
+    }
+    
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Setup Methods
+    
     override func setupProperty() {
         super.setupProperty()
         
