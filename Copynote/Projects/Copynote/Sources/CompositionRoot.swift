@@ -21,8 +21,10 @@ class CompositionRoot {
         window.makeKeyAndVisible()
         
         let memoNoteService: MemoNoteServiceType = MemoNoteService()
+        let urlNoteService: UrlNoteServiceType = UrlNoteService()
         
-        let noteScreen = makeNoteScreen(memoNoteService: memoNoteService)
+        let noteScreen = makeNoteScreen(memoNoteService: memoNoteService,
+                                        urlNoteService: urlNoteService)
         
         window.rootViewController = UINavigationController(rootViewController: noteScreen)
         return AppDependency(window: window,
@@ -36,7 +38,8 @@ class CompositionRoot {
 }
 
 extension CompositionRoot {
-    static func makeNoteScreen(memoNoteService: MemoNoteServiceType) -> NoteViewController {
+    static func makeNoteScreen(memoNoteService: MemoNoteServiceType,
+                               urlNoteService: UrlNoteServiceType) -> NoteViewController {
         let pushCreateNoteScreen: (_ info: NoteInfo) -> CreateNoteViewController = { info in
             let reactor = CreateNoteReactor(info: info)
             let presentCreateMemoNoteView: (_ info: NoteInfo) -> CreateMemoNoteView = { info in
@@ -46,7 +49,8 @@ extension CompositionRoot {
                 return view
             }
             let presentCreateUrlNoteView: (_ info: NoteInfo) -> CreateUrlNoteView = { info in
-                let reactor = CreateUrlNoteReactor(info: info)
+                let reactor = CreateUrlNoteReactor(info: info,
+                                                   urlNoteService: urlNoteService)
                 let view = CreateUrlNoteView(reactor: reactor)
                 return view
             }

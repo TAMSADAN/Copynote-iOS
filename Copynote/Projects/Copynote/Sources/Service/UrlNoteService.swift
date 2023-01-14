@@ -1,5 +1,5 @@
 //
-//  MemoNoteService.swift
+//  UrlNoteService.swift
 //  Copynote
 //
 //  Created by 송영모 on 2023/01/14.
@@ -10,34 +10,34 @@ import Foundation
 import RealmSwift
 import RxSwift
 
-enum MemoNoteEvent {
-    case fetchNote(MemoNote)
-    case createNote(MemoNote)
-    case updateNote(MemoNote)
-    case deleteNote(MemoNote)
+enum UrlNoteEvent {
+    case fetchNote(UrlNote)
+    case createNote(UrlNote)
+    case updateNote(UrlNote)
+    case deleteNote(UrlNote)
 }
 
-protocol MemoNoteServiceType {
-    var event: PublishSubject<MemoNoteEvent> { get }
+protocol UrlNoteServiceType {
+    var event: PublishSubject<UrlNoteEvent> { get }
     
     func fetchNote(id: String)
-    func createOrUpdateNote(note: MemoNote)
+    func createOrUpdateNote(note: UrlNote)
     func deleteNote(id: String)
 }
 
-class MemoNoteService: MemoNoteServiceType {
-    var event = PublishSubject<MemoNoteEvent>()
+class UrlNoteService: UrlNoteServiceType {
+    var event = PublishSubject<UrlNoteEvent>()
     let realm = Provider.shared.realm
     
     func fetchNote(id: String) {
-        guard let obj = realm.objects(MemoNoteRealm.self).where({ $0.id == id }).first else {
+        guard let obj = realm.objects(UrlNoteRealm.self).where({ $0.id == id }).first else {
             return
         }
         
         event.onNext(.fetchNote(obj.toDomain()))
     }
     
-    func createOrUpdateNote(note: MemoNote) {
+    func createOrUpdateNote(note: UrlNote) {
         do {
             try realm.write {
                 realm.add(note.toRealm(), update: .modified)
@@ -48,7 +48,7 @@ class MemoNoteService: MemoNoteServiceType {
     }
     
     func deleteNote(id: String) {
-        guard let obj = realm.objects(MemoNoteRealm.self).where({ $0.id == id }).first else {
+        guard let obj = realm.objects(UrlNoteRealm.self).where({ $0.id == id }).first else {
             return
         }
         do {
@@ -61,3 +61,4 @@ class MemoNoteService: MemoNoteServiceType {
         }
     }
 }
+

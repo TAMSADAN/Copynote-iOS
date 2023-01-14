@@ -20,8 +20,10 @@ class CreateUrlNoteReactor: Reactor {
     }
     
     var initialState: State
+    private let urlNoteService: UrlNoteServiceType
     
-    init(info: NoteInfo) {
+    init(info: NoteInfo, urlNoteService: UrlNoteServiceType) {
+        self.urlNoteService = urlNoteService
         self.initialState = .init(info: info)
     }
 }
