@@ -11,6 +11,9 @@ import RealmSwift
 import RxSwift
 
 enum NoteEvent {
+    case fetchNotes([Note])
+    case fetchMemoNote(MemoNote)
+    case fetchUrlNote(UrlNote)
     case createNote(Note)
     case updateNote(Note)
     case deleteNote(Note)
@@ -19,17 +22,32 @@ enum NoteEvent {
 protocol NoteServiceType {
     var event: PublishSubject<NoteEvent> { get }
     
-    func createUrlNote(note: UrlNote)
+    func fetchNotes()
+    func fetchMemoNote(id: String)
+    func fetchUrlNote(id: String)
     func createMemoNote(note: MemoNote)
-    func updateUrlNote(note: UrlNote)
-    func deleteUrlNote(id: String)
+    func createUrlNote(note: UrlNote)
+    func updateMemoNote(id: String, note: MemoNote)
+    func updateUrlNote(id: String, note: UrlNote)
     func deleteMemoNote(id: String)
+    func deleteUrlNote(id: String)
 }
 
 class NoteService: NoteServiceType {
     var event = PublishSubject<NoteEvent>()
-    
     let realm = Provider.shared.realm
+    
+    func fetchNotes() {
+        
+    }
+    
+    func fetchMemoNote(id: String) {
+        
+    }
+    
+    func fetchUrlNote(id: String) {
+        
+    }
     
     func createUrlNote(note: UrlNote) {
         try! realm.write {
@@ -51,7 +69,11 @@ class NoteService: NoteServiceType {
         }
     }
     
-    func updateUrlNote(note: UrlNote) {
+    func updateMemoNote(id: String, note: MemoNote) {
+        
+    }
+    
+    func updateUrlNote(id: String, note: UrlNote) {
         
     }
     

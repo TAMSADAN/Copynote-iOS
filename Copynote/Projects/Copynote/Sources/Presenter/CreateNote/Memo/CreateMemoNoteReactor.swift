@@ -9,8 +9,14 @@
 import ReactorKit
 
 class CreateMemoNoteReactor: Reactor {
-    enum Action {}
-    enum Mutation {}
+    enum Action {
+        case tapDoneButton
+    }
+    
+    enum Mutation {
+        
+    }
+    
     struct State {
         
     }

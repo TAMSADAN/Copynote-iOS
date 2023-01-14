@@ -18,20 +18,32 @@ class CreateMemoNoteView: BaseView, View {
     
     let titleTextField: UITextField = .init()
     let contentTextView: UITextView = .init()
+    let accessoryView: UIView = .init(frame: CGRect(x: 0.0, y: 0.0, width: Provider.shared.screen.width, height: 50))
+    let doneButton: UIButton = .init(type: .system)
     
     override func setupProperty() {
         super.setupProperty()
+        
+        accessoryView.backgroundColor = .black
         
         titleTextField.placeholder = "제목을 입력하세요."
         titleTextField.font = CopynoteFontFamily.HappinessSansPrint.title.font(size: 30)
         
         contentTextView.font = CopynoteFontFamily.HappinessSansPrint.regular.font(size: 17)
+        
+        doneButton.setTitle("저장하기", for: .normal)
+        doneButton.setTitleColor(.white, for: .normal)
+        doneButton.titleLabel?.font = CopynoteFontFamily.HappinessSansPrint.title.font(size: 20)
+        
+        titleTextField.inputAccessoryView = accessoryView
+        contentTextView.inputAccessoryView = accessoryView
     }
     
     override func setupHierarchy() {
         super.setupHierarchy()
         
         addSubviews([titleTextField, contentTextView])
+        accessoryView.addSubviews([doneButton])
     }
     
     override func setupLayout() {
@@ -47,9 +59,16 @@ class CreateMemoNoteView: BaseView, View {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
+        
+        doneButton.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
+        }
     }
     
     func bind(reactor: Reactor) {
-        
+        doneButton.rx.tap
+            .map { .tapDoneButton }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }

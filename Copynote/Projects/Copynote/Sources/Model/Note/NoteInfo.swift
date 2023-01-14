@@ -10,29 +10,32 @@ import Foundation
 import RealmSwift
 
 struct NoteInfo {
+    var id: String
     var kind: Kind
     var location: String
     var title: String
     
     func toRealm() -> NoteInfoRealm {
-        return .init(kind: kind, location: location, title: title)
+        return .init(id: id, kind: kind, location: location, title: title)
     }
 }
 
 class NoteInfoRealm: Object {
+    @Persisted(primaryKey: true) var id: String
     @Persisted var kind: Kind
     @Persisted var location: String
     @Persisted var title: String
     
-    convenience init(kind: Kind, location: String, title: String) {
+    convenience init(id: String, kind: Kind, location: String, title: String) {
         self.init()
         
+        self.id = id
         self.kind = kind
         self.location = location
         self.title = title
     }
     
     func toDomain() -> NoteInfo {
-        return .init(kind: kind, location: location, title: title)
+        return .init(id: id, kind: kind, location: location, title: title)
     }
 }
