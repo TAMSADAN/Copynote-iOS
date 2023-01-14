@@ -11,32 +11,27 @@ import RealmSwift
 
 struct UrlNote {
     var id: String
-    let info: NoteInfo?
-    let url: String
+    let note: Note?
     
     func toRealm() -> UrlNoteRealm {
-        return .init(id: id, info: info?.toRealm(), url: url)
-    }
-    
-    func toNote() -> Note {
-        return .init(info: info, content: url)
+        return .init(id: id, note: note?.toRealm())
     }
 }
 
 class UrlNoteRealm: Object {
     @Persisted(primaryKey: true) var id: String
-    @Persisted var info: NoteInfoRealm?
+    @Persisted var note: NoteRealm?
     @Persisted var url: String
     
-    convenience init(id: String, info: NoteInfoRealm?, url: String) {
+    convenience init(id: String, note: NoteRealm?) {
         self.init()
         
         self.id = id
-        self.info = info
+        self.note = note
         self.url = url
     }
     
     func toDomain() -> UrlNote {
-        return .init(id: id, info: info?.toDomain(), url: url)
+        return .init(id: id, note: note?.toDomain())
     }
 }

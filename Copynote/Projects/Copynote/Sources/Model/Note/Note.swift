@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Note {
-    let info: NoteInfo?
-    let content: String
-}
+//struct Note {
+//    let info: NoteInfo?
+//    let content: String
+//}

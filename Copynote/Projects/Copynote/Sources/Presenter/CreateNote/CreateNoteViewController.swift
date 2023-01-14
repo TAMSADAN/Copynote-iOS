@@ -14,8 +14,8 @@ class CreateNoteViewController: NavigationViewController, View {
     
     typealias Reactor = CreateNoteReactor
     
-    private let presentCreateMemoNoteView: (_ info: NoteInfo) -> CreateMemoNoteView
-    private let presentCreateUrlNoteView: (_ info: NoteInfo) -> CreateUrlNoteView
+    private let presentCreateMemoNoteView: (_ note: Note) -> CreateMemoNoteView
+    private let presentCreateUrlNoteView: (_ note: Note) -> CreateUrlNoteView
 
     // MARK: - UI Components
     
@@ -29,8 +29,8 @@ class CreateNoteViewController: NavigationViewController, View {
     // MARK: - Initializer
     
     init(reactor: Reactor,
-         presentCreateMemoNoteView: @escaping (_ info: NoteInfo) -> CreateMemoNoteView,
-         presentCreateUrlNoteView: @escaping (_ info: NoteInfo) -> CreateUrlNoteView
+         presentCreateMemoNoteView: @escaping (_ note: Note) -> CreateMemoNoteView,
+         presentCreateUrlNoteView: @escaping (_ note: Note) -> CreateUrlNoteView
     ) {
         self.presentCreateMemoNoteView = presentCreateMemoNoteView
         self.presentCreateUrlNoteView = presentCreateUrlNoteView
@@ -124,23 +124,31 @@ class CreateNoteViewController: NavigationViewController, View {
             .bind { [weak self] kind in
                 switch kind {
                 case .memo:
-                    self?.willPresentCreateMemoNoteView(info: reactor.currentState.info)
+                    self?.willPresentCreateMemoNoteView(note: reactor.currentState.note)
                 case .url:
-                    self?.willPresentCreateUrlNoteView(info: reactor.currentState.info)
+                    self?.willPresentCreateUrlNoteView(note: reactor.currentState.note)
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map(\.dismiss)
+            .filter { $0 }
+            .bind { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
     }
 }
 
 extension CreateNoteViewController {
-    private func willPresentCreateMemoNoteView(info: NoteInfo) {
-        createNoteView = presentCreateMemoNoteView(info)
+    private func willPresentCreateMemoNoteView(note: Note) {
+        createNoteView = presentCreateMemoNoteView(note)
         willPresentCreateNoteView(view: createNoteView)
     }
     
-    private func willPresentCreateUrlNoteView(info: NoteInfo) {
-        createNoteView = presentCreateUrlNoteView(info)
+    private func willPresentCreateUrlNoteView(note: Note) {
+        createNoteView = presentCreateUrlNoteView(note)
         willPresentCreateNoteView(view: createNoteView)
     }
     

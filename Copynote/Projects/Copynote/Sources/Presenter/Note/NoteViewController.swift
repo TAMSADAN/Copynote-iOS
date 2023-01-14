@@ -17,7 +17,7 @@ class NoteViewController: NavigationViewController, View {
     typealias LocationDataSource = RxCollectionViewSectionedReloadDataSource<LocationSectionModel>
     typealias NoteDataSource = RxCollectionViewSectionedReloadDataSource<NoteSectionModel>
     
-    private let pushCreateNoteScreen: (_ info: NoteInfo) -> CreateNoteViewController
+    private let pushCreateNoteScreen: (_ note: Note) -> CreateNoteViewController
 
     private lazy var locationDataSource = LocationDataSource { _, collectionView, indexPath, item -> UICollectionViewCell in
         switch item {
@@ -61,7 +61,7 @@ class NoteViewController: NavigationViewController, View {
     // MARK: - Initializer
     
     init(reactor: Reactor,
-         pushCreateNoteScreen: @escaping (_ info: NoteInfo) -> CreateNoteViewController) {
+         pushCreateNoteScreen: @escaping (_ note: Note) -> CreateNoteViewController) {
         self.pushCreateNoteScreen = pushCreateNoteScreen
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
@@ -156,12 +156,12 @@ class NoteViewController: NavigationViewController, View {
         
         plusButton.rx.tap
             .bind { [weak self] in
-                self?.goToCreateNoteViewController(info: .init(id: "", kind: .memo, location: "", title: ""))
+                self?.goToCreateNoteViewController(note: .init(id: UUID().uuidString, kind: .memo, title: "", content: ""))
             }
             .disposed(by: disposeBag)
 
         reactor.state
-            .map(\.categorySections)
+            .map(\.locationSections)
             .bind(to: locationCollectionView.rx.items(dataSource: locationDataSource))
             .disposed(by: disposeBag)
         
@@ -181,8 +181,8 @@ class NoteViewController: NavigationViewController, View {
 }
 
 extension NoteViewController {
-    func goToCreateNoteViewController(info: NoteInfo) {
-        let viewController = pushCreateNoteScreen(info)
+    func goToCreateNoteViewController(note: Note) {
+        let viewController = pushCreateNoteScreen(note)
         
         navigationController?.pushViewController(viewController, animated: true)
     }

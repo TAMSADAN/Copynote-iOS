@@ -12,12 +12,12 @@ import RxSwift
 
 enum UrlNoteEvent {
     case fetchNote(UrlNote)
-    case createNote(UrlNote)
-    case updateNote(UrlNote)
+    case createOrUpdateNote(UrlNote)
     case deleteNote(UrlNote)
 }
 
 protocol UrlNoteServiceType {
+    var noteEvent: PublishSubject<NoteEvent> { get }
     var event: PublishSubject<UrlNoteEvent> { get }
     
     func fetchNote(id: String)
@@ -26,21 +26,33 @@ protocol UrlNoteServiceType {
 }
 
 class UrlNoteService: UrlNoteServiceType {
+    var noteEvent: PublishSubject<NoteEvent>
     var event = PublishSubject<UrlNoteEvent>()
     let realm = Provider.shared.realm
     
+    init(noteEvent: PublishSubject<NoteEvent>) {
+        self.noteEvent = noteEvent
+    }
+    
     func fetchNote(id: String) {
-        guard let obj = realm.objects(UrlNoteRealm.self).where({ $0.id == id }).first else {
+        guard let urlNote = realm.objects(UrlNoteRealm.self).where({ $0.id == id }).first?.toDomain() else {
             return
         }
         
-        event.onNext(.fetchNote(obj.toDomain()))
+        if let note = urlNote.note {
+            noteEvent.onNext(.fetchNote(note))
+        }
+        event.onNext(.fetchNote(urlNote))
     }
     
     func createOrUpdateNote(note: UrlNote) {
         do {
             try realm.write {
                 realm.add(note.toRealm(), update: .modified)
+                if let note = note.note {
+                    noteEvent.onNext(.createOrUpdateNote(note))
+                }
+                event.onNext(.createOrUpdateNote(note))
             }
         } catch {
             print(error)
@@ -54,7 +66,12 @@ class UrlNoteService: UrlNoteServiceType {
         do {
             try realm.write {
                 realm.delete(obj)
-                event.onNext(.deleteNote(obj.toDomain()))
+                let urlNote = obj.toDomain()
+                
+                if let note = urlNote.note {
+                    noteEvent.onNext(.deleteNote(note))
+                }
+                event.onNext(.deleteNote(urlNote))
             }
         } catch {
             print(error)

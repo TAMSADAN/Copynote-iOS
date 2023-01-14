@@ -12,12 +12,12 @@ import RxSwift
 
 enum MemoNoteEvent {
     case fetchNote(MemoNote)
-    case createNote(MemoNote)
-    case updateNote(MemoNote)
+    case createOrUpdateNote(MemoNote)
     case deleteNote(MemoNote)
 }
 
 protocol MemoNoteServiceType {
+    var noteEvent: PublishSubject<NoteEvent> { get }
     var event: PublishSubject<MemoNoteEvent> { get }
     
     func fetchNote(id: String)
@@ -26,21 +26,34 @@ protocol MemoNoteServiceType {
 }
 
 class MemoNoteService: MemoNoteServiceType {
+    var noteEvent: PublishSubject<NoteEvent>
     var event = PublishSubject<MemoNoteEvent>()
     let realm = Provider.shared.realm
     
+    init(noteEvent: PublishSubject<NoteEvent>) {
+        self.noteEvent = noteEvent
+    }
+    
     func fetchNote(id: String) {
-        guard let obj = realm.objects(MemoNoteRealm.self).where({ $0.id == id }).first else {
+        guard let memoNote = realm.objects(MemoNoteRealm.self).where({ $0.id == id }).first?.toDomain() else {
             return
         }
         
-        event.onNext(.fetchNote(obj.toDomain()))
+        if let note = memoNote.note {
+            noteEvent.onNext(.fetchNote(note))
+        }
+        event.onNext(.fetchNote(memoNote))
     }
     
     func createOrUpdateNote(note: MemoNote) {
         do {
             try realm.write {
                 realm.add(note.toRealm(), update: .modified)
+                
+                if let note = note.note {
+                    noteEvent.onNext(.createOrUpdateNote(note))
+                }
+                event.onNext(.createOrUpdateNote(note))
             }
         } catch {
             print(error)
@@ -54,7 +67,12 @@ class MemoNoteService: MemoNoteServiceType {
         do {
             try realm.write {
                 realm.delete(obj)
-                event.onNext(.deleteNote(obj.toDomain()))
+                let memoNote = obj.toDomain()
+                
+                if let note = memoNote.note {
+                    noteEvent.onNext(.deleteNote(note))
+                }
+                event.onNext(.deleteNote(memoNote))
             }
         } catch {
             print(error)

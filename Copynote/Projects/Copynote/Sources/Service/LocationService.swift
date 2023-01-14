@@ -30,7 +30,9 @@ class LocationService: LocationServiceType {
     
     init() {
         if realm.objects(LocationRealm.self).count == 0 {
-            
+            if let id = Provider.shared.keychain.get(key: .fixedId) {
+                createLocation(location: .init(id: id, name: "전체"))
+            }
         }
     }
     
@@ -47,12 +49,15 @@ class LocationService: LocationServiceType {
     }
     
     func createLocation(location: Location) {
-        try! realm.write {
-            let obj = location.toRealm()
-            obj.id = UUID().uuidString
-            
-            realm.add(obj)
-            event.onNext(.createLocation(obj.toDomain()))
+        do {
+            try realm.write {
+                let obj = location.toRealm()
+                
+                realm.add(obj, update: .modified)
+                event.onNext(.createLocation(obj.toDomain()))
+            }
+        } catch {
+            print(error)
         }
     }
 }

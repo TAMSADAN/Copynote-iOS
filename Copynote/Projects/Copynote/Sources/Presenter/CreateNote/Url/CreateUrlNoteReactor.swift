@@ -13,17 +13,19 @@ class CreateUrlNoteReactor: Reactor {
         case tapDoneButton
     }
     
-    enum Mutation {}
+    enum Mutation {
+        
+    }
     
     struct State {
-        var info: NoteInfo
+        var note: Note
     }
     
     var initialState: State
     private let urlNoteService: UrlNoteServiceType
     
-    init(info: NoteInfo, urlNoteService: UrlNoteServiceType) {
+    init(note: Note, urlNoteService: UrlNoteServiceType) {
         self.urlNoteService = urlNoteService
-        self.initialState = .init(info: info)
+        self.initialState = .init(note: note)
     }
 }
