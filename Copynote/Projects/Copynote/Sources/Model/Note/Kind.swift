@@ -10,16 +10,19 @@ import Foundation
 import RealmSwift
 
 enum Kind: Int, Codable, CaseIterable, PersistableEnum {
-    case memo = 0
-    case url = 1
+    case all = 0
+    case memo = 1
+    case url = 2
     
     var title: String {
         switch self {
+        case .all:
+            return "all"
         case .memo:
-            return "Memo"
+            return "memo"
             
         case .url:
-            return "Url"
+            return "url"
         }
     }
 }

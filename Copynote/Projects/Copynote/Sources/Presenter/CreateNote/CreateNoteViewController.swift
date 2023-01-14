@@ -123,7 +123,7 @@ class CreateNoteViewController: NavigationViewController, View {
             .map(\.kind)
             .bind { [weak self] kind in
                 switch kind {
-                case .memo:
+                case .all, .memo:
                     self?.willPresentCreateMemoNoteView(note: reactor.currentState.note)
                 case .url:
                     self?.willPresentCreateUrlNoteView(note: reactor.currentState.note)

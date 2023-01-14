@@ -11,7 +11,7 @@ import RealmSwift
 
 struct MemoNote {
     var id: String
-    let note: Note?
+    var note: Note?
     
     func toRealm() -> MemoNoteRealm {
         return MemoNoteRealm(id: id, note: note?.toRealm())

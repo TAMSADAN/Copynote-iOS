@@ -26,7 +26,7 @@ class NoteReactor: Reactor {
 
     var initialState: State
     private let locationService: LocationServiceType
-    private let noteService: NoteServiceType
+    let noteService: NoteServiceType
     
     init(locationService: LocationServiceType,
          noteService: NoteServiceType) {
@@ -100,7 +100,7 @@ extension NoteReactor {
     
     private func makeSections(notes: [Note]) -> [NoteSectionModel] {
         let items: [NoteItem] = notes.map({ note -> NoteItem in
-            return .post(.init())
+            return .post(.init(note: note))
         })
         
         let section: NoteSectionModel = .init(model: .post(items), items: items)

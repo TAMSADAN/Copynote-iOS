@@ -11,15 +11,19 @@ import ReactorKit
 class CreateMemoNoteReactor: Reactor {
     enum Action {
         case tapDoneButton
+        case title(String)
+        case content(String)
     }
     
     enum Mutation {
         case setMemoNote(MemoNote)
+        case setTitle(String)
+        case setContent(String)
     }
     
     struct State {
         var note: Note
-        var memoNote: MemoNote?
+        var memoNote: MemoNote
     }
     
     var initialState: State
@@ -27,7 +31,7 @@ class CreateMemoNoteReactor: Reactor {
     
     init(note: Note, memoNoteService: MemoNoteServiceType) {
         self.memoNoteService = memoNoteService
-        self.initialState = .init(note: note)
+        self.initialState = .init(note: note, memoNote: .init(id: note.id, note: note))
         
         memoNoteService.fetchNote(id: note.id)
     }
@@ -37,10 +41,14 @@ extension CreateMemoNoteReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .tapDoneButton:
-            if let note = currentState.memoNote {
-                memoNoteService.createOrUpdateNote(note: note)
-            }
+            memoNoteService.createOrUpdateNote(note: currentState.memoNote)
             return .empty()
+            
+        case let .title(text):
+            return .just(.setTitle(text))
+            
+        case let .content(text):
+            return .just(.setContent(text))
         }
     }
     
@@ -62,8 +70,14 @@ extension CreateMemoNoteReactor {
         var newState = state
         
         switch mutation {
-        case .setMemoNote(let memoNote):
-            newState.memoNote = memoNote
+        case let .setMemoNote(note):
+            newState.memoNote = note
+            
+        case let .setTitle(text):
+            newState.memoNote.note?.title = text
+            
+        case let .setContent(text):
+            newState.memoNote.note?.content = text
         }
         
         return newState

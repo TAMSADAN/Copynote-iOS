@@ -80,6 +80,20 @@ class CreateMemoNoteView: BaseView, View {
     }
     
     func bind(reactor: Reactor) {
+        titleTextField.rx.text
+            .debounce(.milliseconds(200), scheduler: MainScheduler.instance)
+            .compactMap { $0 }
+            .map { .title($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        contentTextView.rx.text
+            .debounce(.milliseconds(200), scheduler: MainScheduler.instance)
+            .compactMap { $0 }
+            .map { .content($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         doneButton.rx.tap
             .map { .tapDoneButton }
             .bind(to: reactor.action)

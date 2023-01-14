@@ -43,7 +43,7 @@ class NoteViewController: NavigationViewController, View {
         case let .post(items):
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: PostCollectionViewHeader.self), for: indexPath) as? PostCollectionViewHeader else { return .init() }
 
-            header.reactor = .init()
+            header.reactor = .init(noteService: reactor.noteService)
             
             return header
         }
@@ -190,10 +190,12 @@ extension NoteViewController {
 
 extension NoteViewController {
     func makeCompositionLayout(from sections: [NoteSectionModel]) -> UICollectionViewCompositionalLayout {
-        let layout: UICollectionViewCompositionalLayout = .init { [weak self] index,_ in
-            switch sections[index].model {                
+        let layout: UICollectionViewCompositionalLayout = .init { [weak self] index, _ in
+            switch sections[safe: index]?.model {
             case let .post(items):
                 return self?.makePostLayoutSection(from: items)
+            case .none:
+                return .none
             }
         }
         return layout

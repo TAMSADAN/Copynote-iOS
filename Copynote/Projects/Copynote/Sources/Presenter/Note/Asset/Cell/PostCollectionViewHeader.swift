@@ -6,6 +6,7 @@
 //  Copyright © 2022 Copynote. All rights reserved.
 //
 
+import UIKit
 import ReactorKit
 
 class PostCollectionViewHeader: BaseCollectionReusableView, View {
@@ -14,16 +15,33 @@ class PostCollectionViewHeader: BaseCollectionReusableView, View {
     
     // MARK: - UI Components
     
-    let kindStackView: KindStackView = .init()
+    private let stackView: UIStackView = .init()
+    private var kindButtons: [UIButton] = []
     
     override func setupProperty() {
         super.setupProperty()
+        
+        stackView.spacing = 10
+        
+        Kind.allCases.forEach({ kind in
+            let button = UIButton(type: .system)
+            
+            button.cornerRound(radius: 10)
+            button.makeBorder(color: .black, width: 1)
+            button.setTitle(kind.title, for: .normal)
+            button.setTitleColor(.black, for: .normal)
+            button.titleLabel?.font = CopynoteFontFamily.HappinessSansPrint.regular.font(size: 13)
+            
+            kindButtons.append(button)
+        })
     }
     
     override func setupHierarchy() {
         super.setupHierarchy()
         
-        addSubviews([kindStackView])
+        addSubview(stackView)
+        
+        stackView.addArrangedSubviews(kindButtons)
     }
     
     override func setupLayout() {
@@ -31,13 +49,20 @@ class PostCollectionViewHeader: BaseCollectionReusableView, View {
         
         backgroundColor = .white
         
-        kindStackView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
+        kindButtons.forEach({ button in
+            button.snp.makeConstraints {
+                $0.width.equalTo(50)
+                $0.height.equalTo(25)
+            }
+        })
+        
+        stackView.snp.makeConstraints {
+            $0.top.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
         }
     }
     
     func bind(reactor: Reactor) {
-        kindStackView.update(kinds: reactor.currentState.kinds)
+        
     }
 }

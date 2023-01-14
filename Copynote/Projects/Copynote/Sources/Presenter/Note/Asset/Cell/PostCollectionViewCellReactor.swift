@@ -13,11 +13,12 @@ class PostCollectionViewCellReactor: Reactor {
     enum Mutation {}
 
     struct State {
-        
+        var note: Note
     }
     
     var initialState: State
-    init() {
-        self.initialState = .init()
+    
+    init(note: Note) {
+        self.initialState = .init(note: note)
     }
 }

@@ -16,8 +16,10 @@ class PostCollectionViewHeaderReactor: Reactor {
     }
     
     var initialState: State
+    private let noteService: NoteServiceType
     
-    init() {
+    init(noteService: NoteServiceType) {
+        self.noteService = noteService
         self.initialState = .init(kinds: [.memo, .memo, .memo])
     }
 }

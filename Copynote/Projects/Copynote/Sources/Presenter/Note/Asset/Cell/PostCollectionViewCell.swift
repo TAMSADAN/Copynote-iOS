@@ -39,9 +39,8 @@ class PostCollectionViewCell: BaseCollectionViewCell, View {
         button.titleLabel?.font = CopynoteFontFamily.HappinessSansPrint.title.font(size: 10)
         button.cornerRound(radius: 12)
         
-        kindLabel.text = "Memo"
-        titleLabel.text = "타이틀입니다."
-        contentLabel.text = "본문입니다."
+        titleLabel.text = "제목이 비어있습니다."
+        contentLabel.text = "본문이 비어있습니다."
     }
     
     override func setupHierarchy() {
@@ -77,6 +76,19 @@ class PostCollectionViewCell: BaseCollectionViewCell, View {
     }
     
     func bind(reactor: Reactor) {
-
+        reactor.state
+            .map(\.note)
+            .bind { [weak self] note in
+                self?.kindLabel.text = note.kind.title
+                
+                if !note.title.isEmpty {
+                    self?.titleLabel.text = note.title
+                }
+                
+                if !note.content.isEmpty {
+                    self?.contentLabel.text = note.content
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
