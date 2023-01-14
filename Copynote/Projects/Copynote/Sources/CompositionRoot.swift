@@ -32,18 +32,17 @@ class CompositionRoot {
 
 extension CompositionRoot {
     static func makeNoteScreen() -> NoteViewController {
-        let pushCreateNoteScreen: (_ mode: PresentMode, _ info: NoteInfo) -> CreateNoteViewController = { mode, info in
+        let pushCreateNoteScreen: (_ info: NoteInfo) -> CreateNoteViewController = { info in
             let reactor = CreateNoteReactor(info: info)
-            let presentCreateMemoNoteView: () -> CreateMemoNoteView = {
+            let presentCreateMemoNoteView: (_ info: NoteInfo) -> CreateMemoNoteView = { info in
                 let view = CreateMemoNoteView()
                 return view
             }
-            let presentCreateUrlNoteView: () -> CreateUrlNoteView = {
+            let presentCreateUrlNoteView: (_ info: NoteInfo) -> CreateUrlNoteView = { info in
                 let view = CreateUrlNoteView()
                 return view
             }
             let viewController = CreateNoteViewController(reactor: reactor,
-                                                          mode: mode,
                                                           presentCreateMemoNoteView: presentCreateMemoNoteView,
                                                           presentCreateUrlNoteView: presentCreateUrlNoteView)
             

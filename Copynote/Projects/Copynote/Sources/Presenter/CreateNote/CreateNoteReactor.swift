@@ -9,15 +9,22 @@
 import ReactorKit
 
 class CreateNoteReactor: Reactor {
-    enum Action {}
-    enum Mutation {}
+    enum Action {
+        case refresh
+    }
+    
+    enum Mutation {
+        
+    }
+    
     struct State {
         var info: NoteInfo
+        var kind: Kind
     }
 
     var initialState: State
     
     init(info: NoteInfo) {
-        self.initialState = .init(info: info)
+        self.initialState = .init(info: info, kind: info.kind)
     }
 }

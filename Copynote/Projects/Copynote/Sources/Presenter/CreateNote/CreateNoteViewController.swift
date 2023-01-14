@@ -14,25 +14,24 @@ class CreateNoteViewController: NavigationViewController, View {
     
     typealias Reactor = CreateNoteReactor
     
-    let mode: PresentMode
-    private let presentCreateMemoNoteView: () -> CreateMemoNoteView
-    private let presentCreateUrlNoteView: () -> CreateUrlNoteView
+    private let presentCreateMemoNoteView: (_ info: NoteInfo) -> CreateMemoNoteView
+    private let presentCreateUrlNoteView: (_ info: NoteInfo) -> CreateUrlNoteView
 
     // MARK: - UI Components
     
-    let kindButton: UIButton = .init(type: .system)
-    let categoryButton: UIButton = .init(type: .system)
-    let divider: UIView = .init()
-    let scrollView: UIScrollView = .init()
+    private let kindButton: UIButton = .init(type: .system)
+    private let categoryButton: UIButton = .init(type: .system)
+    private let divider: UIView = .init()
+    private let containerView: UIView = .init()
     
-    var createNoteView: UIView = .init()
+    private var createNoteView: UIView = .init()
+    
+    // MARK: - Initializer
     
     init(reactor: Reactor,
-         mode: PresentMode,
-         presentCreateMemoNoteView: @escaping () -> CreateMemoNoteView,
-         presentCreateUrlNoteView: @escaping () -> CreateUrlNoteView
+         presentCreateMemoNoteView: @escaping (_ info: NoteInfo) -> CreateMemoNoteView,
+         presentCreateUrlNoteView: @escaping (_ info: NoteInfo) -> CreateUrlNoteView
     ) {
-        self.mode = mode
         self.presentCreateMemoNoteView = presentCreateMemoNoteView
         self.presentCreateUrlNoteView = presentCreateUrlNoteView
         super.init(nibName: nil, bundle: nil)
@@ -48,8 +47,6 @@ class CreateNoteViewController: NavigationViewController, View {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        willPresentCreateMemoNoteView()
     }
     
     // MARK: - Setup Methods
@@ -86,7 +83,7 @@ class CreateNoteViewController: NavigationViewController, View {
         contentView.addSubviews([kindButton,
                                  categoryButton,
                                  divider,
-                                 scrollView])
+                                 containerView])
     }
     
     override func setupLayout() {
@@ -110,32 +107,47 @@ class CreateNoteViewController: NavigationViewController, View {
             $0.height.equalTo(1)
         }
         
-        scrollView.snp.makeConstraints {
+        containerView.snp.makeConstraints {
             $0.top.equalTo(divider.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     
     func bind(reactor: Reactor) {
+        rx.viewWillAppear
+            .map { _ in .refresh }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
+        reactor.state
+            .map(\.kind)
+            .bind { [weak self] kind in
+                switch kind {
+                case .memo:
+                    self?.willPresentCreateMemoNoteView(info: reactor.currentState.info)
+                case .url:
+                    self?.willPresentCreateUrlNoteView(info: reactor.currentState.info)
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
 
 extension CreateNoteViewController {
-    func willPresentCreateMemoNoteView() {
-        createNoteView = presentCreateMemoNoteView()
+    private func willPresentCreateMemoNoteView(info: NoteInfo) {
+        createNoteView = presentCreateMemoNoteView(info)
         willPresentCreateNoteView(view: createNoteView)
     }
     
-    func willPresentCreateUrlNoteView() {
-        createNoteView = presentCreateUrlNoteView()
+    private func willPresentCreateUrlNoteView(info: NoteInfo) {
+        createNoteView = presentCreateUrlNoteView(info)
         willPresentCreateNoteView(view: createNoteView)
     }
     
-    func willPresentCreateNoteView(view: UIView) {
+    private func willPresentCreateNoteView(view: UIView) {
         view.removeFromSuperview()
         
-        scrollView.addSubview(view)
+        containerView.addSubview(view)
         
         view.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
