@@ -10,17 +10,19 @@ import UIKit
 import ReactorKit
 import RxDataSources
 
-class NoteViewController: LogoViewController, View {
+class NoteViewController: NavigationViewController, View {
     // MARK: - Properties
 
     typealias Reactor = NoteReactor
-    typealias CategoryDataSource = RxCollectionViewSectionedReloadDataSource<CategorySectionModel>
+    typealias LocationDataSource = RxCollectionViewSectionedReloadDataSource<LocationSectionModel>
     typealias NoteDataSource = RxCollectionViewSectionedReloadDataSource<NoteSectionModel>
+    
+    private let pushCreateNoteScreen: (_ info: NoteInfo) -> CreateNoteViewController
 
-    private lazy var categoryDataSource = CategoryDataSource { _, collectionView, indexPath, item -> UICollectionViewCell in
+    private lazy var locationDataSource = LocationDataSource { _, collectionView, indexPath, item -> UICollectionViewCell in
         switch item {
-        case let .category(reactor):
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CategoryCollectionViewCell.self), for: indexPath) as? CategoryCollectionViewCell else { return .init() }
+        case let .location(reactor):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: LocationCollectionViewCell.self), for: indexPath) as? LocationCollectionViewCell else { return .init() }
 
             cell.reactor = reactor
             return cell
@@ -47,16 +49,20 @@ class NoteViewController: LogoViewController, View {
         }
     }
 
-
     // MARK: - UI Components
     
+    let logoView: UIView = .init()
+    let logoLabel: UILabel = .init()
+    let logoDivider: UIView = .init()
     let plusButton: UIButton = .init(type: .system)
-    let categoryCollectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    let locationCollectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     let noteCollectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     // MARK: - Initializer
     
-    init(reactor: Reactor) {
+    init(reactor: Reactor,
+         pushCreateNoteScreen: @escaping (_ info: NoteInfo) -> CreateNoteViewController) {
+        self.pushCreateNoteScreen = pushCreateNoteScreen
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -68,16 +74,27 @@ class NoteViewController: LogoViewController, View {
 
     // MARK: - Setup Methods
     
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        
+        showNavigtaionBar(isHidden: true)
+    }
+    
     override func setupDelegate() {
         super.setupDelegate()
         
-        categoryCollectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: CategoryCollectionViewCell.self))
+        locationCollectionView.register(LocationCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: LocationCollectionViewCell.self))
         noteCollectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: PostCollectionViewCell.self))
         noteCollectionView.register(PostCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: PostCollectionViewHeader.self))
     }
 
     override func setupProperty() {
         super.setupProperty()
+        
+        logoLabel.font = CopynoteFontFamily.HappinessSansPrint.regular.font(size: 20)
+        logoLabel.text = "copy note ."
+
+        logoDivider.backgroundColor = .black
         
         plusButton.setTitle("+", for: .normal)
         plusButton.setTitle("-", for: .highlighted)
@@ -88,27 +105,44 @@ class NoteViewController: LogoViewController, View {
     override func setupHierarchy() {
         super.setupHierarchy()
 
-        contentView.addSubviews([categoryCollectionView, noteCollectionView])
+        contentView.addSubviews([logoView, locationCollectionView, noteCollectionView])
         
-        logoView.addSubviews([plusButton])
+        logoView.addSubviews([logoLabel, logoDivider, plusButton])
     }
 
     override func setupLayout() {
         super.setupLayout()
+        
+        logoView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(60)
+        }
+
+        logoLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(20)
+            $0.centerY.equalToSuperview()
+        }
+
+        logoDivider.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview()
+            $0.height.equalTo(1)
+        }
         
         plusButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(20)
         }
         
-        categoryCollectionView.snp.makeConstraints {
-            $0.top.equalToSuperview()
+        locationCollectionView.snp.makeConstraints {
+            $0.top.equalTo(logoView.snp.bottom)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(50)
         }
         
         noteCollectionView.snp.makeConstraints {
-            $0.top.equalTo(categoryCollectionView.snp.bottom)
+            $0.top.equalTo(locationCollectionView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
@@ -119,10 +153,16 @@ class NoteViewController: LogoViewController, View {
             .map { _ in .refresh }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        plusButton.rx.tap
+            .bind { [weak self] in
+                self?.goToCreateNoteViewController(info: .init(id: "", kind: .memo, location: "", title: ""))
+            }
+            .disposed(by: disposeBag)
 
         reactor.state
             .map(\.categorySections)
-            .bind(to: categoryCollectionView.rx.items(dataSource: categoryDataSource))
+            .bind(to: locationCollectionView.rx.items(dataSource: locationDataSource))
             .disposed(by: disposeBag)
         
         reactor.state
@@ -137,6 +177,14 @@ class NoteViewController: LogoViewController, View {
                 this.noteCollectionView.collectionViewLayout = this.makeCompositionLayout(from: sections)
             }
             .disposed(by: disposeBag)
+    }
+}
+
+extension NoteViewController {
+    func goToCreateNoteViewController(info: NoteInfo) {
+        let viewController = pushCreateNoteScreen(info)
+        
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 

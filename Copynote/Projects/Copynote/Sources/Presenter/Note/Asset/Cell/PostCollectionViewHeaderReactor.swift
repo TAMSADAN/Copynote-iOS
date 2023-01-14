@@ -18,6 +18,6 @@ class PostCollectionViewHeaderReactor: Reactor {
     var initialState: State
     
     init() {
-        self.initialState = .init(kinds: [.init(title: "All"), .init(title: "Memo"), .init(title: "URL")])
+        self.initialState = .init(kinds: [.memo, .memo, .memo])
     }
 }
