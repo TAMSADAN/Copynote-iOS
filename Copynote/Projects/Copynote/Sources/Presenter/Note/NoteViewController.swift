@@ -187,6 +187,12 @@ class NoteViewController: NavigationViewController, View {
             }
             .disposed(by: disposeBag)
         
+        settingButton.rx.tap
+            .bind { [weak self] in
+                self?.willPushSettingViewController()
+            }
+            .disposed(by: disposeBag)
+        
         noteCollectionView.rx.setDataSource(noteDataSource).disposed(by: disposeBag)
         
         Observable.zip(
@@ -216,6 +222,12 @@ class NoteViewController: NavigationViewController, View {
 extension NoteViewController {
     func willPushCreateNoteViewController(note: Note) {
         let viewController = pushCreateNoteScreen(note)
+        
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func willPushSettingViewController() {
+        let viewController = pushSettingScreen()
         
         navigationController?.pushViewController(viewController, animated: true)
     }

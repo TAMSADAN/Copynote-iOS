@@ -17,7 +17,7 @@ class SettingView: BaseView {
     
     // MARK: - Initializer
     
-    init(image: UIImage, title: String) {
+    init(image: UIImage?, title: String?) {
         super.init(frame: .zero)
         
         leadingImageView.image = image
@@ -34,7 +34,12 @@ class SettingView: BaseView {
     override func setupProperty() {
         super.setupProperty()
         
+        leadingImageView.tintColor = .black
+        leadingImageView.contentMode = .scaleAspectFit
+        
+        trailingImageView.tintColor = .black
         trailingImageView.image = UIImage(systemName: "chevron.right")
+        trailingImageView.contentMode = .scaleAspectFit
     }
     
     override func setupHierarchy() {
@@ -49,8 +54,8 @@ class SettingView: BaseView {
         leadingImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
-            $0.width.equalTo(30)
-            $0.height.equalTo(30)
+            $0.width.equalTo(25)
+            $0.height.equalTo(25)
         }
         
         titleLabel.snp.makeConstraints {
@@ -61,8 +66,8 @@ class SettingView: BaseView {
         trailingImageView.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
-            $0.width.equalTo(30)
-            $0.height.equalTo(30)
+            $0.width.equalTo(20)
+            $0.height.equalTo(20)
         }
     }
 }

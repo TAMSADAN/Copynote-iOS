@@ -46,13 +46,14 @@ class CopyBottomSheetViewController: BottomSheetViewController, View {
     override func setupProperty() {
         super.setupProperty()
         
-        copyView.backgroundColor = .systemGray6
-        
         titleLabel.text = "copied !"
         titleLabel.font = CopynoteFontFamily.HappinessSansPrint.title.font(size: 18)
         titleLabel.textColor = .black
         
-        copyLabel.font = CopynoteFontFamily.HappinessSansPrint.regular.font(size: 15)
+        copyView.backgroundColor = .systemGray6
+        copyView.cornerRound(radius: 5)
+        
+        copyLabel.font = CopynoteFontFamily.HappinessSansPrint.regular.font(size: 14)
         copyLabel.numberOfLines = 0
         copyLabel.textColor = .black
     }
