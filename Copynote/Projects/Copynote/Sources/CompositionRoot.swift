@@ -48,19 +48,32 @@ extension CompositionRoot {
                                urlNoteService: UrlNoteServiceType) -> NoteViewController {
         let pushCreateNoteScreen: (_ note: Note) -> CreateNoteViewController = { note in
             let reactor = CreateNoteReactor(note: note, noteService: noteService)
+            
+            let pushSelectKindBottomSheetScreen: (Kind) -> SelectKindBottomSheetViewController = { kind in
+                let reactor = SelectKindBottomSheetReactor(kind: kind)
+                let viewController = SelectKindBottomSheetViewController(mode: .drag, reactor: reactor)
+                
+                return viewController
+            }
+            
             let presentCreateMemoNoteView: (_ note: Note) -> CreateMemoNoteView = { note in
                 let reactor = CreateMemoNoteReactor(note: note,
                                                     memoNoteService: memoNoteService)
                 let view = CreateMemoNoteView(reactor: reactor)
+                
                 return view
             }
+            
             let presentCreateUrlNoteView: (_ note: Note) -> CreateUrlNoteView = { note in
                 let reactor = CreateUrlNoteReactor(note: note,
                                                    urlNoteService: urlNoteService)
                 let view = CreateUrlNoteView(reactor: reactor)
+                
                 return view
             }
+            
             let viewController = CreateNoteViewController(reactor: reactor,
+                                                          pushSelectKindBottomSheetScreen: pushSelectKindBottomSheetScreen,
                                                           presentCreateMemoNoteView: presentCreateMemoNoteView,
                                                           presentCreateUrlNoteView: presentCreateUrlNoteView)
             

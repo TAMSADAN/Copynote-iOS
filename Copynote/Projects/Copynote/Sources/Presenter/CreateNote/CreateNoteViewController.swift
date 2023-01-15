@@ -14,6 +14,7 @@ class CreateNoteViewController: NavigationViewController, View {
     
     typealias Reactor = CreateNoteReactor
     
+    private let pushSelectKindBottomSheetScreen: (_ kind: Kind) -> SelectKindBottomSheetViewController
     private let presentCreateMemoNoteView: (_ note: Note) -> CreateMemoNoteView
     private let presentCreateUrlNoteView: (_ note: Note) -> CreateUrlNoteView
 
@@ -29,9 +30,11 @@ class CreateNoteViewController: NavigationViewController, View {
     // MARK: - Initializer
     
     init(reactor: Reactor,
+         pushSelectKindBottomSheetScreen: @escaping (_ kind: Kind) -> SelectKindBottomSheetViewController,
          presentCreateMemoNoteView: @escaping (_ note: Note) -> CreateMemoNoteView,
          presentCreateUrlNoteView: @escaping (_ note: Note) -> CreateUrlNoteView
     ) {
+        self.pushSelectKindBottomSheetScreen = pushSelectKindBottomSheetScreen
         self.presentCreateMemoNoteView = presentCreateMemoNoteView
         self.presentCreateUrlNoteView = presentCreateUrlNoteView
         super.init(nibName: nil, bundle: nil)
@@ -60,7 +63,7 @@ class CreateNoteViewController: NavigationViewController, View {
     override func setupProperty() {
         super.setupProperty()
         
-        kindButton.setTitle("     memo     ", for: .normal)
+        kindButton.setTitle("memo", for: .normal)
         kindButton.setTitleColor(.white, for: .normal)
         kindButton.tintColor = .black
         kindButton.titleLabel?.font = CopynoteFontFamily.HappinessSansPrint.bold.font(size: 16)
@@ -92,6 +95,7 @@ class CreateNoteViewController: NavigationViewController, View {
         kindButton.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
+            $0.width.equalTo(70)
             $0.height.equalTo(35)
         }
         
@@ -119,6 +123,12 @@ class CreateNoteViewController: NavigationViewController, View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        kindButton.rx.tap
+            .bind { [weak self] in
+                self?.willPushSelectKindBottomSheetViewController(kind: reactor.currentState.kind)
+            }
+            .disposed(by: disposeBag)
+        
         reactor.state
             .map(\.kind)
             .bind { [weak self] kind in
@@ -142,6 +152,12 @@ class CreateNoteViewController: NavigationViewController, View {
 }
 
 extension CreateNoteViewController {
+    private func willPushSelectKindBottomSheetViewController(kind: Kind) {
+        let viewController = pushSelectKindBottomSheetScreen(kind)
+        
+        self.present(viewController, animated: true)
+    }
+    
     private func willPresentCreateMemoNoteView(note: Note) {
         createNoteView = presentCreateMemoNoteView(note)
         willPresentCreateNoteView(view: createNoteView)

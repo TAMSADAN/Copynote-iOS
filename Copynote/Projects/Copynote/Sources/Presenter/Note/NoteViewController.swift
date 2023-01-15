@@ -207,7 +207,7 @@ class NoteViewController: NavigationViewController, View {
             .withUnretained(self)
             .bind { this, sections in
                 this.noteDataSource.setSections(sections)
-                this.noteCollectionView.setCollectionViewLayout(this.makeCompositionLayout(from: sections), animated: true)
+                this.noteCollectionView.setCollectionViewLayout(this.makeCompositionLayout(from: sections), animated: false)
             }
             .disposed(by: disposeBag)
     }
