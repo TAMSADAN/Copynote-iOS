@@ -67,9 +67,26 @@ extension CompositionRoot {
             return viewController
         }
         
+        let pushCopyBottomSheetScreen: (_ note: Note) -> CopyBottomSheetViewController = { note in
+            let reactor = CopyBottomSheetReactor(note: note)
+            let viewController = CopyBottomSheetViewController(mode: .drag,
+                                                               reactor: reactor)
+            
+            return viewController
+        }
+        
+        let pushSettingScreen: () -> SettingViewController = {
+            let reactor = SettingReactor()
+            let viewController = SettingViewController(reactor: reactor)
+            
+            return viewController
+        }
+        
         let reactor = NoteReactor(locationService: locationService, noteService: noteService)
         let viewController = NoteViewController(reactor: reactor,
-                                                pushCreateNoteScreen: pushCreateNoteScreen)
+                                                pushCreateNoteScreen: pushCreateNoteScreen,
+                                                pushCopyBottomSheetScreen: pushCopyBottomSheetScreen,
+                                                pushSettingScreen: pushSettingScreen)
         
         return viewController
     }

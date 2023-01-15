@@ -18,6 +18,8 @@ class NoteViewController: NavigationViewController, View {
     typealias NoteDataSource = RxCollectionViewSectionedReloadDataSource<NoteSectionModel>
     
     private let pushCreateNoteScreen: (_ note: Note) -> CreateNoteViewController
+    private let pushCopyBottomSheetScreen: (_ note: Note) -> CopyBottomSheetViewController
+    private let pushSettingScreen: () -> SettingViewController
 
     private lazy var locationDataSource = LocationDataSource { _, collectionView, indexPath, item -> UICollectionViewCell in
         switch item {
@@ -30,11 +32,19 @@ class NoteViewController: NavigationViewController, View {
     }
     
     private lazy var noteDataSource = NoteDataSource { _, collectionView, indexPath, item -> UICollectionViewCell in
+        guard let reactor = self.reactor else { return .init() }
+        
         switch item {
-        case let .post(reactor):
+        case let .post(cellReactor):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PostCollectionViewCell.self), for: indexPath) as? PostCollectionViewCell else { return .init() }
             
-            cell.reactor = reactor
+            cell.reactor = cellReactor
+            cell.button.rx.tap
+                .bind { [weak self] _ in
+                    self?.willPresentCopyBottomSheetViewController(note: cellReactor.currentState.note)
+                }
+                .disposed(by: cell.disposeBag)
+            
             return cell
         }
     } configureSupplementaryView: { [weak self] dataSource, collectionView, _, indexPath -> UICollectionReusableView in
@@ -62,8 +72,12 @@ class NoteViewController: NavigationViewController, View {
     // MARK: - Initializer
     
     init(reactor: Reactor,
-         pushCreateNoteScreen: @escaping (_ note: Note) -> CreateNoteViewController) {
+         pushCreateNoteScreen: @escaping (_ note: Note) -> CreateNoteViewController,
+         pushCopyBottomSheetScreen: @escaping (_ note: Note) -> CopyBottomSheetViewController,
+         pushSettingScreen: @escaping () -> SettingViewController) {
         self.pushCreateNoteScreen = pushCreateNoteScreen
+        self.pushCopyBottomSheetScreen = pushCopyBottomSheetScreen
+        self.pushSettingScreen = pushSettingScreen
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -97,8 +111,6 @@ class NoteViewController: NavigationViewController, View {
 
         logoDivider.backgroundColor = .black
         
-//        plusButton.setTitle("+", for: .normal)
-//        plusButton.setTitle("-", for: .highlighted)
         plusButton.setImage(UIImage(systemName: "plus"), for: .normal)
         plusButton.tintColor = .black
         plusButton.setTitleColor(.black, for: .normal)
@@ -171,9 +183,19 @@ class NoteViewController: NavigationViewController, View {
         
         plusButton.rx.tap
             .bind { [weak self] in
-                self?.goToCreateNoteViewController(note: .init(id: UUID().uuidString, kind: .memo, title: "", content: ""))
+                self?.willPushCreateNoteViewController(note: .init(id: UUID().uuidString, kind: .memo, title: "", content: ""))
             }
             .disposed(by: disposeBag)
+        
+        noteCollectionView.rx.setDataSource(noteDataSource).disposed(by: disposeBag)
+        
+        Observable.zip(
+            noteCollectionView.rx.itemSelected,
+            noteCollectionView.rx.modelSelected(type(of: self.noteDataSource).Section.Item.self)
+        )
+        .map { .tapNoteItem($0, $1) }
+        .bind(to: reactor.action)
+        .disposed(by: disposeBag)
 
         reactor.state
             .map(\.locationSections)
@@ -182,24 +204,26 @@ class NoteViewController: NavigationViewController, View {
         
         reactor.state
             .map(\.noteSections)
-            .bind(to: noteCollectionView.rx.items(dataSource: noteDataSource))
-            .disposed(by: disposeBag)
-        
-        reactor.state
-            .map(\.noteSections)
             .withUnretained(self)
             .bind { this, sections in
-                this.noteCollectionView.collectionViewLayout = this.makeCompositionLayout(from: sections)
+                this.noteDataSource.setSections(sections)
+                this.noteCollectionView.setCollectionViewLayout(this.makeCompositionLayout(from: sections), animated: true)
             }
             .disposed(by: disposeBag)
     }
 }
 
 extension NoteViewController {
-    func goToCreateNoteViewController(note: Note) {
+    func willPushCreateNoteViewController(note: Note) {
         let viewController = pushCreateNoteScreen(note)
         
         navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func willPresentCopyBottomSheetViewController(note: Note) {
+        let viewController = pushCopyBottomSheetScreen(note)
+        
+        present(viewController, animated: true)
     }
 }
 
@@ -222,7 +246,7 @@ extension NoteViewController {
             layoutItem.contentInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
             return layoutItem
         }
-        let layoutGroup: NSCollectionLayoutGroup = .vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)), subitems: layoutItems)
+        let layoutGroup: NSCollectionLayoutGroup = .vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(500)), subitems: layoutItems)
         layoutGroup.interItemSpacing = .fixed(12)
         
         let layoutSection: NSCollectionLayoutSection = .init(group: layoutGroup)

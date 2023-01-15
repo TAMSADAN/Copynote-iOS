@@ -6,11 +6,14 @@
 //  Copyright © 2022 Copynote. All rights reserved.
 //
 
+import UIKit
 import ReactorKit
 
 class NoteReactor: Reactor {
     enum Action {
         case refresh
+        case tapNoteItem(IndexPath, NoteItem)
+        case tapNoteItemCopyButton(IndexPath, NoteItem)
     }
 
     enum Mutation {
@@ -42,6 +45,12 @@ extension NoteReactor {
         case .refresh:
             locationService.fetchLocations()
             noteService.fetchNotes()
+            return .empty()
+            
+        case .tapNoteItem:
+            return .empty()
+            
+        case .tapNoteItemCopyButton:
             return .empty()
         }
     }
