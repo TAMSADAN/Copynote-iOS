@@ -15,6 +15,7 @@ class CreateOrUpdateNoteViewController: NavigationViewController, View {
     typealias Reactor = CreateOrUpdateNoteReactor
     
     private let pushSelectKindBottomSheetScreen: (_ kind: Kind) -> SelectKindBottomSheetViewController
+    private let pushSelectLocationBottomSheetScreen: (_ location: Location) -> SelectLocationBottomSheetViewController
     private let presentCreateOrUpdateMemoNoteView: (_ note: Note) -> CreateOrUpdateMemoNoteView
     private let presentCreateOrUpdateUrlNoteView: (_ note: Note) -> CreateOrUpdateUrlNoteView
 
@@ -31,10 +32,12 @@ class CreateOrUpdateNoteViewController: NavigationViewController, View {
     
     init(reactor: Reactor,
          pushSelectKindBottomSheetScreen: @escaping (_ kind: Kind) -> SelectKindBottomSheetViewController,
+         pushSelectLocationBottomSheetScreen: @escaping (_ location: Location) -> SelectLocationBottomSheetViewController,
          presentCreateMemoNoteView: @escaping (_ note: Note) -> CreateOrUpdateMemoNoteView,
          presentCreateUrlNoteView: @escaping (_ note: Note) -> CreateOrUpdateUrlNoteView
     ) {
         self.pushSelectKindBottomSheetScreen = pushSelectKindBottomSheetScreen
+        self.pushSelectLocationBottomSheetScreen = pushSelectLocationBottomSheetScreen
         self.presentCreateOrUpdateMemoNoteView = presentCreateMemoNoteView
         self.presentCreateOrUpdateUrlNoteView = presentCreateUrlNoteView
         super.init(nibName: nil, bundle: nil)

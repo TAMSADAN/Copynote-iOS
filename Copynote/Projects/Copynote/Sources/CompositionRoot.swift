@@ -37,9 +37,9 @@ class CompositionRoot {
                              configureSDKs: self.configureSDKs,
                              configureAppearance: self.configureAppearance)
     }
-
+    
     static func configureSDKs() { }
-
+    
     static func configureAppearance() { }
 }
 
@@ -51,13 +51,20 @@ extension CompositionRoot {
                                selectKindService: SelectKindServiceType) -> NoteViewController {
         let pushCreateOrUpdateNoteScreen: (_ note: Note) -> CreateOrUpdateNoteViewController = { note in
             let reactor = CreateOrUpdateNoteReactor(note: note,
-                                            noteService: noteService,
-                                            selectKindService: selectKindService)
+                                                    noteService: noteService,
+                                                    selectKindService: selectKindService)
             
             let pushSelectKindBottomSheetScreen: (Kind) -> SelectKindBottomSheetViewController = { kind in
                 let reactor = SelectKindBottomSheetReactor(selectedKind: kind,
                                                            selectKindService: selectKindService)
                 let viewController = SelectKindBottomSheetViewController(mode: .drag, reactor: reactor)
+                
+                return viewController
+            }
+            
+            let pushSelectLocationBottomSheetScreen: (Location) -> SelectLocationBottomSheetViewController = { location in
+                let reactor = SelectLocationBottomSheetReactor(selectedKind: .all, selectKindService: selectKindService)
+                let viewController = SelectLocationBottomSheetViewController(mode: .drag, reactor: reactor)
                 
                 return viewController
             }
@@ -79,9 +86,10 @@ extension CompositionRoot {
             }
             
             let viewController = CreateOrUpdateNoteViewController(reactor: reactor,
-                                                          pushSelectKindBottomSheetScreen: pushSelectKindBottomSheetScreen,
-                                                          presentCreateMemoNoteView: presentCreateOrUpdateMemoNoteView,
-                                                          presentCreateUrlNoteView: presentCreateOrUpdateUrlNoteView)
+                                                                  pushSelectKindBottomSheetScreen: pushSelectKindBottomSheetScreen,
+                                                                  pushSelectLocationBottomSheetScreen: pushSelectLocationBottomSheetScreen,
+                                                                  presentCreateMemoNoteView: presentCreateOrUpdateMemoNoteView,
+                                                                  presentCreateUrlNoteView: presentCreateOrUpdateUrlNoteView)
             
             return viewController
         }
