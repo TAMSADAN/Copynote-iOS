@@ -6,6 +6,7 @@
 //  Copyright © 2022 Copynote. All rights reserved.
 //
 
+import UIKit
 import ReactorKit
 
 class PostCollectionViewHeader: BaseCollectionReusableView, View {
@@ -14,16 +15,26 @@ class PostCollectionViewHeader: BaseCollectionReusableView, View {
     
     // MARK: - UI Components
     
-    let kindStackView: KindStackView = .init()
+    private let stackView: UIStackView = .init()
+    var kindButtons: [UIButton] = []
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        stackView.removeArrangedSubviews()
+        kindButtons = []
+    }
     
     override func setupProperty() {
         super.setupProperty()
+        
+        stackView.spacing = 10
     }
     
     override func setupHierarchy() {
         super.setupHierarchy()
         
-        addSubviews([kindStackView])
+        addSubview(stackView)
     }
     
     override func setupLayout() {
@@ -31,13 +42,38 @@ class PostCollectionViewHeader: BaseCollectionReusableView, View {
         
         backgroundColor = .white
         
-        kindStackView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
+        stackView.snp.makeConstraints {
+            $0.top.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
         }
     }
     
     func bind(reactor: Reactor) {
-        kindStackView.update(kinds: reactor.currentState.kinds)
+        reactor.initialState.kinds.forEach({ kind in
+            let button = UIButton(type: .system)
+            
+            if kind == reactor.initialState.selectedKind {
+                button.backgroundColor = .black
+                button.titleLabel?.font = CopynoteFontFamily.HappinessSansPrint.bold.font(size: 13)
+                button.setTitleColor(.white, for: .normal)
+            } else {
+                button.backgroundColor = .white
+                button.titleLabel?.font = CopynoteFontFamily.HappinessSansPrint.regular.font(size: 13)
+                button.setTitleColor(.black, for: .normal)
+            }
+            
+            button.cornerRound(radius: 10)
+            button.makeBorder(color: .black, width: 1)
+            button.setTitle(kind.title, for: .normal)
+            
+            kindButtons.append(button)
+            
+            button.snp.makeConstraints {
+                $0.width.equalTo(50)
+                $0.height.equalTo(25)
+            }
+            
+            stackView.addArrangedSubview(button)
+        })
     }
 }

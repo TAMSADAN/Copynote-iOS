@@ -12,6 +12,7 @@ import RealmSwift
 protocol ProviderType: AnyObject {
     var enviroment: EnvironmentProviderType { get }
     var screen: ScreenProviderType { get }
+    var keychain: KeychainProviderType { get }
     var realm: Realm { get }
 }
 
@@ -20,6 +21,7 @@ class Provider: ProviderType {
 
     lazy var enviroment: EnvironmentProviderType = EnvironmentProvider(provider: self)
     lazy var screen: ScreenProviderType = ScreenProvider(provider: self)
+    lazy var keychain: KeychainProviderType = KeychainProvider(provider: self)
     lazy var realm: Realm = try! Realm()
     
     private init() {}

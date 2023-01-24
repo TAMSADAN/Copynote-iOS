@@ -59,6 +59,10 @@ class BottomSheetViewController: BaseViewController {
         self.animateDismissView()
         super.dismiss(animated: flag, completion: completion)
     }
+    
+    func refresh() {
+        sheetView.layoutIfNeeded()
+    }
 
     // MARK: - Setup Methods
 
@@ -151,6 +155,7 @@ class BottomSheetViewController: BaseViewController {
     func animatePresentView() {
         UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseInOut]) {
             self.dimmedView.backgroundColor = self.dimmedColor
+            self.dimmedView.alpha = self.MAX_ALPHA
         }
     }
 

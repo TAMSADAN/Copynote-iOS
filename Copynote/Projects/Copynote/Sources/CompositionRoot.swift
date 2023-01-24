@@ -20,46 +20,101 @@ class CompositionRoot {
         window.backgroundColor = .white
         window.makeKeyAndVisible()
         
-        let memoNoteService: MemoNoteServiceType = MemoNoteService()
+        let locationService: LocationServiceType = LocationService()
+        let noteService: NoteServiceType = NoteService()
+        let memoNoteService: MemoNoteServiceType = MemoNoteService(noteEvent: noteService.event)
+        let urlNoteService: UrlNoteServiceType = UrlNoteService(noteEvent: noteService.event)
+        let selectKindService: SelectKindServiceType = SelectKindService()
         
-        let noteScreen = makeNoteScreen(memoNoteService: memoNoteService)
+        let noteScreen = makeNoteScreen(locationService: locationService,
+                                        noteService: noteService,
+                                        memoNoteService: memoNoteService,
+                                        urlNoteService: urlNoteService,
+                                        selectKindService: selectKindService)
         
         window.rootViewController = UINavigationController(rootViewController: noteScreen)
         return AppDependency(window: window,
                              configureSDKs: self.configureSDKs,
                              configureAppearance: self.configureAppearance)
     }
-
+    
     static func configureSDKs() { }
-
+    
     static func configureAppearance() { }
 }
 
 extension CompositionRoot {
-    static func makeNoteScreen(memoNoteService: MemoNoteServiceType) -> NoteViewController {
-        let pushCreateNoteScreen: (_ info: NoteInfo) -> CreateNoteViewController = { info in
-            let reactor = CreateNoteReactor(info: info)
-            let presentCreateMemoNoteView: (_ info: NoteInfo) -> CreateMemoNoteView = { info in
-                let reactor = CreateMemoNoteReactor(info: info,
-                                                    memoNoteService: memoNoteService)
-                let view = CreateMemoNoteView(reactor: reactor)
+    static func makeNoteScreen(locationService: LocationServiceType,
+                               noteService: NoteServiceType,
+                               memoNoteService: MemoNoteServiceType,
+                               urlNoteService: UrlNoteServiceType,
+                               selectKindService: SelectKindServiceType) -> NoteViewController {
+        let pushCreateOrUpdateNoteScreen: (_ note: Note) -> CreateOrUpdateNoteViewController = { note in
+            let reactor = CreateOrUpdateNoteReactor(note: note,
+                                                    noteService: noteService,
+                                                    selectKindService: selectKindService)
+            
+            let pushSelectKindBottomSheetScreen: (Kind) -> SelectKindBottomSheetViewController = { kind in
+                let reactor = SelectKindBottomSheetReactor(selectedKind: kind,
+                                                           selectKindService: selectKindService)
+                let viewController = SelectKindBottomSheetViewController(mode: .drag, reactor: reactor)
+                
+                return viewController
+            }
+            
+            let pushSelectLocationBottomSheetScreen: (Location) -> SelectLocationBottomSheetViewController = { location in
+                let reactor = SelectLocationBottomSheetReactor(selectedKind: .all, selectKindService: selectKindService)
+                let viewController = SelectLocationBottomSheetViewController(mode: .drag, reactor: reactor)
+                
+                return viewController
+            }
+            
+            let presentCreateOrUpdateMemoNoteView: (_ note: Note) -> CreateOrUpdateMemoNoteView = { note in
+                let reactor = CreateOrUpdateMemoNoteReactor(note: note,
+                                                            memoNoteService: memoNoteService)
+                let view = CreateOrUpdateMemoNoteView(reactor: reactor)
+                
                 return view
             }
-            let presentCreateUrlNoteView: (_ info: NoteInfo) -> CreateUrlNoteView = { info in
-                let reactor = CreateUrlNoteReactor(info: info)
-                let view = CreateUrlNoteView(reactor: reactor)
+            
+            let presentCreateOrUpdateUrlNoteView: (_ note: Note) -> CreateOrUpdateUrlNoteView = { note in
+                let reactor = CreateOrUpdateUrlNoteReactor(note: note,
+                                                           urlNoteService: urlNoteService)
+                let view = CreateOrUpdateUrlNoteView(reactor: reactor)
+                
                 return view
             }
-            let viewController = CreateNoteViewController(reactor: reactor,
-                                                          presentCreateMemoNoteView: presentCreateMemoNoteView,
-                                                          presentCreateUrlNoteView: presentCreateUrlNoteView)
+            
+            let viewController = CreateOrUpdateNoteViewController(reactor: reactor,
+                                                                  pushSelectKindBottomSheetScreen: pushSelectKindBottomSheetScreen,
+                                                                  pushSelectLocationBottomSheetScreen: pushSelectLocationBottomSheetScreen,
+                                                                  presentCreateMemoNoteView: presentCreateOrUpdateMemoNoteView,
+                                                                  presentCreateUrlNoteView: presentCreateOrUpdateUrlNoteView)
             
             return viewController
         }
         
-        let reactor = NoteReactor()
+        let pushCopyBottomSheetScreen: (_ note: Note) -> CopyBottomSheetViewController = { note in
+            let reactor = CopyBottomSheetReactor(note: note)
+            let viewController = CopyBottomSheetViewController(mode: .drag,
+                                                               reactor: reactor)
+            
+            return viewController
+        }
+        
+        let pushSettingScreen: () -> SettingViewController = {
+            let reactor = SettingReactor()
+            let viewController = SettingViewController(reactor: reactor)
+            
+            return viewController
+        }
+        
+        let reactor = NoteReactor(locationService: locationService,
+                                  noteService: noteService)
         let viewController = NoteViewController(reactor: reactor,
-                                                pushCreateNoteScreen: pushCreateNoteScreen)
+                                                pushCreateNoteScreen: pushCreateOrUpdateNoteScreen,
+                                                pushCopyBottomSheetScreen: pushCopyBottomSheetScreen,
+                                                pushSettingScreen: pushSettingScreen)
         
         return viewController
     }

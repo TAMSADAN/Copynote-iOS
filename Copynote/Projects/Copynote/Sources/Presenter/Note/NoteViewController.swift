@@ -17,7 +17,9 @@ class NoteViewController: NavigationViewController, View {
     typealias LocationDataSource = RxCollectionViewSectionedReloadDataSource<LocationSectionModel>
     typealias NoteDataSource = RxCollectionViewSectionedReloadDataSource<NoteSectionModel>
     
-    private let pushCreateNoteScreen: (_ info: NoteInfo) -> CreateNoteViewController
+    private let pushCreateOrUpdateNoteScreen: (_ note: Note) -> CreateOrUpdateNoteViewController
+    private let pushCopyBottomSheetScreen: (_ note: Note) -> CopyBottomSheetViewController
+    private let pushSettingScreen: () -> SettingViewController
 
     private lazy var locationDataSource = LocationDataSource { _, collectionView, indexPath, item -> UICollectionViewCell in
         switch item {
@@ -30,11 +32,24 @@ class NoteViewController: NavigationViewController, View {
     }
     
     private lazy var noteDataSource = NoteDataSource { _, collectionView, indexPath, item -> UICollectionViewCell in
+        guard let reactor = self.reactor else { return .init() }
+        
         switch item {
-        case let .post(reactor):
+        case let .post(cellReactor):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PostCollectionViewCell.self), for: indexPath) as? PostCollectionViewCell else { return .init() }
             
-            cell.reactor = reactor
+            cell.reactor = cellReactor
+            cell.button.rx.tap
+                .bind { [weak self] _ in
+                    self?.willPresentCopyBottomSheetViewController(note: cellReactor.currentState.note)
+                }
+                .disposed(by: cell.disposeBag)
+            
+            return cell
+            
+        case .empty:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: EmptyCell.self), for: indexPath) as? EmptyCell else { return .init() }
+            
             return cell
         }
     } configureSupplementaryView: { [weak self] dataSource, collectionView, _, indexPath -> UICollectionReusableView in
@@ -43,7 +58,17 @@ class NoteViewController: NavigationViewController, View {
         case let .post(items):
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: PostCollectionViewHeader.self), for: indexPath) as? PostCollectionViewHeader else { return .init() }
 
-            header.reactor = .init()
+            header.prepareForReuse()
+            
+            header.reactor = .init(selectedKind: reactor.currentState.selectedKind,
+                                   noteService: reactor.noteService)
+            
+            header.kindButtons.enumerated().forEach({ indx, button in
+                button.rx.tap
+                    .map { .tapKind(Kind.allCases[safe: indx] ?? .all) }
+                    .bind(to: reactor.action)
+                    .disposed(by: header.disposeBag)
+            })
             
             return header
         }
@@ -55,14 +80,19 @@ class NoteViewController: NavigationViewController, View {
     let logoLabel: UILabel = .init()
     let logoDivider: UIView = .init()
     let plusButton: UIButton = .init(type: .system)
+    let settingButton: UIButton = .init(type: .system)
     let locationCollectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     let noteCollectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     // MARK: - Initializer
     
     init(reactor: Reactor,
-         pushCreateNoteScreen: @escaping (_ info: NoteInfo) -> CreateNoteViewController) {
-        self.pushCreateNoteScreen = pushCreateNoteScreen
+         pushCreateNoteScreen: @escaping (_ note: Note) -> CreateOrUpdateNoteViewController,
+         pushCopyBottomSheetScreen: @escaping (_ note: Note) -> CopyBottomSheetViewController,
+         pushSettingScreen: @escaping () -> SettingViewController) {
+        self.pushCreateOrUpdateNoteScreen = pushCreateNoteScreen
+        self.pushCopyBottomSheetScreen = pushCopyBottomSheetScreen
+        self.pushSettingScreen = pushSettingScreen
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -85,6 +115,7 @@ class NoteViewController: NavigationViewController, View {
         
         locationCollectionView.register(LocationCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: LocationCollectionViewCell.self))
         noteCollectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: PostCollectionViewCell.self))
+        noteCollectionView.register(EmptyCell.self, forCellWithReuseIdentifier: String(describing: EmptyCell.self))
         noteCollectionView.register(PostCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: PostCollectionViewHeader.self))
     }
 
@@ -96,10 +127,13 @@ class NoteViewController: NavigationViewController, View {
 
         logoDivider.backgroundColor = .black
         
-        plusButton.setTitle("+", for: .normal)
-        plusButton.setTitle("-", for: .highlighted)
+        plusButton.setImage(UIImage(systemName: "plus"), for: .normal)
+        plusButton.tintColor = .black
         plusButton.setTitleColor(.black, for: .normal)
         plusButton.titleLabel?.font = CopynoteFontFamily.HappinessSansPrint.title.font(size: 30)
+        
+        settingButton.setImage(UIImage(systemName: "gearshape"), for: .normal)
+        settingButton.tintColor = .black
     }
 
     override func setupHierarchy() {
@@ -107,7 +141,7 @@ class NoteViewController: NavigationViewController, View {
 
         contentView.addSubviews([logoView, locationCollectionView, noteCollectionView])
         
-        logoView.addSubviews([logoLabel, logoDivider, plusButton])
+        logoView.addSubviews([logoLabel, logoDivider, plusButton, settingButton])
     }
 
     override func setupLayout() {
@@ -132,7 +166,16 @@ class NoteViewController: NavigationViewController, View {
         
         plusButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalTo(settingButton.snp.leading).offset(-10)
+            $0.width.equalTo(20)
+            $0.height.equalTo(20)
+        }
+        
+        settingButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(15)
+            $0.width.equalTo(20)
+            $0.height.equalTo(20)
         }
         
         locationCollectionView.snp.makeConstraints {
@@ -156,24 +199,37 @@ class NoteViewController: NavigationViewController, View {
         
         plusButton.rx.tap
             .bind { [weak self] in
-                self?.goToCreateNoteViewController(info: .init(id: "", kind: .memo, location: "", title: ""))
+                self?.willPushCreateOrUpdateNoteViewController(note: .init(id: UUID().uuidString, kind: .memo, title: "", content: ""))
             }
             .disposed(by: disposeBag)
-
-        reactor.state
-            .map(\.categorySections)
-            .bind(to: locationCollectionView.rx.items(dataSource: locationDataSource))
+        
+        settingButton.rx.tap
+            .bind { [weak self] in
+                self?.willPushSettingViewController()
+            }
             .disposed(by: disposeBag)
         
+        noteCollectionView.rx.setDataSource(noteDataSource).disposed(by: disposeBag)
+        
+        Observable.zip(
+            noteCollectionView.rx.itemSelected,
+            noteCollectionView.rx.modelSelected(type(of: self.noteDataSource).Section.Item.self)
+        )
+        .map { .tapNoteItem($0, $1) }
+        .bind(to: reactor.action)
+        .disposed(by: disposeBag)
+
         reactor.state
-            .map(\.noteSections)
-            .bind(to: noteCollectionView.rx.items(dataSource: noteDataSource))
+            .map(\.locationSections)
+            .bind(to: locationCollectionView.rx.items(dataSource: locationDataSource))
             .disposed(by: disposeBag)
         
         reactor.state
             .map(\.noteSections)
             .withUnretained(self)
             .bind { this, sections in
+                this.noteDataSource.setSections(sections)
+                this.noteCollectionView.reloadData()
                 this.noteCollectionView.collectionViewLayout = this.makeCompositionLayout(from: sections)
             }
             .disposed(by: disposeBag)
@@ -181,19 +237,33 @@ class NoteViewController: NavigationViewController, View {
 }
 
 extension NoteViewController {
-    func goToCreateNoteViewController(info: NoteInfo) {
-        let viewController = pushCreateNoteScreen(info)
+    func willPushCreateOrUpdateNoteViewController(note: Note) {
+        let viewController = pushCreateOrUpdateNoteScreen(note)
         
         navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func willPushSettingViewController() {
+        let viewController = pushSettingScreen()
+        
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func willPresentCopyBottomSheetViewController(note: Note) {
+        let viewController = pushCopyBottomSheetScreen(note)
+        
+        present(viewController, animated: true)
     }
 }
 
 extension NoteViewController {
     func makeCompositionLayout(from sections: [NoteSectionModel]) -> UICollectionViewCompositionalLayout {
-        let layout: UICollectionViewCompositionalLayout = .init { [weak self] index,_ in
-            switch sections[index].model {                
+        let layout: UICollectionViewCompositionalLayout = .init { [weak self] index, _ in
+            switch sections[safe: index]?.model {
             case let .post(items):
                 return self?.makePostLayoutSection(from: items)
+            case .none:
+                return .none
             }
         }
         return layout
@@ -205,7 +275,7 @@ extension NoteViewController {
             layoutItem.contentInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
             return layoutItem
         }
-        let layoutGroup: NSCollectionLayoutGroup = .vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)), subitems: layoutItems)
+        let layoutGroup: NSCollectionLayoutGroup = .vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(500)), subitems: layoutItems)
         layoutGroup.interItemSpacing = .fixed(12)
         
         let layoutSection: NSCollectionLayoutSection = .init(group: layoutGroup)

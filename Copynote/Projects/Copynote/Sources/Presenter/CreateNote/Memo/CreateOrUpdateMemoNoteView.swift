@@ -9,16 +9,16 @@
 import UIKit
 import ReactorKit
 
-class CreateMemoNoteView: BaseView, View {
+class CreateOrUpdateMemoNoteView: BaseView, View {
     // MARK: - Properties
     
-    typealias Reactor = CreateMemoNoteReactor
+    typealias Reactor = CreateOrUpdateMemoNoteReactor
     
     // MARK: - UI Components
     
     let titleTextField: UITextField = .init()
     let contentTextView: UITextView = .init()
-    let accessoryView: UIView = .init(frame: CGRect(x: 0.0, y: 0.0, width: Provider.shared.screen.width, height: 50))
+    let accessoryView: UIView = .init(frame: CGRect(x: 0.0, y: 0.0, width: Provider.shared.screen.width, height: 45))
     let doneButton: UIButton = .init(type: .system)
     
     // MARK: - Initializer
@@ -80,6 +80,20 @@ class CreateMemoNoteView: BaseView, View {
     }
     
     func bind(reactor: Reactor) {
+        titleTextField.rx.text
+            .debounce(.milliseconds(200), scheduler: MainScheduler.instance)
+            .compactMap { $0 }
+            .map { .title($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        contentTextView.rx.text
+            .debounce(.milliseconds(200), scheduler: MainScheduler.instance)
+            .compactMap { $0 }
+            .map { .content($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         doneButton.rx.tap
             .map { .tapDoneButton }
             .bind(to: reactor.action)

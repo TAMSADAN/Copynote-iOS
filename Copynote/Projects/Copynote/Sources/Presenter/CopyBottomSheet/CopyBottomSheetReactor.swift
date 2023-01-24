@@ -1,17 +1,18 @@
 //
-//  NoteCollectionViewCellReactor.swift
+//  CopyBottomSheetReactor.swift
 //  Copynote
 //
-//  Created by 송영모 on 2022/12/30.
-//  Copyright © 2022 Copynote. All rights reserved.
+//  Created by 송영모 on 2023/01/15.
+//  Copyright © 2023 Copynote. All rights reserved.
 //
 
 import ReactorKit
 
-class PostCollectionViewCellReactor: Reactor {
+class CopyBottomSheetReactor: Reactor {
     enum Action {}
+    
     enum Mutation {}
-
+    
     struct State {
         var note: Note
     }
