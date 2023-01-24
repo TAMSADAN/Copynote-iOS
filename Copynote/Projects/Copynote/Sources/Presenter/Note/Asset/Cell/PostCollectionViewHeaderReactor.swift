@@ -12,14 +12,16 @@ class PostCollectionViewHeaderReactor: Reactor {
     enum Action {}
     enum Mutation {}
     struct State {
-        var kinds: [Kind]
+        let selectedKind: Kind
+        let kinds: [Kind] = Kind.allCases
+        
     }
     
     var initialState: State
     private let noteService: NoteServiceType
     
-    init(noteService: NoteServiceType) {
+    init(selectedKind: Kind, noteService: NoteServiceType) {
         self.noteService = noteService
-        self.initialState = .init(kinds: [.memo, .memo, .memo])
+        self.initialState = .init(selectedKind: selectedKind)
     }
 }

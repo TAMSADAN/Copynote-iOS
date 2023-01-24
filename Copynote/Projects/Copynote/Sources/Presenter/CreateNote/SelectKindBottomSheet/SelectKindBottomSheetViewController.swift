@@ -30,6 +30,7 @@ class SelectKindBottomSheetViewController: BottomSheetViewController, View {
     // MARK: - UI Components
     
     let contentView: UIView = .init()
+    let titleLabel: UILabel = .init()
     let collectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     // MARK: - Initializer
@@ -63,6 +64,10 @@ class SelectKindBottomSheetViewController: BottomSheetViewController, View {
     override func setupProperty() {
         super.setupProperty()
         
+        titleLabel.text = "Type"
+        titleLabel.font = CopynoteFontFamily.HappinessSansPrint.title.font(size: 18)
+        titleLabel.textColor = .black
+        
         collectionView.isScrollEnabled = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
@@ -71,14 +76,19 @@ class SelectKindBottomSheetViewController: BottomSheetViewController, View {
     override func setupHierarchy() {
         super.setupHierarchy()
         
-        contentView.addSubviews([collectionView])
+        contentView.addSubviews([titleLabel, collectionView])
     }
     
     override func setupLayout() {
         super.setupLayout()
         
+        titleLabel.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+        }
+        
         collectionView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview()
+            $0.top.equalTo(titleLabel.snp.bottom).offset(10)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     
@@ -99,7 +109,7 @@ class SelectKindBottomSheetViewController: BottomSheetViewController, View {
         collectionView.rx.setDataSource(dataSource).disposed(by: disposeBag)
         
         contentView.snp.makeConstraints {
-            $0.height.equalTo(Double(reactor.initialState.kinds.count) * 50.0)
+            $0.height.equalTo(100.0 + Double(reactor.initialState.kinds.count) * 50.0)
         }
         
         reactor.state

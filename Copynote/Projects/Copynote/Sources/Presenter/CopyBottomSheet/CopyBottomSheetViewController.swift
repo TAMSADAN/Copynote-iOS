@@ -46,7 +46,7 @@ class CopyBottomSheetViewController: BottomSheetViewController, View {
     override func setupProperty() {
         super.setupProperty()
         
-        titleLabel.text = "copied !"
+        titleLabel.text = "Copy"
         titleLabel.font = CopynoteFontFamily.HappinessSansPrint.title.font(size: 18)
         titleLabel.textColor = .black
         

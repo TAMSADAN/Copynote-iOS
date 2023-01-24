@@ -53,7 +53,17 @@ class NoteViewController: NavigationViewController, View {
         case let .post(items):
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: PostCollectionViewHeader.self), for: indexPath) as? PostCollectionViewHeader else { return .init() }
 
-            header.reactor = .init(noteService: reactor.noteService)
+            header.prepareForReuse()
+            
+            header.reactor = .init(selectedKind: reactor.currentState.selectedKind,
+                                   noteService: reactor.noteService)
+            
+            header.kindButtons.enumerated().forEach({ indx, button in
+                button.rx.tap
+                    .map { .tapKind(Kind.allCases[safe: indx] ?? .all) }
+                    .bind(to: reactor.action)
+                    .disposed(by: header.disposeBag)
+            })
             
             return header
         }
@@ -214,6 +224,7 @@ class NoteViewController: NavigationViewController, View {
             .bind { this, sections in
                 this.noteDataSource.setSections(sections)
                 this.noteCollectionView.setCollectionViewLayout(this.makeCompositionLayout(from: sections), animated: false)
+                this.noteCollectionView.reloadData()
             }
             .disposed(by: disposeBag)
     }

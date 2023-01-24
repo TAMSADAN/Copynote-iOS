@@ -20,7 +20,8 @@ class CreateOrUpdateNoteReactor: Reactor {
     
     struct State {
         var note: Note
-        var kind: Kind
+        var selectedKind: Kind
+        var selectedLocation: Location?
         var dismiss: Bool = false
     }
 
@@ -33,7 +34,9 @@ class CreateOrUpdateNoteReactor: Reactor {
          selectKindService: SelectKindServiceType) {
         self.noteService = noteService
         self.selectKindService = selectKindService
-        self.initialState = .init(note: note, kind: note.kind)
+        self.initialState = .init(note: note,
+                                  selectedKind: note.kind,
+                                  selectedLocation: note.location)
     }
 }
 
@@ -77,7 +80,7 @@ extension CreateOrUpdateNoteReactor {
             newState.dismiss = bool
             
         case let .setKind(kind):
-            newState.kind = kind
+            newState.selectedKind = kind
         }
         
         return newState

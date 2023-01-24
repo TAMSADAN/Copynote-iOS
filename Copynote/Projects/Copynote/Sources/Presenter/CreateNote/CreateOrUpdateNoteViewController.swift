@@ -22,7 +22,7 @@ class CreateOrUpdateNoteViewController: NavigationViewController, View {
     // MARK: - UI Components
     
     private let kindButton: UIButton = .init(type: .system)
-    private let categoryButton: UIButton = .init(type: .system)
+    private let locationButton: UIButton = .init(type: .system)
     private let divider: UIView = .init()
     private let containerView: UIView = .init()
     
@@ -73,12 +73,12 @@ class CreateOrUpdateNoteViewController: NavigationViewController, View {
         kindButton.cornerRound(radius: 15)
         kindButton.backgroundColor = .black
         
-        categoryButton.setTitle("     테스트     ", for: .normal)
-        categoryButton.setTitleColor(.white, for: .normal)
-        categoryButton.tintColor = .black
-        categoryButton.titleLabel?.font = CopynoteFontFamily.HappinessSansPrint.bold.font(size: 13)
-        categoryButton.cornerRound(radius: 15)
-        categoryButton.backgroundColor = .black
+        locationButton.setTitle("     테스트     ", for: .normal)
+        locationButton.setTitleColor(.white, for: .normal)
+        locationButton.tintColor = .black
+        locationButton.titleLabel?.font = CopynoteFontFamily.HappinessSansPrint.bold.font(size: 13)
+        locationButton.cornerRound(radius: 15)
+        locationButton.backgroundColor = .black
         
         divider.backgroundColor = .black
     }
@@ -87,7 +87,7 @@ class CreateOrUpdateNoteViewController: NavigationViewController, View {
         super.setupHierarchy()
         
         contentView.addSubviews([kindButton,
-                                 categoryButton,
+                                 locationButton,
                                  divider,
                                  containerView])
     }
@@ -102,14 +102,14 @@ class CreateOrUpdateNoteViewController: NavigationViewController, View {
             $0.height.equalTo(35)
         }
         
-        categoryButton.snp.makeConstraints {
+        locationButton.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalTo(kindButton.snp.trailing).offset(10)
             $0.height.equalTo(35)
         }
         
         divider.snp.makeConstraints {
-            $0.top.equalTo(categoryButton.snp.bottom).offset(10)
+            $0.top.equalTo(locationButton.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(1)
         }
@@ -128,12 +128,18 @@ class CreateOrUpdateNoteViewController: NavigationViewController, View {
         
         kindButton.rx.tap
             .bind { [weak self] in
-                self?.willPushSelectKindBottomSheetViewController(kind: reactor.currentState.kind)
+                self?.willPushSelectKindBottomSheetViewController(kind: reactor.currentState.selectedKind)
+            }
+            .disposed(by: disposeBag)
+        
+        locationButton.rx.tap
+            .bind { [weak self] in
+                
             }
             .disposed(by: disposeBag)
         
         reactor.state
-            .map(\.kind)
+            .map(\.selectedKind)
             .bind { [weak self] kind in
                 self?.kindButton.setTitle(kind.title, for: .normal)
                 
@@ -143,6 +149,13 @@ class CreateOrUpdateNoteViewController: NavigationViewController, View {
                 case .url:
                     self?.willPresentCreateOrUpdateUrlNoteView(note: reactor.currentState.note)
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap(\.selectedLocation)
+            .bind { [weak self] location in
+                self?.locationButton.setTitle(location.name, for: .normal)
             }
             .disposed(by: disposeBag)
         
@@ -159,6 +172,12 @@ class CreateOrUpdateNoteViewController: NavigationViewController, View {
 extension CreateOrUpdateNoteViewController {
     private func willPushSelectKindBottomSheetViewController(kind: Kind) {
         let viewController = pushSelectKindBottomSheetScreen(kind)
+        
+        self.present(viewController, animated: true)
+    }
+    
+    private func willPushSelectLocationBottomSheetViewController(location: Location) {
+        let viewController = pushSelectLocationBottomSheetScreen(location)
         
         self.present(viewController, animated: true)
     }

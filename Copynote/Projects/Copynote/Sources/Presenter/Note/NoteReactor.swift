@@ -12,19 +12,23 @@ import ReactorKit
 class NoteReactor: Reactor {
     enum Action {
         case refresh
+        case tapKind(Kind)
         case tapNoteItem(IndexPath, NoteItem)
         case tapNoteItemCopyButton(IndexPath, NoteItem)
     }
 
     enum Mutation {
+        case setSelectedKind(Kind)
+        case setSelectedLocation(Location)
         case setLocationSections([LocationSectionModel])
         case setNoteSections([NoteSectionModel])
     }
 
     struct State {
+        var selectedKind: Kind = .all
+        var selectedLocation: Location?
         var locationSections: [LocationSectionModel] = []
         var noteSections: [NoteSectionModel] = []
-        var loaction: String?
     }
 
     var initialState: State
@@ -47,6 +51,10 @@ extension NoteReactor {
             noteService.fetchNotes()
             return .empty()
             
+        case let .tapKind(kind):
+            noteService.fetchNotes()
+            return .just(.setSelectedKind(kind))
+            
         case .tapNoteItem:
             return .empty()
             
@@ -59,6 +67,12 @@ extension NoteReactor {
         let locationEventMutation = locationService.event.withUnretained(self).flatMap { this, event -> Observable<Mutation> in
             switch event {
             case let .fetchLocations(locations):
+                if this.currentState.selectedLocation == nil, let location = locations.first {
+                    return .concat([
+                        .just(.setLocationSections(this.makeSections(locations: locations))),
+                        .just(.setSelectedLocation(location))
+                    ])
+                }
                 return .just(.setLocationSections(this.makeSections(locations: locations)))
                 
             default:
@@ -83,6 +97,12 @@ extension NoteReactor {
         var newState = state
         
         switch mutation {
+        case let .setSelectedKind(kind):
+            newState.selectedKind = kind
+            
+        case let .setSelectedLocation(location):
+            newState.selectedLocation = location
+            
         case let .setLocationSections(sections):
             newState.locationSections = sections
             
