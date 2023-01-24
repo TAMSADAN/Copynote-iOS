@@ -18,6 +18,7 @@ enum Kind: Int, Codable, CaseIterable, PersistableEnum {
         switch self {
         case .all:
             return "all"
+            
         case .memo:
             return "memo"
             

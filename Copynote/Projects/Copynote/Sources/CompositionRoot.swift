@@ -24,11 +24,13 @@ class CompositionRoot {
         let noteService: NoteServiceType = NoteService()
         let memoNoteService: MemoNoteServiceType = MemoNoteService(noteEvent: noteService.event)
         let urlNoteService: UrlNoteServiceType = UrlNoteService(noteEvent: noteService.event)
+        let selectKindService: SelectKindServiceType = SelectKindService()
         
         let noteScreen = makeNoteScreen(locationService: locationService,
                                         noteService: noteService,
                                         memoNoteService: memoNoteService,
-                                        urlNoteService: urlNoteService)
+                                        urlNoteService: urlNoteService,
+                                        selectKindService: selectKindService)
         
         window.rootViewController = UINavigationController(rootViewController: noteScreen)
         return AppDependency(window: window,
@@ -45,12 +47,16 @@ extension CompositionRoot {
     static func makeNoteScreen(locationService: LocationServiceType,
                                noteService: NoteServiceType,
                                memoNoteService: MemoNoteServiceType,
-                               urlNoteService: UrlNoteServiceType) -> NoteViewController {
+                               urlNoteService: UrlNoteServiceType,
+                               selectKindService: SelectKindServiceType) -> NoteViewController {
         let pushCreateNoteScreen: (_ note: Note) -> CreateNoteViewController = { note in
-            let reactor = CreateNoteReactor(note: note, noteService: noteService)
+            let reactor = CreateNoteReactor(note: note,
+                                            noteService: noteService,
+                                            selectKindService: selectKindService)
             
             let pushSelectKindBottomSheetScreen: (Kind) -> SelectKindBottomSheetViewController = { kind in
-                let reactor = SelectKindBottomSheetReactor(kind: kind)
+                let reactor = SelectKindBottomSheetReactor(selectedKind: kind,
+                                                           selectKindService: selectKindService)
                 let viewController = SelectKindBottomSheetViewController(mode: .drag, reactor: reactor)
                 
                 return viewController
@@ -95,7 +101,8 @@ extension CompositionRoot {
             return viewController
         }
         
-        let reactor = NoteReactor(locationService: locationService, noteService: noteService)
+        let reactor = NoteReactor(locationService: locationService,
+                                  noteService: noteService)
         let viewController = NoteViewController(reactor: reactor,
                                                 pushCreateNoteScreen: pushCreateNoteScreen,
                                                 pushCopyBottomSheetScreen: pushCopyBottomSheetScreen,

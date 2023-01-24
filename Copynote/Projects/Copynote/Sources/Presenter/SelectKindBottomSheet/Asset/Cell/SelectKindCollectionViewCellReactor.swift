@@ -13,11 +13,14 @@ class SelectKindCollectionViewCellReactor: Reactor {
     
     enum Mutation {}
     
-    struct State {}
+    struct State {
+        let kind: Kind
+        let isSelected: Bool
+    }
     
     var initialState: State
     
-    init() {
-        self.initialState = .init()
+    init(kind: Kind, isSelected: Bool = false) {
+        self.initialState = .init(kind: kind, isSelected: isSelected)
     }
 }

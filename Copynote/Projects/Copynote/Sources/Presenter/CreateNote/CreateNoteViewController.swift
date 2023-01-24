@@ -132,6 +132,8 @@ class CreateNoteViewController: NavigationViewController, View {
         reactor.state
             .map(\.kind)
             .bind { [weak self] kind in
+                self?.kindButton.setTitle(kind.title, for: .normal)
+                
                 switch kind {
                 case .all, .memo:
                     self?.willPresentCreateMemoNoteView(note: reactor.currentState.note)
@@ -159,17 +161,21 @@ extension CreateNoteViewController {
     }
     
     private func willPresentCreateMemoNoteView(note: Note) {
+        guard (createNoteView as? CreateMemoNoteView) == nil else { return }
+        
         createNoteView = presentCreateMemoNoteView(note)
         willPresentCreateNoteView(view: createNoteView)
     }
     
     private func willPresentCreateUrlNoteView(note: Note) {
+        guard (createNoteView as? CreateUrlNoteView) == nil else { return }
+        
         createNoteView = presentCreateUrlNoteView(note)
         willPresentCreateNoteView(view: createNoteView)
     }
     
     private func willPresentCreateNoteView(view: UIView) {
-        view.removeFromSuperview()
+        containerView.subviews.forEach({ $0.removeFromSuperview() })
         
         containerView.addSubview(view)
         

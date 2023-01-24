@@ -14,6 +14,7 @@ class CreateNoteReactor: Reactor {
     }
     
     enum Mutation {
+        case setKind(Kind)
         case setDismiss(Bool)
     }
     
@@ -25,9 +26,13 @@ class CreateNoteReactor: Reactor {
 
     var initialState: State
     private let noteService: NoteServiceType
+    private let selectKindService: SelectKindServiceType
     
-    init(note: Note, noteService: NoteServiceType) {
+    init(note: Note,
+         noteService: NoteServiceType,
+         selectKindService: SelectKindServiceType) {
         self.noteService = noteService
+        self.selectKindService = selectKindService
         self.initialState = .init(note: note, kind: note.kind)
     }
 }
@@ -41,7 +46,7 @@ extension CreateNoteReactor {
     }
     
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
-        let eventMutation = noteService.event.flatMap { event -> Observable<Mutation> in
+        let noteEventMutation = noteService.event.flatMap { event -> Observable<Mutation> in
             switch event {
             case .createOrUpdateNote:
                 return .concat([
@@ -54,7 +59,14 @@ extension CreateNoteReactor {
             }
         }
         
-        return Observable.merge(eventMutation, mutation)
+        let selectKindEventMutation = selectKindService.event.flatMap { event -> Observable<Mutation> in
+            switch event {
+            case let .selectKind(kind):
+                return .just(.setKind(kind))
+            }
+        }
+        
+        return Observable.merge(noteEventMutation, selectKindEventMutation, mutation)
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
@@ -63,6 +75,9 @@ extension CreateNoteReactor {
         switch mutation {
         case let .setDismiss(bool):
             newState.dismiss = bool
+            
+        case let .setKind(kind):
+            newState.kind = kind
         }
         
         return newState

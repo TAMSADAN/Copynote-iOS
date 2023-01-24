@@ -28,7 +28,7 @@ class NoteReactor: Reactor {
     }
 
     var initialState: State
-    private let locationService: LocationServiceType
+    let locationService: LocationServiceType
     let noteService: NoteServiceType
     
     init(locationService: LocationServiceType,

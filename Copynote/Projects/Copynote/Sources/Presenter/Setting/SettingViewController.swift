@@ -23,6 +23,7 @@ class SettingViewController: NavigationViewController, View {
     
     let usefuleView: SettingView = .init(image: .init(systemName: "sun.max"), title: "붙여넣기 허용하기")
     let githubView: SettingView = .init(image: .init(systemName: "chevron.left.forwardslash.chevron.right"), title: "깃허브 별 달러가기")
+    let starView: SettingView = .init(image: .init(systemName: "star"), title: "앱스토어 별점 주러가기")
     let divider: UIView = .init()
     
     // MARK: - Initializer
@@ -63,7 +64,7 @@ class SettingViewController: NavigationViewController, View {
         stackView.spacing = 20
         stackView.distribution = .equalSpacing
         
-        stackView.addArrangedSubviews([usefuleView, divider, githubView])
+        stackView.addArrangedSubviews([usefuleView, divider, githubView, starView])
     }
     
     override func setupHierarchy() {
@@ -97,6 +98,11 @@ class SettingViewController: NavigationViewController, View {
         }
         
         githubView.snp.makeConstraints {
+            $0.width.equalToSuperview()
+            $0.height.equalTo(50)
+        }
+        
+        starView.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.height.equalTo(50)
         }
