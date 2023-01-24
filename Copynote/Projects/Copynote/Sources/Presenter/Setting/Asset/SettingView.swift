@@ -37,6 +37,8 @@ class SettingView: BaseView {
         leadingImageView.tintColor = .black
         leadingImageView.contentMode = .scaleAspectFit
         
+        titleLabel.font = CopynoteFontFamily.HappinessSansPrint.regular.font(size: 15)
+        
         trailingImageView.tintColor = .black
         trailingImageView.image = UIImage(systemName: "chevron.right")
         trailingImageView.contentMode = .scaleAspectFit
@@ -52,10 +54,10 @@ class SettingView: BaseView {
         super.setupLayout()
         
         leadingImageView.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview()
             $0.centerY.equalToSuperview()
-            $0.width.equalTo(25)
-            $0.height.equalTo(25)
+            $0.width.equalTo(20)
+            $0.height.equalTo(20)
         }
         
         titleLabel.snp.makeConstraints {
@@ -64,10 +66,10 @@ class SettingView: BaseView {
         }
         
         trailingImageView.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview()
             $0.centerY.equalToSuperview()
-            $0.width.equalTo(20)
-            $0.height.equalTo(20)
+            $0.width.equalTo(15)
+            $0.height.equalTo(15)
         }
     }
 }

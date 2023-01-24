@@ -21,7 +21,9 @@ class SettingViewController: NavigationViewController, View {
     
     let stackView: UIStackView = .init()
     
-    let githubView: SettingView = .init(image: .init(systemName: "chevron.left.forwardslash.chevron.right"), title: "깃허브")
+    let usefuleView: SettingView = .init(image: .init(systemName: "sun.max"), title: "붙여넣기 허용하기")
+    let githubView: SettingView = .init(image: .init(systemName: "chevron.left.forwardslash.chevron.right"), title: "깃허브 별 달러가기")
+    let divider: UIView = .init()
     
     // MARK: - Initializer
     
@@ -56,9 +58,12 @@ class SettingViewController: NavigationViewController, View {
         guideLabel.font = CopynoteFontFamily.HappinessSansPrint.regular.font(size: 15)
         guideLabel.textColor = .black
         
-        stackView.spacing = 10
+        divider.backgroundColor = .black
         
-        stackView.addArrangedSubviews([githubView])
+        stackView.spacing = 20
+        stackView.distribution = .equalSpacing
+        
+        stackView.addArrangedSubviews([usefuleView, divider, githubView])
     }
     
     override func setupHierarchy() {
@@ -82,13 +87,23 @@ class SettingViewController: NavigationViewController, View {
         }
         
         stackView.snp.makeConstraints {
-            $0.top.equalTo(guideView.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(guideView.snp.bottom).offset(30)
+            $0.leading.trailing.equalToSuperview().inset(20)
+        }
+        
+        usefuleView.snp.makeConstraints {
+            $0.width.equalToSuperview()
+            $0.height.equalTo(50)
         }
         
         githubView.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.height.equalTo(50)
+        }
+        
+        divider.snp.makeConstraints {
+            $0.width.equalToSuperview()
+            $0.height.equalTo(1)
         }
     }
     

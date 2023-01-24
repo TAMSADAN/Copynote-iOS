@@ -18,7 +18,7 @@ class CreateMemoNoteView: BaseView, View {
     
     let titleTextField: UITextField = .init()
     let contentTextView: UITextView = .init()
-    let accessoryView: UIView = .init(frame: CGRect(x: 0.0, y: 0.0, width: Provider.shared.screen.width, height: 50))
+    let accessoryView: UIView = .init(frame: CGRect(x: 0.0, y: 0.0, width: Provider.shared.screen.width, height: 45))
     let doneButton: UIButton = .init(type: .system)
     
     // MARK: - Initializer
