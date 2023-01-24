@@ -18,6 +18,7 @@ class NoteReactor: Reactor {
     }
 
     enum Mutation {
+        case setNotes([Note])
         case setSelectedKind(Kind)
         case setSelectedLocation(Location)
         case setLocationSections([LocationSectionModel])
@@ -25,6 +26,7 @@ class NoteReactor: Reactor {
     }
 
     struct State {
+        var notes: [Note] = []
         var selectedKind: Kind = .all
         var selectedLocation: Location?
         var locationSections: [LocationSectionModel] = []
@@ -52,8 +54,10 @@ extension NoteReactor {
             return .empty()
             
         case let .tapKind(kind):
-            noteService.fetchNotes()
-            return .just(.setSelectedKind(kind))
+            return .concat([
+                .just(.setSelectedKind(kind)),
+                .just(.setNoteSections(makeSections(notes: currentState.notes, selectedKind: kind)))
+            ])
             
         case .tapNoteItem:
             return .empty()
@@ -83,8 +87,11 @@ extension NoteReactor {
         let noteEventMutation = noteService.event.withUnretained(self).flatMap { this, event -> Observable<Mutation> in
             switch event {
             case let .fetchNotes(notes):
-                return .just(.setNoteSections(this.makeSections(notes: notes)))
-                
+                return .concat([
+                    .just(.setNotes(notes)),
+                    .just(.setNoteSections(this.makeSections(notes: notes, selectedKind: this.currentState.selectedKind)))
+                ])
+
             default:
                 return .empty()
             }
@@ -97,6 +104,9 @@ extension NoteReactor {
         var newState = state
         
         switch mutation {
+        case let .setNotes(notes):
+            newState.notes = notes
+            
         case let .setSelectedKind(kind):
             newState.selectedKind = kind
             
@@ -127,17 +137,25 @@ extension NoteReactor {
         }
     }
     
-    private func makeSections(notes: [Note]) -> [NoteSectionModel] {
-        let items: [NoteItem] = notes.map({ note -> NoteItem in
-            return .post(.init(note: note))
-        })
+    private func makeSections(notes: [Note], selectedKind: Kind) -> [NoteSectionModel] {
+        let items: [NoteItem] = {
+            var noteItems: [NoteItem] = []
+            
+            notes.forEach({ note in
+                if selectedKind == .all || note.kind == selectedKind {
+                    noteItems.append(.post(.init(note: note)))
+                }
+            })
+            
+            if noteItems.isEmpty {
+                noteItems =  [.empty]
+            }
+            
+            return noteItems
+        }()
         
         let section: NoteSectionModel = .init(model: .post(items), items: items)
         
-        if items.isEmpty {
-            return []
-        } else {
-            return [section]
-        }
+        return [section]
     }
 }

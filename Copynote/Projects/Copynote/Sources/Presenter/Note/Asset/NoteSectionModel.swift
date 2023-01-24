@@ -16,6 +16,7 @@ enum NoteSection {
 
 enum NoteItem {
     case post(PostCollectionViewCellReactor)
+    case empty
 }
 
 extension NoteSection: SectionModelType {

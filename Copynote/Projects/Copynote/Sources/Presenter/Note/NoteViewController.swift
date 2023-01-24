@@ -46,6 +46,11 @@ class NoteViewController: NavigationViewController, View {
                 .disposed(by: cell.disposeBag)
             
             return cell
+            
+        case .empty:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: EmptyCell.self), for: indexPath) as? EmptyCell else { return .init() }
+            
+            return cell
         }
     } configureSupplementaryView: { [weak self] dataSource, collectionView, _, indexPath -> UICollectionReusableView in
         guard let reactor = self?.reactor else { return .init() }
@@ -110,6 +115,7 @@ class NoteViewController: NavigationViewController, View {
         
         locationCollectionView.register(LocationCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: LocationCollectionViewCell.self))
         noteCollectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: PostCollectionViewCell.self))
+        noteCollectionView.register(EmptyCell.self, forCellWithReuseIdentifier: String(describing: EmptyCell.self))
         noteCollectionView.register(PostCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: PostCollectionViewHeader.self))
     }
 
@@ -223,8 +229,8 @@ class NoteViewController: NavigationViewController, View {
             .withUnretained(self)
             .bind { this, sections in
                 this.noteDataSource.setSections(sections)
-                this.noteCollectionView.setCollectionViewLayout(this.makeCompositionLayout(from: sections), animated: false)
                 this.noteCollectionView.reloadData()
+                this.noteCollectionView.collectionViewLayout = this.makeCompositionLayout(from: sections)
             }
             .disposed(by: disposeBag)
     }
