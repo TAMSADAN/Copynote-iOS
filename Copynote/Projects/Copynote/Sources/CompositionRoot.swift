@@ -49,8 +49,8 @@ extension CompositionRoot {
                                memoNoteService: MemoNoteServiceType,
                                urlNoteService: UrlNoteServiceType,
                                selectKindService: SelectKindServiceType) -> NoteViewController {
-        let pushCreateNoteScreen: (_ note: Note) -> CreateNoteViewController = { note in
-            let reactor = CreateNoteReactor(note: note,
+        let pushCreateOrUpdateNoteScreen: (_ note: Note) -> CreateOrUpdateNoteViewController = { note in
+            let reactor = CreateOrUpdateNoteReactor(note: note,
                                             noteService: noteService,
                                             selectKindService: selectKindService)
             
@@ -62,26 +62,26 @@ extension CompositionRoot {
                 return viewController
             }
             
-            let presentCreateMemoNoteView: (_ note: Note) -> CreateMemoNoteView = { note in
-                let reactor = CreateMemoNoteReactor(note: note,
-                                                    memoNoteService: memoNoteService)
-                let view = CreateMemoNoteView(reactor: reactor)
+            let presentCreateOrUpdateMemoNoteView: (_ note: Note) -> CreateOrUpdateMemoNoteView = { note in
+                let reactor = CreateOrUpdateMemoNoteReactor(note: note,
+                                                            memoNoteService: memoNoteService)
+                let view = CreateOrUpdateMemoNoteView(reactor: reactor)
                 
                 return view
             }
             
-            let presentCreateUrlNoteView: (_ note: Note) -> CreateUrlNoteView = { note in
-                let reactor = CreateUrlNoteReactor(note: note,
-                                                   urlNoteService: urlNoteService)
-                let view = CreateUrlNoteView(reactor: reactor)
+            let presentCreateOrUpdateUrlNoteView: (_ note: Note) -> CreateOrUpdateUrlNoteView = { note in
+                let reactor = CreateOrUpdateUrlNoteReactor(note: note,
+                                                           urlNoteService: urlNoteService)
+                let view = CreateOrUpdateUrlNoteView(reactor: reactor)
                 
                 return view
             }
             
-            let viewController = CreateNoteViewController(reactor: reactor,
+            let viewController = CreateOrUpdateNoteViewController(reactor: reactor,
                                                           pushSelectKindBottomSheetScreen: pushSelectKindBottomSheetScreen,
-                                                          presentCreateMemoNoteView: presentCreateMemoNoteView,
-                                                          presentCreateUrlNoteView: presentCreateUrlNoteView)
+                                                          presentCreateMemoNoteView: presentCreateOrUpdateMemoNoteView,
+                                                          presentCreateUrlNoteView: presentCreateOrUpdateUrlNoteView)
             
             return viewController
         }
@@ -104,7 +104,7 @@ extension CompositionRoot {
         let reactor = NoteReactor(locationService: locationService,
                                   noteService: noteService)
         let viewController = NoteViewController(reactor: reactor,
-                                                pushCreateNoteScreen: pushCreateNoteScreen,
+                                                pushCreateNoteScreen: pushCreateOrUpdateNoteScreen,
                                                 pushCopyBottomSheetScreen: pushCopyBottomSheetScreen,
                                                 pushSettingScreen: pushSettingScreen)
         

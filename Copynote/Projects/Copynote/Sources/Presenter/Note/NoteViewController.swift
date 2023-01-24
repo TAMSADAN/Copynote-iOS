@@ -17,7 +17,7 @@ class NoteViewController: NavigationViewController, View {
     typealias LocationDataSource = RxCollectionViewSectionedReloadDataSource<LocationSectionModel>
     typealias NoteDataSource = RxCollectionViewSectionedReloadDataSource<NoteSectionModel>
     
-    private let pushCreateNoteScreen: (_ note: Note) -> CreateNoteViewController
+    private let pushCreateOrUpdateNoteScreen: (_ note: Note) -> CreateOrUpdateNoteViewController
     private let pushCopyBottomSheetScreen: (_ note: Note) -> CopyBottomSheetViewController
     private let pushSettingScreen: () -> SettingViewController
 
@@ -72,10 +72,10 @@ class NoteViewController: NavigationViewController, View {
     // MARK: - Initializer
     
     init(reactor: Reactor,
-         pushCreateNoteScreen: @escaping (_ note: Note) -> CreateNoteViewController,
+         pushCreateNoteScreen: @escaping (_ note: Note) -> CreateOrUpdateNoteViewController,
          pushCopyBottomSheetScreen: @escaping (_ note: Note) -> CopyBottomSheetViewController,
          pushSettingScreen: @escaping () -> SettingViewController) {
-        self.pushCreateNoteScreen = pushCreateNoteScreen
+        self.pushCreateOrUpdateNoteScreen = pushCreateNoteScreen
         self.pushCopyBottomSheetScreen = pushCopyBottomSheetScreen
         self.pushSettingScreen = pushSettingScreen
         super.init(nibName: nil, bundle: nil)
@@ -183,7 +183,7 @@ class NoteViewController: NavigationViewController, View {
         
         plusButton.rx.tap
             .bind { [weak self] in
-                self?.willPushCreateNoteViewController(note: .init(id: UUID().uuidString, kind: .memo, title: "", content: ""))
+                self?.willPushCreateOrUpdateNoteViewController(note: .init(id: UUID().uuidString, kind: .memo, title: "", content: ""))
             }
             .disposed(by: disposeBag)
         
@@ -220,8 +220,8 @@ class NoteViewController: NavigationViewController, View {
 }
 
 extension NoteViewController {
-    func willPushCreateNoteViewController(note: Note) {
-        let viewController = pushCreateNoteScreen(note)
+    func willPushCreateOrUpdateNoteViewController(note: Note) {
+        let viewController = pushCreateOrUpdateNoteScreen(note)
         
         navigationController?.pushViewController(viewController, animated: true)
     }

@@ -8,7 +8,7 @@
 
 import ReactorKit
 
-class CreateUrlNoteReactor: Reactor {
+class CreateOrUpdateUrlNoteReactor: Reactor {
     enum Action {
         case tapDoneButton
     }

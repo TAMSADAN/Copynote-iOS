@@ -9,10 +9,10 @@
 import UIKit
 import ReactorKit
 
-class CreateMemoNoteView: BaseView, View {
+class CreateOrUpdateMemoNoteView: BaseView, View {
     // MARK: - Properties
     
-    typealias Reactor = CreateMemoNoteReactor
+    typealias Reactor = CreateOrUpdateMemoNoteReactor
     
     // MARK: - UI Components
     

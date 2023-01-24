@@ -8,7 +8,7 @@
 
 import ReactorKit
 
-class CreateMemoNoteReactor: Reactor {
+class CreateOrUpdateMemoNoteReactor: Reactor {
     enum Action {
         case tapDoneButton
         case title(String)
@@ -37,7 +37,7 @@ class CreateMemoNoteReactor: Reactor {
     }
 }
 
-extension CreateMemoNoteReactor {
+extension CreateOrUpdateMemoNoteReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .tapDoneButton:

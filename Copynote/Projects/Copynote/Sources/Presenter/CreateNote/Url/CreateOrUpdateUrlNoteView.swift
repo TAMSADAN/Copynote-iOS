@@ -9,10 +9,10 @@
 import UIKit
 import ReactorKit
 
-class CreateUrlNoteView: BaseView, View {
+class CreateOrUpdateUrlNoteView: BaseView, View {
     // MARK: - Properties
     
-    typealias Reactor = CreateUrlNoteReactor
+    typealias Reactor = CreateOrUpdateUrlNoteReactor
     
     // MARK: - Initializer
     

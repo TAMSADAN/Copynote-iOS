@@ -8,7 +8,7 @@
 
 import ReactorKit
 
-class CreateNoteReactor: Reactor {
+class CreateOrUpdateNoteReactor: Reactor {
     enum Action {
         case refresh
     }
@@ -37,7 +37,7 @@ class CreateNoteReactor: Reactor {
     }
 }
 
-extension CreateNoteReactor {
+extension CreateOrUpdateNoteReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .refresh:

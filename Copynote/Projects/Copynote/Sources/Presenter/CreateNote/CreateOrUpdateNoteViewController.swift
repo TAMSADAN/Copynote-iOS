@@ -9,14 +9,14 @@
 import UIKit
 import ReactorKit
 
-class CreateNoteViewController: NavigationViewController, View {
+class CreateOrUpdateNoteViewController: NavigationViewController, View {
     // MARK: - Properties
     
-    typealias Reactor = CreateNoteReactor
+    typealias Reactor = CreateOrUpdateNoteReactor
     
     private let pushSelectKindBottomSheetScreen: (_ kind: Kind) -> SelectKindBottomSheetViewController
-    private let presentCreateMemoNoteView: (_ note: Note) -> CreateMemoNoteView
-    private let presentCreateUrlNoteView: (_ note: Note) -> CreateUrlNoteView
+    private let presentCreateOrUpdateMemoNoteView: (_ note: Note) -> CreateOrUpdateMemoNoteView
+    private let presentCreateOrUpdateUrlNoteView: (_ note: Note) -> CreateOrUpdateUrlNoteView
 
     // MARK: - UI Components
     
@@ -25,18 +25,18 @@ class CreateNoteViewController: NavigationViewController, View {
     private let divider: UIView = .init()
     private let containerView: UIView = .init()
     
-    private var createNoteView: UIView = .init()
+    private var createOrUpdateNoteView: UIView = .init()
     
     // MARK: - Initializer
     
     init(reactor: Reactor,
          pushSelectKindBottomSheetScreen: @escaping (_ kind: Kind) -> SelectKindBottomSheetViewController,
-         presentCreateMemoNoteView: @escaping (_ note: Note) -> CreateMemoNoteView,
-         presentCreateUrlNoteView: @escaping (_ note: Note) -> CreateUrlNoteView
+         presentCreateMemoNoteView: @escaping (_ note: Note) -> CreateOrUpdateMemoNoteView,
+         presentCreateUrlNoteView: @escaping (_ note: Note) -> CreateOrUpdateUrlNoteView
     ) {
         self.pushSelectKindBottomSheetScreen = pushSelectKindBottomSheetScreen
-        self.presentCreateMemoNoteView = presentCreateMemoNoteView
-        self.presentCreateUrlNoteView = presentCreateUrlNoteView
+        self.presentCreateOrUpdateMemoNoteView = presentCreateMemoNoteView
+        self.presentCreateOrUpdateUrlNoteView = presentCreateUrlNoteView
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -136,9 +136,9 @@ class CreateNoteViewController: NavigationViewController, View {
                 
                 switch kind {
                 case .all, .memo:
-                    self?.willPresentCreateMemoNoteView(note: reactor.currentState.note)
+                    self?.willPresentCreateOrUpdateMemoNoteView(note: reactor.currentState.note)
                 case .url:
-                    self?.willPresentCreateUrlNoteView(note: reactor.currentState.note)
+                    self?.willPresentCreateOrUpdateUrlNoteView(note: reactor.currentState.note)
                 }
             }
             .disposed(by: disposeBag)
@@ -153,28 +153,28 @@ class CreateNoteViewController: NavigationViewController, View {
     }
 }
 
-extension CreateNoteViewController {
+extension CreateOrUpdateNoteViewController {
     private func willPushSelectKindBottomSheetViewController(kind: Kind) {
         let viewController = pushSelectKindBottomSheetScreen(kind)
         
         self.present(viewController, animated: true)
     }
     
-    private func willPresentCreateMemoNoteView(note: Note) {
-        guard (createNoteView as? CreateMemoNoteView) == nil else { return }
+    private func willPresentCreateOrUpdateMemoNoteView(note: Note) {
+        guard (createOrUpdateNoteView as? CreateOrUpdateMemoNoteView) == nil else { return }
         
-        createNoteView = presentCreateMemoNoteView(note)
-        willPresentCreateNoteView(view: createNoteView)
+        createOrUpdateNoteView = presentCreateOrUpdateMemoNoteView(note)
+        willPresentCreateOrUpdateNoteView(view: createOrUpdateNoteView)
     }
     
-    private func willPresentCreateUrlNoteView(note: Note) {
-        guard (createNoteView as? CreateUrlNoteView) == nil else { return }
+    private func willPresentCreateOrUpdateUrlNoteView(note: Note) {
+        guard (createOrUpdateNoteView as? CreateOrUpdateUrlNoteView) == nil else { return }
         
-        createNoteView = presentCreateUrlNoteView(note)
-        willPresentCreateNoteView(view: createNoteView)
+        createOrUpdateNoteView = presentCreateOrUpdateUrlNoteView(note)
+        willPresentCreateOrUpdateNoteView(view: createOrUpdateNoteView)
     }
     
-    private func willPresentCreateNoteView(view: UIView) {
+    private func willPresentCreateOrUpdateNoteView(view: UIView) {
         containerView.subviews.forEach({ $0.removeFromSuperview() })
         
         containerView.addSubview(view)
