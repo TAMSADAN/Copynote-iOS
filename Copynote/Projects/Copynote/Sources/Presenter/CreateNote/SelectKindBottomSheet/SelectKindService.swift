@@ -10,18 +10,18 @@ import Foundation
 import RealmSwift
 import RxSwift
 
-enum SelectKindServiceEvent {
+enum SelectKindEvent {
     case selectKind(Kind)
 }
 
 protocol SelectKindServiceType {
-    var event: PublishSubject<SelectKindServiceEvent> { get }
+    var event: PublishSubject<SelectKindEvent> { get }
     
     func selectKind(kind: Kind)
 }
 
 class SelectKindService: SelectKindServiceType {
-    var event = PublishSubject<SelectKindServiceEvent>()
+    var event = PublishSubject<SelectKindEvent>()
     
     func selectKind(kind: Kind) {
         event.onNext(.selectKind(kind))

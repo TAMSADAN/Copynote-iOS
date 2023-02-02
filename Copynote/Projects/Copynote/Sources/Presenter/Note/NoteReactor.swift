@@ -13,8 +13,8 @@ class NoteReactor: Reactor {
     enum Action {
         case refresh
         case tapKind(Kind)
+        case tapLocationItem(IndexPath, LocationItem)
         case tapNoteItem(IndexPath, NoteItem)
-        case tapNoteItemCopyButton(IndexPath, NoteItem)
     }
 
     enum Mutation {
@@ -56,13 +56,21 @@ extension NoteReactor {
         case let .tapKind(kind):
             return .concat([
                 .just(.setSelectedKind(kind)),
-                .just(.setNoteSections(makeSections(notes: currentState.notes, selectedKind: kind)))
+                .just(.setNoteSections(makeSections(notes: currentState.notes, selectedKind: kind, selectedLocation: currentState.selectedLocation)))
             ])
             
-        case .tapNoteItem:
-            return .empty()
+        case let .tapLocationItem(_, item):
+            switch item {
+            case let .location(reactor):
+                let location = reactor.initialState.location
+                
+                return .concat([
+                    .just(.setSelectedLocation(location)),
+                    .just(.setNoteSections(makeSections(notes: currentState.notes, selectedKind: currentState.selectedKind, selectedLocation: location)))
+                ])
+            }
             
-        case .tapNoteItemCopyButton:
+        case .tapNoteItem:
             return .empty()
         }
     }
@@ -89,7 +97,7 @@ extension NoteReactor {
             case let .fetchNotes(notes):
                 return .concat([
                     .just(.setNotes(notes)),
-                    .just(.setNoteSections(this.makeSections(notes: notes, selectedKind: this.currentState.selectedKind)))
+                    .just(.setNoteSections(this.makeSections(notes: notes, selectedKind: this.currentState.selectedKind, selectedLocation: this.currentState.selectedLocation)))
                 ])
 
             default:
@@ -125,7 +133,7 @@ extension NoteReactor {
     
     private func makeSections(locations: [Location]) -> [LocationSectionModel] {
         let items: [LocationItem] = locations.map({ location -> LocationItem in
-            return .location(.init(location: location.name))
+            return .location(.init(location: location))
         })
         
         let section: LocationSectionModel = .init(model: .location(items), items: items)
@@ -137,12 +145,12 @@ extension NoteReactor {
         }
     }
     
-    private func makeSections(notes: [Note], selectedKind: Kind) -> [NoteSectionModel] {
+    private func makeSections(notes: [Note], selectedKind: Kind, selectedLocation: Location?) -> [NoteSectionModel] {
         let items: [NoteItem] = {
             var noteItems: [NoteItem] = []
             
             notes.forEach({ note in
-                if selectedKind == .all || note.kind == selectedKind {
+                if (selectedKind == .all || note.kind == selectedKind) && note.location?.id == selectedLocation?.id {
                     noteItems.append(.post(.init(note: note)))
                 }
             })

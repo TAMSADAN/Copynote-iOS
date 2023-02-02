@@ -12,7 +12,7 @@ import ReactorKit
 class SelectLocationCollectionViewCell: BaseCollectionViewCell, View {
     // MARK: - Properties
     
-    typealias Reactor = SelectKindCollectionViewCellReactor
+    typealias Reactor = SelectLocationCollectionViewCellReactor
     
     // MARK: - UI Components
     
@@ -56,7 +56,8 @@ class SelectLocationCollectionViewCell: BaseCollectionViewCell, View {
     // MARK: - Bind Method
     
     func bind(reactor: Reactor) {
-        titleLabel.text = reactor.initialState.kind.title
+        titleLabel.text = reactor.initialState.location.name
+        
         if reactor.initialState.isSelected {
             imageView.isHidden = false
             titleLabel.font = CopynoteFontFamily.HappinessSansPrint.bold.font(size: 18)

@@ -127,14 +127,16 @@ class CreateOrUpdateNoteViewController: NavigationViewController, View {
             .disposed(by: disposeBag)
         
         kindButton.rx.tap
-            .bind { [weak self] in
-                self?.willPushSelectKindBottomSheetViewController(kind: reactor.currentState.selectedKind)
+            .compactMap { reactor.currentState.selectedKind }
+            .bind { [weak self] kind in
+                self?.willPushSelectKindBottomSheetViewController(kind: kind)
             }
             .disposed(by: disposeBag)
         
         locationButton.rx.tap
-            .bind { [weak self] in
-                
+            .compactMap { reactor.currentState.selectedLocation }
+            .bind { [weak self] location in
+                self?.willPushSelectLocationBottomSheetViewController(location: location)
             }
             .disposed(by: disposeBag)
         

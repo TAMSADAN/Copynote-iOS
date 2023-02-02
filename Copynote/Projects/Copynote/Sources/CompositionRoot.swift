@@ -25,12 +25,14 @@ class CompositionRoot {
         let memoNoteService: MemoNoteServiceType = MemoNoteService(noteEvent: noteService.event)
         let urlNoteService: UrlNoteServiceType = UrlNoteService(noteEvent: noteService.event)
         let selectKindService: SelectKindServiceType = SelectKindService()
+        let selectLocationService: SelectLocationServiceType = SelectLocationService()
         
         let noteScreen = makeNoteScreen(locationService: locationService,
                                         noteService: noteService,
                                         memoNoteService: memoNoteService,
                                         urlNoteService: urlNoteService,
-                                        selectKindService: selectKindService)
+                                        selectKindService: selectKindService,
+                                        selectLocationService: selectLocationService)
         
         window.rootViewController = UINavigationController(rootViewController: noteScreen)
         return AppDependency(window: window,
@@ -48,7 +50,8 @@ extension CompositionRoot {
                                noteService: NoteServiceType,
                                memoNoteService: MemoNoteServiceType,
                                urlNoteService: UrlNoteServiceType,
-                               selectKindService: SelectKindServiceType) -> NoteViewController {
+                               selectKindService: SelectKindServiceType,
+                               selectLocationService: SelectLocationServiceType) -> NoteViewController {
         let pushCreateOrUpdateNoteScreen: (_ note: Note) -> CreateOrUpdateNoteViewController = { note in
             let reactor = CreateOrUpdateNoteReactor(note: note,
                                                     noteService: noteService,
@@ -63,7 +66,9 @@ extension CompositionRoot {
             }
             
             let pushSelectLocationBottomSheetScreen: (Location) -> SelectLocationBottomSheetViewController = { location in
-                let reactor = SelectLocationBottomSheetReactor(selectedKind: .all, selectKindService: selectKindService)
+                let reactor = SelectLocationBottomSheetReactor(selectedLocation: location,
+                                                               locationService: locationService,
+                                                               selectLocationService: selectLocationService)
                 let viewController = SelectLocationBottomSheetViewController(mode: .drag, reactor: reactor)
                 
                 return viewController
