@@ -7,7 +7,24 @@
 //
 
 import Foundation
+import RealmSwift
+import RxSwift
 
-class SelectLocationService {
-    
+enum SelectLocationEvent {
+    case selectLocation(Location)
 }
+
+protocol SelectLocationServiceType {
+    var event: PublishSubject<SelectLocationEvent> { get }
+    
+    func selectLocation(location: Location)
+}
+
+class SelectLocationService: SelectLocationServiceType {
+    var event = PublishSubject<SelectLocationEvent>()
+    
+    func selectLocation(location: Location) {
+        event.onNext(.selectLocation(location))
+    }
+}
+

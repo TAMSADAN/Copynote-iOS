@@ -198,8 +198,14 @@ class NoteViewController: NavigationViewController, View {
             .disposed(by: disposeBag)
         
         plusButton.rx.tap
-            .bind { [weak self] in
-                self?.willPushCreateOrUpdateNoteViewController(note: .init(id: UUID().uuidString, kind: .memo, title: "", content: ""))
+            .compactMap { (UUID().uuidString,
+                           reactor.currentState.selectedKind.toDomain(),
+                           reactor.currentState.selectedLocation) }
+            .map({ id, kind, location in
+                return Note(id: id, kind: kind, location: location, title: "", content: "")
+            })
+            .bind { [weak self] note in
+                self?.willPushCreateOrUpdateNoteViewController(note: note)
             }
             .disposed(by: disposeBag)
         

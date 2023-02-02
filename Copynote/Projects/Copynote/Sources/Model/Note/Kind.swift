@@ -26,4 +26,14 @@ enum Kind: Int, Codable, CaseIterable, PersistableEnum {
             return "url"
         }
     }
+    
+    func toDomain() -> Kind {
+        switch self {
+        case .all:
+            return .memo
+            
+        default:
+            return self
+        }
+    }
 }

@@ -14,12 +14,12 @@ class SelectLocationBottomSheetViewController: BottomSheetViewController, View {
     // MARK: - Properties
     
     typealias Reactor = SelectLocationBottomSheetReactor
-    typealias DataSource = RxCollectionViewSectionedReloadDataSource<SelectKindSectionModel>
+    typealias DataSource = RxCollectionViewSectionedReloadDataSource<SelectLocationSectionModel>
     
     private lazy var dataSource = DataSource { _, collectionView, indexPath, item -> UICollectionViewCell in
         switch item {
-        case let .kind(reactor):
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: SelectKindCollectionViewCell.self), for: indexPath) as? SelectKindCollectionViewCell else { return .init() }
+        case let .location(reactor):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: SelectLocationCollectionViewCell.self), for: indexPath) as? SelectLocationCollectionViewCell else { return .init() }
             
             cell.reactor = reactor
             
@@ -57,7 +57,7 @@ class SelectLocationBottomSheetViewController: BottomSheetViewController, View {
     override func setupDelegate() {
         super.setupDelegate()
         
-        collectionView.register(SelectKindCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: SelectKindCollectionViewCell.self))
+        collectionView.register(SelectLocationCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: SelectLocationCollectionViewCell.self))
     }
     
     override func setupProperty() {
@@ -79,6 +79,7 @@ class SelectLocationBottomSheetViewController: BottomSheetViewController, View {
         
         collectionView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(50)
         }
     }
     
@@ -92,23 +93,19 @@ class SelectLocationBottomSheetViewController: BottomSheetViewController, View {
             collectionView.rx.itemSelected,
             collectionView.rx.modelSelected(type(of: self.dataSource).Section.Item.self)
         )
-        .map { .tapKindItem($0, $1) }
+        .map { .tapLocationItem($0, $1) }
         .bind(to: reactor.action)
         .disposed(by: disposeBag)
         
         collectionView.rx.setDataSource(dataSource).disposed(by: disposeBag)
-        
-        contentView.snp.makeConstraints {
-            $0.height.equalTo(Double(reactor.initialState.kinds.count) * 50.0)
-        }
         
         reactor.state
             .map(\.sections)
             .withUnretained(self)
             .bind { this, sections in
                 this.dataSource.setSections(sections)
-                this.collectionView.setCollectionViewLayout(this.makeCompositionLayout(from: sections), animated: false)
                 this.collectionView.reloadData()
+                this.collectionView.setCollectionViewLayout(this.makeCompositionLayout(from: sections), animated: false)
             }
             .disposed(by: disposeBag)
         
@@ -123,11 +120,12 @@ class SelectLocationBottomSheetViewController: BottomSheetViewController, View {
 }
 
 extension SelectLocationBottomSheetViewController {
-    private func makeCompositionLayout(from sections: [SelectKindSectionModel]) -> UICollectionViewCompositionalLayout {
+    private func makeCompositionLayout(from sections: [SelectLocationSectionModel]) -> UICollectionViewCompositionalLayout {
         let layout: UICollectionViewCompositionalLayout = .init { [weak self] index, _ in
             switch sections[safe: index]?.model {
-            case let .kind(items):
-                return self?.makeKindLayoutSection(from: items)
+            case let .location(items):
+                return self?.makeLocationLayoutSection(from: items)
+                
             case .none:
                 return .none
             }
@@ -135,7 +133,7 @@ extension SelectLocationBottomSheetViewController {
         return layout
     }
     
-    private func makeKindLayoutSection(from items: [SelectKindItem]) -> NSCollectionLayoutSection {
+    private func makeLocationLayoutSection(from items: [SelectLocationItem]) -> NSCollectionLayoutSection {
         let layoutItems: [NSCollectionLayoutItem] = items.map { item in
             let layoutItem: NSCollectionLayoutItem = .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50)))
             return layoutItem
@@ -147,4 +145,3 @@ extension SelectLocationBottomSheetViewController {
         return layoutSection
     }
 }
-
